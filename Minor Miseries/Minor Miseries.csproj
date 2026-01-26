@@ -1,0 +1,79 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>disable</Nullable>
+		<RootNamespace>Minor_Miseries</RootNamespace>
+		<LangVersion>Latest</LangVersion>
+		<IsPackable>false</IsPackable>
+		<AssemblyVersion>1.0.0.0</AssemblyVersion>
+		<FileVersion>1.0.0.0</FileVersion>
+		<NeutralLanguage>en-US</NeutralLanguage>
+		<AssemblyName>Minor_Miseries</AssemblyName>
+		<LangVersion>latest</LangVersion>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Platforms>AnyCPU;x64</Platforms>
+	</PropertyGroup>
+
+	
+	<PropertyGroup>
+		<TheLongDarkPath>D:\SteamLibrary\steamapps\common\TheLongDark</TheLongDarkPath>
+	</PropertyGroup>
+
+	
+	<ItemGroup>
+	  <None Remove="Resources\Icons\Splinter.png" />
+	</ItemGroup>
+
+	<PropertyGroup>
+		<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+		<EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Compile Include="Afflictions\BackPain.cs" />
+		<Compile Include="Afflictions\Blister.cs" />
+		<Compile Include="Afflictions\Overconfidence.cs" />
+		<Compile Include="Core.cs" />
+		<Compile Include="Patches\BreakdownPatch.cs" />
+		<Compile Include="Patches\CraftingPatch.cs" />
+		<Compile Include="MMSettings.cs" />
+		<Compile Include="Afflictions\OverconfidenceRisk.cs" />
+		<Compile Include="Afflictions\Scratch.cs" />
+		<Compile Include="Afflictions\Splinter.cs" />
+		<Compile Include="Afflictions\StuckFood.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Include="Resources\Icons\Splinter.png" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Reference Include="AfflictionComponent">
+			<HintPath>$(TheLongDarkPath)\Mods\AfflictionComponent.dll</HintPath>
+		</Reference>
+		<Reference Include="ModSettings">
+			<HintPath>$(TheLongDarkPath)\Mods\ModSettings.dll</HintPath>
+		</Reference>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="STBlade.Modding.TLD.Il2CppAssemblies.Windows" Version="2.51.0" />
+	  <PackageReference Include="STBlade.Modding.TLD.ModSettings" Version="1.9.0" />
+	  <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Using Include="System.Reflection" />
+		<Using Include="System.Diagnostics.CodeAnalysis" />
+		<Using Include="Il2Cpp" />
+		<Using Include="HarmonyLib" />
+		<Using Include="MelonLoader" />
+		<Using Include="UnityEngine" />
+		<Using Include="ModSettings" />
+	</ItemGroup>
+
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+		<Copy SourceFiles="$(TargetPath)" DestinationFolder="$(TheLongDarkPath)/Mods" />
+	</Target>
+</Project>

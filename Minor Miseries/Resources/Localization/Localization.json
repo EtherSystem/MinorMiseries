@@ -1,0 +1,188 @@
+{
+    "GAMEPLAY_SplinterName": {
+        "English": "Splinter",
+        "French (France)": "Écharde",
+        "Spanish (Spain)": "",
+        "German": "",
+        "Turkish": "",
+        "Russian": ""
+    },
+    "GAMEPLAY_SplinterCause": {
+        "English": "Unprotected hands",
+        "French (France)": "Mains non protégées",
+        "Spanish (Spain)": "",
+        "German": "",
+        "Turkish": "",
+        "Russian": ""
+    },
+    "GAMEPLAY_SplinterDescription": {
+        "English": "A splinter is lodged in your skin",
+        "French (France)": "Une écharde est logée sous ta peau",
+        "Spanish (Spain)": "",
+        "German": "",
+        "Turkish": "",
+        "Russian": ""
+    },
+
+
+
+    "GAMEPLAY_StuckFoodName": {
+        "English": "Stuck Food",
+        "French (France)": "Nourriture bloquée",
+        "Spanish (Spain)": "",
+        "German": "",
+        "Turkish": "",
+        "Russian": ""
+    },
+    "GAMEPLAY_StuckFoodCause": {
+        "English": "You ate too fast",
+        "French (France)": "Vous avez mangé trop vite",
+        "Spanish (Spain)": "",
+        "German": "",
+        "Turkish": "",
+        "Russian": ""
+    },
+    "GAMEPLAY_StuckFoodDescription": {
+        "English": "It seems that some food is stuck between your teeth",
+        "French (France)": "Il semblerait que de la nourriture se soit bloquée entre tes dents",
+        "Spanish (Spain)": "",
+        "German": "",
+        "Turkish": "",
+        "Russian": ""
+    },
+
+
+
+    "GAMEPLAY_BlisterName": {
+        "English": "Blister",
+        "French (France)": "Ampoule",
+        "Spanish (Spain)": "",
+        "German": "",
+        "Turkish": "",
+        "Russian": ""
+    },
+    "GAMEPLAY_BlisterCause": {
+        "English": "Walked for too long",
+        "French (France)": "Marcher trop longtemps",
+        "Spanish (Spain)": "",
+        "German": "",
+        "Turkish": "",
+        "Russian": ""
+    },
+    "GAMEPLAY_BlisterDescription": {
+        "English": "You have made a sustained effort for too long",
+        "French (France)": "Tu as fais un effort soutenu pendant trop longtemps",
+        "Spanish (Spain)": "",
+        "German": "",
+        "Turkish": "",
+        "Russian": ""
+    },
+
+
+
+    "GAMEPLAY_BackPainName": {
+        "English": "Back Pain",
+        "French (France)": "Mal de dos",
+        "Spanish (Spain)": "",
+        "German": "",
+        "Turkish": "",
+        "Russian": ""
+    },
+    "GAMEPLAY_BackPainCause": {
+        "English": "A too heavy backpack",
+        "French (France)": "Un sac à dos trop lourd",
+        "Spanish (Spain)": "",
+        "German": "",
+        "Turkish": "",
+        "Russian": ""
+    },
+    "GAMEPLAY_BackPainDescription": {
+        "English": "Being encumbered for too long has consequences...",
+        "French (France)": "Être encombré pendant trop longtemps a des conséquences...",
+        "Spanish (Spain)": "",
+        "German": "",
+        "Turkish": "",
+        "Russian": ""
+    },
+
+
+
+    "GAMEPLAY_ScratchName": {
+        "English": "Scratch",
+        "French (France)": "Égratignure",
+        "Spanish (Spain)": "",
+        "German": "",
+        "Turkish": "",
+        "Russian": ""
+    },
+    "GAMEPLAY_ScratchCause": {
+        "English": "Awkward gesture",
+        "French (France)": "Geste maladroit",
+        "Spanish (Spain)": "",
+        "German": "",
+        "Turkish": "",
+        "Russian": ""
+    },
+    "GAMEPLAY_ScratchDescription": {
+        "English": "You've scratched your skin, nothing too serious",
+        "French (France)": "Tu a égratigné ta peau, rien de trop sérieux",
+        "Spanish (Spain)": "",
+        "German": "",
+        "Turkish": "",
+        "Russian": ""
+    },
+
+
+
+    "GAMEPLAY_OverconfidenceRiskName": {
+        "English": "Overconfidence",
+        "French (France)": "Surconfiance",
+        "Spanish (Spain)": "",
+        "German": "",
+        "Turkish": "",
+        "Russian": ""
+    },
+    "GAMEPLAY_OverconfidenceRiskCause": {
+        "English": "Yourself",
+        "French (France)": "Toi-même",
+        "Spanish (Spain)": "",
+        "German": "",
+        "Turkish": "",
+        "Russian": ""
+    },
+    "GAMEPLAY_OverconfidenceRiskDescription": {
+        "English": "Everything seems so simple, doesn't it ?",
+        "French (France)": "Tout semble si simple, n'est-ce pas ?",
+        "Spanish (Spain)": "",
+        "German": "",
+        "Turkish": "",
+        "Russian": ""
+    },
+
+
+
+    "GAMEPLAY_OverconfidenceName": {
+        "English": "Overconfidence",
+        "French (France)": "Surconfiance",
+        "Spanish (Spain)": "",
+        "German": "",
+        "Turkish": "",
+        "Russian": ""
+    },
+    "GAMEPLAY_OverconfidenceCause": {
+        "English": "Yourself",
+        "French (France)": "Toi-même",
+        "Spanish (Spain)": "",
+        "German": "",
+        "Turkish": "",
+        "Russian": ""
+    },
+    "GAMEPLAY_OverconfidenceDescription": {
+        "English": "You are far too confident, you are paying the price for your experience, and you take your survival for granted. Afflictions are now easier to contract.",
+        "French (France)": "Tu es bien trop confiant, tu payes le prix de ton expérience et tiens ta survie pour acquise. Les maladies sont désormais plus faciles à contracter.",
+        "Spanish (Spain)": "",
+        "German": "",
+        "Turkish": "",
+        "Russian": ""
+    }
+}

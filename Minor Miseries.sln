@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36811.4
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Minor Miseries", "Minor Miseries\Minor Miseries.csproj", "{2F871B40-7EB4-4051-AB84-93B722779BBC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2F871B40-7EB4-4051-AB84-93B722779BBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F871B40-7EB4-4051-AB84-93B722779BBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F871B40-7EB4-4051-AB84-93B722779BBC}.Debug|x64.ActiveCfg = Debug|x64
+		{2F871B40-7EB4-4051-AB84-93B722779BBC}.Debug|x64.Build.0 = Debug|x64
+		{2F871B40-7EB4-4051-AB84-93B722779BBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F871B40-7EB4-4051-AB84-93B722779BBC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F871B40-7EB4-4051-AB84-93B722779BBC}.Release|x64.ActiveCfg = Release|x64
+		{2F871B40-7EB4-4051-AB84-93B722779BBC}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9FC85FEA-0E59-4AFA-8752-AFB44B959F3B}
+	EndGlobalSection
+EndGlobal
