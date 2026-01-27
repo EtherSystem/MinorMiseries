@@ -1,5 +1,5 @@
-﻿using Random = UnityEngine.Random;
-using static Minor_Miseries.Afflictions.Splinter;
+﻿using static Minor_Miseries.Afflictions.Splinter;
+using Random = UnityEngine.Random;
 
 namespace Minor_Miseries.Patches
 {

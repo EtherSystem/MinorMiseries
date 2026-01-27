@@ -1,6 +1,6 @@
 ﻿using AfflictionComponent.Components;
-using AfflictionComponent.Enums;
 using AfflictionComponent.Interfaces;
+using AfflictionComponent.Enums;
 
 namespace Minor_Miseries.Afflictions
 {

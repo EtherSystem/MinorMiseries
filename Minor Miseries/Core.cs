@@ -1,11 +1,13 @@
-﻿using AfflictionComponent.Components;
+﻿using static Minor_Miseries.Afflictions.OverconfidenceRisk;
+using static Minor_Miseries.Afflictions.Overconfidence;
+using static Minor_Miseries.Afflictions.StuckFood;
+using static Minor_Miseries.Afflictions.Splinter;
 using static Minor_Miseries.Afflictions.BackPain;
 using static Minor_Miseries.Afflictions.Blister;
-using static Minor_Miseries.Afflictions.OverconfidenceRisk;
-using static Minor_Miseries.Afflictions.StuckFood;
-using static Minor_Miseries.Afflictions.Overconfidence;
+using static Minor_Miseries.Afflictions.Scratch;
+using AfflictionComponent.Components;
 
-[assembly: MelonInfo(typeof(Minor_Miseries.Core), "Minor Miseries", "1.0.0", "EtherSystem", null)]
+[assembly: MelonInfo(typeof(Minor_Miseries.Core), "Minor Miseries", "1.0.1", "EtherSystem", null)]
 [assembly: MelonGame("Hinterland", "TheLongDark")]
 
 namespace Minor_Miseries
@@ -16,6 +18,57 @@ namespace Minor_Miseries
         {
             LoggerInstance.Msg("Initialized.");
             Settings.OnLoad();
+
+            uConsole.RegisterCommand("mm_afflictions", new Action(() =>
+            {
+                new SplinterAffliction(AfflictionBodyArea.HandLeft).Start();
+                new StuckFoodAffliction(AfflictionBodyArea.Head).Start();
+                new BlisterAffliction(AfflictionBodyArea.FootLeft).Start();
+                new BackPainAffliction(AfflictionBodyArea.Chest).Start();
+                new ScratchAffliction(AfflictionBodyArea.Chest).Start();
+            }));
+
+            uConsole.RegisterCommand("mm_afflictions_cure", new Action(() =>
+            {
+                var mgr = AfflictionManager.GetAfflictionManagerInstance();
+                if (mgr?.m_Afflictions == null) return;
+
+                for (int i = mgr.m_Afflictions.Count - 1; i >= 0; i--)
+                {
+                    var a = mgr.m_Afflictions[i];
+                    if (a == null) continue;
+
+                    if (a is SplinterAffliction || a is StuckFoodAffliction || a is BlisterAffliction || a is BackPainAffliction || a is ScratchAffliction)
+                    {
+                        a.Cure();
+                    }
+                }
+            }));
+
+            uConsole.RegisterCommand("overcrisk", new Action(() =>
+            {
+                new OverconfidenceRiskAffliction(AfflictionBodyArea.Head).Start();
+            }));
+
+            uConsole.RegisterCommand("overc", new Action(() =>
+            {
+                new OverconfidenceAffliction(AfflictionBodyArea.Head).Start();
+            }));
+
+            uConsole.RegisterCommand("overc_cure", new Action(() =>
+            {
+                var mgr = AfflictionManager.GetAfflictionManagerInstance();
+                if (mgr?.m_Afflictions == null) return;
+
+                for (int i = mgr.m_Afflictions.Count - 1; i >= 0; i--)
+                {
+                    var a = mgr.m_Afflictions[i];
+                    if (a == null) continue;
+
+                    if (a is OverconfidenceRiskAffliction || a is OverconfidenceAffliction)
+                        a.Cure();
+                }
+            }));
         }
 
         private static readonly bool IsOvercActive = OverconfidenceAffliction.IsOvercActive;
@@ -25,12 +78,12 @@ namespace Minor_Miseries
         private float hoursSpentMoving = 0f;
         private float hoursOverloaded = 0f;
         private const float CONF_THRESHOLD_HOURS = 96f;
-        private const float BLIST_THRESHOLD_HOURS = 5f;
-        private const float OVERC_BLIST_THRESHOLD_HOURS = 4f;
+        private const float BLIST_THRESHOLD_HOURS = 4f;
+        private const float OVERC_BLIST_THRESHOLD_HOURS = 3f;
         private const float BACKPAIN_TRESHOLD_HOURS = 1f;
         private const float OVERC_BACKPAIN_TRESHOLD_HOURS = 0.5f;
-        private const float STUCKFOOD_CHANCE = 10f;
-        private const float OVERC_STUCKFOOD_CHANCE = 20f;
+        private const float STUCKFOOD_CHANCE = 5f;
+        private const float OVERC_STUCKFOOD_CHANCE = 10f;
         private bool hadAfflictionLastTick = false;
         private bool wasEating = false;
 

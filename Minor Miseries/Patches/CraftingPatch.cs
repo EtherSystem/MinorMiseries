@@ -1,5 +1,5 @@
-﻿using Random = UnityEngine.Random;
-using static Minor_Miseries.Afflictions.Scratch;
+﻿using static Minor_Miseries.Afflictions.Scratch;
+using Random = UnityEngine.Random;
 
 namespace Minor_Miseries.Patches
 {
