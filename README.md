@@ -1,4 +1,4 @@
-Minor Miseries is a mod for The Long Dark that adds minor afflictions to make survival more unpredictable.
+Minor Miseries is a mod for The Long Dark that adds minor afflictions to make survival more spicy.
 
 These afflictions are not fatal, but they accumulate, are easily forgotten... and then eventually become significant.
 
