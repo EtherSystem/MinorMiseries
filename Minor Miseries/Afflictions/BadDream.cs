@@ -1,27 +1,32 @@
-﻿using AfflictionComponent.Components;
-using AfflictionComponent.Interfaces;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using AfflictionComponent.Components;
 using AfflictionComponent.Enums;
+using AfflictionComponent.Interfaces;
 
 namespace Minor_Miseries.Afflictions
 {
-    internal class StuckFood
+    internal class BadDream
     {
-        public class StuckFoodAffliction : CustomAffliction, IDuration, IRemedies, IInstance
+        public class BadDreamAffliction : CustomAffliction, IDuration, IRemedies, IInstance
         {
             public InstanceType Type { get; set; } = InstanceType.Single;
             public void OnFoundExistingInstance(CustomAffliction existingAffliction)
             {
-                //MelonLogger.Msg("stuck food duplication");
-                if (existingAffliction is StuckFoodAffliction stuckFood)
+                //MelonLogger.Msg("bad dream duplication");
+                if (existingAffliction is BadDreamAffliction badDream)
                 {
-                    stuckFood.ResetAffliction(resetRemedies: false);
+                    badDream.ResetAffliction(resetRemedies: false);
                     var now = GameManager.GetTimeOfDayComponent().GetHoursPlayedNotPaused();
-                    stuckFood.EndTime = now + stuckFood.Duration;
+                    badDream.EndTime = now + badDream.Duration;
                 }
             }
 
             private readonly float m_LastUpdateTime;
-            public float Duration { get; set; } = Settings.options.StuckFoodDuration;
+            public float Duration { get; set; } = Settings.options.BadDreamDuration;
             public float EndTime { get; set; }
 
             public Tuple<string, int, int>[] RemedyItems { get; set; } = Array.Empty<Tuple<string, int, int>>();
@@ -29,7 +34,7 @@ namespace Minor_Miseries.Afflictions
 
             public bool InstantHeal { get; set; } = true;
 
-            public StuckFoodAffliction(AfflictionBodyArea bodyArea) : base("Stuck Food", "You ate too fast", "It seems that some food is stuck between your teeth", null, "ico_injury_scurvy", bodyArea) //customsprite :Minor_Miseries.Resources.Icons.StuckFood.png
+            public BadDreamAffliction(AfflictionBodyArea bodyArea) : base("Bad Dream", "Troubled sleep", "A disturbing dream snaps you awake, your thoughts racing and sleep refusing to return", null, "ico_injury_headache", bodyArea) //customsprite :Minor_Miseries.Resources.Icons.BadDream.png
             {
                 m_LastUpdateTime = GameManager.GetTimeOfDayComponent().GetHoursPlayedNotPaused();
             }

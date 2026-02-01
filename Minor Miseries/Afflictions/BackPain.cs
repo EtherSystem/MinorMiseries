@@ -27,14 +27,8 @@ namespace Minor_Miseries.Afflictions
             public float Duration { get; set; } = Settings.options.BackPainDuration;
             public float EndTime { get; set; }
 
-            public Tuple<string, int, int>[] RemedyItems { get; set; }
-            //= new Tuple<string, int, int>[] {
-            //    Tuple.Create("GEAR_HeavyBandage", 1, 1)
-            //};
-            public Tuple<string, int, int>[] AltRemedyItems { get; set; }
-            //= new Tuple<string, int, int>[] {
-            //    Tuple.Create("GEAR_Name", 1, 1)
-            //};
+            public Tuple<string, int, int>[] RemedyItems { get; set; } = Array.Empty<Tuple<string, int, int>>();
+            public Tuple<string, int, int>[] AltRemedyItems { get; set; } = Array.Empty<Tuple<string, int, int>>();
 
             public bool InstantHeal { get; set; } = true;
 

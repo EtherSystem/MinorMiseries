@@ -10,7 +10,7 @@ namespace Minor_Miseries.Afflictions
         public class OverconfidenceRiskAffliction : CustomAffliction, IRemedies, IInstance, IRiskPercentage
         {
             private static readonly bool IsOvercActive = Overconfidence.OverconfidenceAffliction.IsOvercActive;
-            public InstanceType Type { get; set; } = InstanceType.SingleLocation;
+            public InstanceType Type { get; set; } = InstanceType.Single;
             public void OnFoundExistingInstance(CustomAffliction existingAffliction)
             {
                 return;//MelonLogger.Msg("splinter duplication");
@@ -20,14 +20,8 @@ namespace Minor_Miseries.Afflictions
             private float m_LastUpdateTime;
             public bool Risk { get; set; } = true;
 
-            public Tuple<string, int, int>[] RemedyItems { get; set; }
-            //= new Tuple<string, int, int>[] {
-            //    Tuple.Create("GEAR_Knife", 1, 1)
-            //};
-            public Tuple<string, int, int>[] AltRemedyItems { get; set; }
-            //= new Tuple<string, int, int>[] {
-            //    Tuple.Create("GEAR_Name", 1, 1)
-            //};
+            public Tuple<string, int, int>[] RemedyItems { get; set; } = Array.Empty<Tuple<string, int, int>>();
+            public Tuple<string, int, int>[] AltRemedyItems { get; set; } = Array.Empty<Tuple<string, int, int>>();
 
             public bool InstantHeal { get; set; } = true;
 

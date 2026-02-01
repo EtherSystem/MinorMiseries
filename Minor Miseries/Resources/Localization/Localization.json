@@ -1,4 +1,12 @@
 {
+    "GAMEPLAY_BadDreamWakeup": {
+        "English": "You wake up suddenly, shaken by a bad dream",
+        "French (France)": "Vous vous réveillez brusquement, secoué par un mauvais rêve",
+        "Spanish (Spain)": "Te despiertas de repente, sacudido por una mala pesadilla",
+        "German": "Du wachst plötzlich auf, erschüttert von einem Albtraum",
+        "Turkish": "Kötü bir rüyanın etkisiyle aniden uyanıyorsunuz",
+        "Russian": "Вы внезапно просыпаетесь, потрясенные кошмарным сном"
+    },
     "GAMEPLAY_SplinterName": {
         "English": "Splinter",
         "French (France)": "Écharde",
@@ -132,7 +140,30 @@
         "Russian": ""
     },
 
-
+    "GAMEPLAY_BadDreamName": {
+        "English": "Bad Dream",
+        "French (France)": "Mauvais Rêve",
+        "Spanish (Spain)": "",
+        "German": "",
+        "Turkish": "",
+        "Russian": ""
+    },
+    "GAMEPLAY_BadDreamCause": {
+        "English": "Troubled sleep",
+        "French (France)": "Sommeil troublé",
+        "Spanish (Spain)": "",
+        "German": "",
+        "Turkish": "",
+        "Russian": ""
+    },
+    "GAMEPLAY_BadDreamDescription": {
+        "English": "A disturbing dream snaps you awake, your throughts racing and sleep refusing to return",
+        "French (France)": "Un mauvais rêve vous réveille en sursant, vos pensées s'emballent et le sommeil refuse de revenir",
+        "Spanish (Spain)": "",
+        "German": "",
+        "Turkish": "",
+        "Russian": ""
+    },
 
     "GAMEPLAY_OverconfidenceRiskName": {
         "English": "Overconfidence",

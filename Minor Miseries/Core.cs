@@ -5,17 +5,32 @@ using static Minor_Miseries.Afflictions.Splinter;
 using static Minor_Miseries.Afflictions.BackPain;
 using static Minor_Miseries.Afflictions.Blister;
 using static Minor_Miseries.Afflictions.Scratch;
+using static Minor_Miseries.Afflictions.BadDream;
 using AfflictionComponent.Components;
+using LocalizationUtilities;
 
-[assembly: MelonInfo(typeof(Minor_Miseries.Core), "Minor Miseries", "1.0.1", "EtherSystem", null)]
+[assembly: MelonInfo(typeof(Minor_Miseries.Core), "Minor Miseries", "1.1.0", "EtherSystem", null)]
 [assembly: MelonGame("Hinterland", "TheLongDark")]
 
 namespace Minor_Miseries
 {
     public class Core : MelonMod
     {
+        public static string? LoadEmbeddedJSON(string Localization)
+        {
+            string? result = null;
+
+            Stream? stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("Minor_Miseries.Resources.Localization.Localization.json");
+            if (stream != null)
+            {
+                StreamReader reader = new StreamReader(stream);
+                result = reader.ReadToEnd();
+            }
+            return result;
+        }
         public override void OnInitializeMelon()
         {
+            LocalizationManager.LoadJsonLocalization(LoadEmbeddedJSON("Localization.json"));
             LoggerInstance.Msg("Initialized.");
             Settings.OnLoad();
 
@@ -26,6 +41,7 @@ namespace Minor_Miseries
                 new BlisterAffliction(AfflictionBodyArea.FootLeft).Start();
                 new BackPainAffliction(AfflictionBodyArea.Chest).Start();
                 new ScratchAffliction(AfflictionBodyArea.Chest).Start();
+                new BadDreamAffliction(AfflictionBodyArea.Head).Start();
             }));
 
             uConsole.RegisterCommand("mm_afflictions_cure", new Action(() =>
@@ -38,7 +54,7 @@ namespace Minor_Miseries
                     var a = mgr.m_Afflictions[i];
                     if (a == null) continue;
 
-                    if (a is SplinterAffliction || a is StuckFoodAffliction || a is BlisterAffliction || a is BackPainAffliction || a is ScratchAffliction)
+                    if (a is SplinterAffliction || a is StuckFoodAffliction || a is BlisterAffliction || a is BackPainAffliction || a is ScratchAffliction || a is BadDreamAffliction)
                     {
                         a.Cure();
                     }
@@ -77,6 +93,8 @@ namespace Minor_Miseries
         private float hoursSinceLastAffliction = 0f;
         private float hoursSpentMoving = 0f;
         private float hoursOverloaded = 0f;
+        private bool wasResting = false;
+        private float badDreamRollTimer = 0f;
         private const float CONF_THRESHOLD_HOURS = 96f;
         private const float BLIST_THRESHOLD_HOURS = 4f;
         private const float OVERC_BLIST_THRESHOLD_HOURS = 3f;
@@ -84,6 +102,9 @@ namespace Minor_Miseries
         private const float OVERC_BACKPAIN_TRESHOLD_HOURS = 0.5f;
         private const float STUCKFOOD_CHANCE = 5f;
         private const float OVERC_STUCKFOOD_CHANCE = 10f;
+        private const float BAD_DREAM_CHANCE = 4f;
+        private const float OVERC_BAD_DREAM_CHANCE = 8f;
+        private const float BAD_DREAM_ROLL_EVERY = 1f;
         private bool hadAfflictionLastTick = false;
         private bool wasEating = false;
 
@@ -209,6 +230,41 @@ namespace Minor_Miseries
                     new BackPainAffliction(AfflictionBodyArea.Chest).Start();
                     hoursOverloaded = 0f;
                 }
+            }
+
+            //bad dream
+            if (Settings.options.IsBadDream)
+            {
+                var rest = GameManager.GetRestComponent();
+                if (rest == null) return;
+
+                bool isSleeping = rest.IsSleeping();
+
+                if (isSleeping)
+                {
+                    badDreamRollTimer += realTimeElapsed;
+
+                    if (badDreamRollTimer >= BAD_DREAM_ROLL_EVERY)
+                    {
+                        badDreamRollTimer = 0f;
+                        float chance = IsOvercActive
+                            ? OVERC_BAD_DREAM_CHANCE
+                            : BAD_DREAM_CHANCE;
+
+                        float roll = UnityEngine.Random.Range(0f, 100f);
+                        if (roll < chance)
+                        {
+                            rest.m_InterruptionAfterSecondsSleeping = 1;
+                            new BadDreamAffliction(AfflictionBodyArea.Head).Start();
+                            HUDMessage.AddMessage(Localization.Get("GAMEPLAY_BadDreamWakeup"), 4, false);
+                        }
+                    }
+                }
+                else
+                {
+                    badDreamRollTimer = 0f;
+                }
+                wasResting = isSleeping;
             }
 
             //overconfidence

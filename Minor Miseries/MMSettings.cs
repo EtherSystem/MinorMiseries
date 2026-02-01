@@ -27,6 +27,10 @@ namespace Minor_Miseries
         [Description("base = yes")]
         public bool IsScratch = true;
 
+        [Name("Bad Dream")]
+        [Description("base = yes")]
+        public bool IsBadDream = true;
+
         [Name("Overconfidence")]
         [Description("base = yes")]
         public bool IsOverconfidence = true;
@@ -57,6 +61,11 @@ namespace Minor_Miseries
         [Description("base = 40 hours")]
         [Slider(1, 48, 48)]
         public float ScratchDuration = 40f;
+
+        [Name("Bad Dream duration")]
+        [Description("base = 0.25 hour (15min)")]
+        [Slider (0.1f, 1f, 60)]
+        public float BadDreamDuration = 0.25f;
 
         protected override void OnConfirm()
         {
