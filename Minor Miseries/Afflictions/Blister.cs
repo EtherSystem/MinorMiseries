@@ -1,6 +1,7 @@
 ﻿using AfflictionComponent.Components;
-using AfflictionComponent.Interfaces;
 using AfflictionComponent.Enums;
+using AfflictionComponent.Interfaces;
+using static Minor_Miseries.Afflictions.Overconfidence;
 
 namespace Minor_Miseries.Afflictions
 {
@@ -8,7 +9,6 @@ namespace Minor_Miseries.Afflictions
     {
         public class BlisterAffliction : CustomAffliction, IDuration, IRemedies, IInstance
         {
-            private static readonly bool IsOvercActive = Overconfidence.OverconfidenceAffliction.IsOvercActive;
             public InstanceType Type { get; set; } = InstanceType.Single;
             public void OnFoundExistingInstance(CustomAffliction existingAffliction)
             {
@@ -61,7 +61,7 @@ namespace Minor_Miseries.Afflictions
                     var pm = GameManager.GetPlayerManagerComponent();
                     if (IsBlisterActive && (pm.PlayerIsClimbing() || pm.PlayerIsSprinting() || pm.PlayerIsWalking() || pm.PlayerIsCrouched()))
                     {
-                        if (IsOvercActive)
+                        if (OverconfidenceAffliction.IsOvercActive)
                         {
                             __result *= 0.8f;
                         }

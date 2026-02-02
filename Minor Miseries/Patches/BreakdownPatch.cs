@@ -1,4 +1,5 @@
-﻿using static Minor_Miseries.Afflictions.Splinter;
+﻿using static Minor_Miseries.Afflictions.Overconfidence;
+using static Minor_Miseries.Afflictions.Splinter;
 using Random = UnityEngine.Random;
 
 namespace Minor_Miseries.Patches
@@ -7,7 +8,6 @@ namespace Minor_Miseries.Patches
     {
         public static float BASE_SPLINTER_CHANCE = 10f;
         public static float OVERC_SPLINTER_CHANCE = 20f;
-        private static readonly bool IsOvercActive = Afflictions.Overconfidence.OverconfidenceAffliction.IsOvercActive;
 
         [HarmonyPatch(typeof(Panel_BreakDown), nameof(Panel_BreakDown.OnBreakDown))]
         internal static class OnBreakDownPatch
@@ -18,14 +18,14 @@ namespace Minor_Miseries.Patches
                 if (Settings.options.IsSplinter && noGloves)
                 {
                     float roll = Random.Range(0f, 100f);
-                    if (IsOvercActive)
+                    if (OverconfidenceAffliction.IsOvercActive)
                     {
                         if (roll < OVERC_SPLINTER_CHANCE)
                         {
                             var side = Random.Range(0, 2) == 0
                                 ? AfflictionBodyArea.HandLeft : AfflictionBodyArea.HandRight;
                             //MelonLogger.Msg("an overconfidente splinter has been applied");
-                            new SplinterAffliction(side).Start();
+                            new SplinterAffliction(AfflictionBodyArea.HandLeft).Start();
                         }
                     }
                     else
@@ -35,7 +35,7 @@ namespace Minor_Miseries.Patches
                             var side = Random.Range(0, 2) == 0
                                 ? AfflictionBodyArea.HandLeft : AfflictionBodyArea.HandRight;
                             //MelonLogger.Msg("a splinter has been applied");
-                            new SplinterAffliction(side).Start();
+                            new SplinterAffliction(AfflictionBodyArea.HandRight).Start();
                         }
                     }
                 }

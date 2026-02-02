@@ -1,7 +1,8 @@
 ﻿using AfflictionComponent.Components;
-using AfflictionComponent.Interfaces;
 using AfflictionComponent.Enums;
+using AfflictionComponent.Interfaces;
 using Il2CppTLD.IntBackedUnit;
+using static Minor_Miseries.Afflictions.Overconfidence;
 
 namespace Minor_Miseries.Afflictions
 {
@@ -9,7 +10,6 @@ namespace Minor_Miseries.Afflictions
     {
         public class BackPainAffliction : CustomAffliction, IDuration, IInstance, IRemedies
         {
-            private static readonly bool IsOvercActive = Overconfidence.OverconfidenceAffliction.IsOvercActive;
             public InstanceType Type { get; set; } = InstanceType.Single;
             public void OnFoundExistingInstance(CustomAffliction existingAffliction)
             {
@@ -64,7 +64,7 @@ namespace Minor_Miseries.Afflictions
             {
                 if (IsBackPainActive)
                 {
-                    if (IsOvercActive)
+                    if (OverconfidenceAffliction.IsOvercActive)
                     {
                         encumber.m_MaxCarryCapacity = ItemWeight.FromKilograms(30f - 7.5f);
                         encumber.m_MaxCarryCapacityWhenExhausted = ItemWeight.FromKilograms(15f - 7.5f);

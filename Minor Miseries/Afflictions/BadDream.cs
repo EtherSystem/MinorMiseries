@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AfflictionComponent.Components;
-using AfflictionComponent.Enums;
+﻿using AfflictionComponent.Components;
 using AfflictionComponent.Interfaces;
+using AfflictionComponent.Enums;
 
 namespace Minor_Miseries.Afflictions
 {

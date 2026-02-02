@@ -40,6 +40,12 @@ namespace Minor_Miseries.Afflictions
 
             public override void OnUpdate()
             {
+                var firstAid = InterfaceManager.GetPanel<Panel_FirstAid>();
+                if (firstAid != null && firstAid.isActiveAndEnabled)
+                {
+                    return;
+                }
+
                 IsOvercActive = true;
                 var cond = GameManager.GetConditionComponent();
                 bool hasAffliction = (cond != null && cond.HasAffliction());

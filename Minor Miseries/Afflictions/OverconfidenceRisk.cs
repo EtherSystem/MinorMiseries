@@ -2,6 +2,7 @@
 using AfflictionComponent.Components;
 using AfflictionComponent.Interfaces;
 using AfflictionComponent.Enums;
+using System.Collections;
 
 namespace Minor_Miseries.Afflictions
 {
@@ -9,7 +10,8 @@ namespace Minor_Miseries.Afflictions
     {
         public class OverconfidenceRiskAffliction : CustomAffliction, IRemedies, IInstance, IRiskPercentage
         {
-            private static readonly bool IsOvercActive = Overconfidence.OverconfidenceAffliction.IsOvercActive;
+            private static bool IsOvercActive => OverconfidenceAffliction.IsOvercActive;
+
             public InstanceType Type { get; set; } = InstanceType.Single;
             public void OnFoundExistingInstance(CustomAffliction existingAffliction)
             {
@@ -44,7 +46,17 @@ namespace Minor_Miseries.Afflictions
 
             public override void OnUpdate()
             {
-                if (Risk)
+                var firstAid = InterfaceManager.GetPanel<Panel_FirstAid>();
+                if (firstAid != null && firstAid.isActiveAndEnabled)
+                {
+                    return;
+                }
+
+                if (!Risk)
+                { 
+                    return;
+                }
+                else if (Risk)
                 {
                     var cond = GameManager.GetConditionComponent();
                     bool hasAffliction = (cond != null && cond.HasAffliction());
@@ -59,8 +71,7 @@ namespace Minor_Miseries.Afflictions
                     else if (GetRiskValue() >= 100)
                     {
                         Cure(false);
-                        var overconfidenceaff = new OverconfidenceAffliction(AfflictionBodyArea.Head);
-                        overconfidenceaff.Start();
+                        MelonCoroutines.Start(StartOverconfidenceNextFrame());
                         return;
                     }
                     else if (GetRiskValue() < 0f)
@@ -82,6 +93,12 @@ namespace Minor_Miseries.Afflictions
                 m_LastUpdateTime = currentTime;
 
                 // Mod.Logger.Log($"Risk for {m_AfflictionKey} increased to {m_RiskPercentage:F2}%", ComplexLogger.FlaggedLoggingLevel.Debug);
+            }
+
+            private IEnumerator StartOverconfidenceNextFrame()
+            {
+                yield return null;
+                new OverconfidenceAffliction(AfflictionBodyArea.Head).Start();
             }
         }
     }

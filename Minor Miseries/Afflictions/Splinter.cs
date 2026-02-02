@@ -1,6 +1,7 @@
 ﻿using AfflictionComponent.Components;
-using AfflictionComponent.Interfaces;
 using AfflictionComponent.Enums;
+using AfflictionComponent.Interfaces;
+using static Minor_Miseries.Afflictions.Overconfidence;
 
 namespace Minor_Miseries.Afflictions
 {
@@ -8,7 +9,6 @@ namespace Minor_Miseries.Afflictions
     {
         public class SplinterAffliction : CustomAffliction, IDuration, IRemedies, IInstance
         {
-            private static readonly bool IsOvercActive = Overconfidence.OverconfidenceAffliction.IsOvercActive;
             public InstanceType Type { get; set; } = InstanceType.Single;
             public void OnFoundExistingInstance(CustomAffliction existingAffliction)
             {
@@ -60,7 +60,7 @@ namespace Minor_Miseries.Afflictions
 
                     if (IsSplinterActive)
                     {
-                        if (IsOvercActive)
+                        if (OverconfidenceAffliction.IsOvercActive)
                         {
                             __result = (int)(__result * 1.2f);
                         }
@@ -81,7 +81,7 @@ namespace Minor_Miseries.Afflictions
                     var pm = GameManager.GetPlayerManagerComponent();
                     if (IsSplinterActive && (pm.PlayerIsClimbing()))
                     {
-                        if (IsOvercActive)
+                        if (OverconfidenceAffliction.IsOvercActive)
                         {
                             __result *= 0.8f;
                         }

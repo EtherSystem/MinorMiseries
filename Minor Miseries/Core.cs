@@ -9,7 +9,7 @@ using static Minor_Miseries.Afflictions.BadDream;
 using AfflictionComponent.Components;
 using LocalizationUtilities;
 
-[assembly: MelonInfo(typeof(Minor_Miseries.Core), "Minor Miseries", "1.1.0", "EtherSystem", null)]
+[assembly: MelonInfo(typeof(Minor_Miseries.Core), "Minor Miseries", "1.1.1", "EtherSystem", null)]
 [assembly: MelonGame("Hinterland", "TheLongDark")]
 
 namespace Minor_Miseries
@@ -34,6 +34,7 @@ namespace Minor_Miseries
             LoggerInstance.Msg("Initialized.");
             Settings.OnLoad();
 
+            //dev console commands
             uConsole.RegisterCommand("mm_afflictions", new Action(() =>
             {
                 new SplinterAffliction(AfflictionBodyArea.HandLeft).Start();
@@ -41,6 +42,36 @@ namespace Minor_Miseries
                 new BlisterAffliction(AfflictionBodyArea.FootLeft).Start();
                 new BackPainAffliction(AfflictionBodyArea.Chest).Start();
                 new ScratchAffliction(AfflictionBodyArea.Chest).Start();
+                new BadDreamAffliction(AfflictionBodyArea.Head).Start();
+            }));
+
+            uConsole.RegisterCommand("splinter", new Action(() =>
+            {
+                new SplinterAffliction(AfflictionBodyArea.HandLeft).Start();
+            }));
+
+            uConsole.RegisterCommand("stuckfood", new Action(() =>
+            {
+                new StuckFoodAffliction(AfflictionBodyArea.Head).Start();
+            }));
+
+            uConsole.RegisterCommand("blister", new Action(() =>
+            {
+                new BlisterAffliction(AfflictionBodyArea.FootLeft).Start();
+            }));
+
+            uConsole.RegisterCommand("backpain", new Action(() =>
+            {
+                new BackPainAffliction(AfflictionBodyArea.Chest).Start();
+            }));
+
+            uConsole.RegisterCommand("scratch", new Action(() =>
+            {
+                new ScratchAffliction(AfflictionBodyArea.Chest).Start();
+            }));
+
+            uConsole.RegisterCommand("baddream", new Action(() =>
+            {
                 new BadDreamAffliction(AfflictionBodyArea.Head).Start();
             }));
 
@@ -87,7 +118,6 @@ namespace Minor_Miseries
             }));
         }
 
-        private static readonly bool IsOvercActive = OverconfidenceAffliction.IsOvercActive;
         private readonly System.Random _random = new();
         private float updateTimer = 0f;
         private float hoursSinceLastAffliction = 0f;
@@ -95,7 +125,7 @@ namespace Minor_Miseries
         private float hoursOverloaded = 0f;
         private bool wasResting = false;
         private float badDreamRollTimer = 0f;
-        private const float CONF_THRESHOLD_HOURS = 96f;
+        private const float CONF_THRESHOLD_HOURS = 2f;
         private const float BLIST_THRESHOLD_HOURS = 4f;
         private const float OVERC_BLIST_THRESHOLD_HOURS = 3f;
         private const float BACKPAIN_TRESHOLD_HOURS = 1f;
@@ -139,7 +169,12 @@ namespace Minor_Miseries
             if (scene == "MainMenu" || scene == "Boot" || scene == "Empty") return;
 
             var cond = GameManager.GetConditionComponent();
-            var pm = GameManager.GetPlayerManagerComponent();
+
+            var firstAid = InterfaceManager.GetPanel<Panel_FirstAid>();
+            if (firstAid != null && firstAid.isActiveAndEnabled)
+            {
+                return;
+            }
 
             //clock
             updateTimer += Time.deltaTime;
@@ -175,7 +210,7 @@ namespace Minor_Miseries
             //stuck food
             if (Settings.options.IsStuckFood && wasEating && !isEating)
             {
-                if (IsOvercActive)
+                if (OverconfidenceAffliction.IsOvercActive)
                 {
                     float roll = UnityEngine.Random.Range(0f, 100f);
                     if (roll < OVERC_STUCKFOOD_CHANCE)
@@ -199,32 +234,32 @@ namespace Minor_Miseries
             //blister
             if (Settings.options.IsBlister)
             {
-                if (IsOvercActive && hoursSpentMoving >= OVERC_BLIST_THRESHOLD_HOURS)
+                if (OverconfidenceAffliction.IsOvercActive && hoursSpentMoving >= OVERC_BLIST_THRESHOLD_HOURS)
                 {
                     var side = _random.Next(0, 2) == 0
                         ? AfflictionBodyArea.FootLeft : AfflictionBodyArea.FootRight;
                     //MelonLogger.Msg("an overc blister appeared");
-                    new BlisterAffliction(side).Start();
+                    new BlisterAffliction(AfflictionBodyArea.FootLeft).Start();
                 }
-                else if (!IsOvercActive && hoursSpentMoving >= BLIST_THRESHOLD_HOURS)
+                else if (!OverconfidenceAffliction.IsOvercActive && hoursSpentMoving >= BLIST_THRESHOLD_HOURS)
                 {
                     var side = _random.Next(0, 2) == 0
                         ? AfflictionBodyArea.FootLeft : AfflictionBodyArea.FootRight;
                     //MelonLogger.Msg("a blister appeared");
-                    new BlisterAffliction(side).Start();
+                    new BlisterAffliction(AfflictionBodyArea.FootRight).Start();
                 }
             }
 
             //back pain
             if (Settings.options.IsBackPain)
             {
-                if (IsOvercActive && (hoursOverloaded >= OVERC_BACKPAIN_TRESHOLD_HOURS))
+                if (OverconfidenceAffliction.IsOvercActive && (hoursOverloaded >= OVERC_BACKPAIN_TRESHOLD_HOURS))
                 {
                     //MelonLogger.Msg("you have an overc back pain");
                     new BackPainAffliction(AfflictionBodyArea.Chest).Start();
                     hoursOverloaded = 0f;
                 }
-                else if (!IsOvercActive && (hoursOverloaded >= BACKPAIN_TRESHOLD_HOURS))
+                else if (!OverconfidenceAffliction.IsOvercActive && (hoursOverloaded >= BACKPAIN_TRESHOLD_HOURS))
                 {
                     //MelonLogger.Msg("you have back pain");
                     new BackPainAffliction(AfflictionBodyArea.Chest).Start();
@@ -247,7 +282,7 @@ namespace Minor_Miseries
                     if (badDreamRollTimer >= BAD_DREAM_ROLL_EVERY)
                     {
                         badDreamRollTimer = 0f;
-                        float chance = IsOvercActive
+                        float chance = OverconfidenceAffliction.IsOvercActive
                             ? OVERC_BAD_DREAM_CHANCE
                             : BAD_DREAM_CHANCE;
 
@@ -268,7 +303,7 @@ namespace Minor_Miseries
             }
 
             //overconfidence
-            if (Settings.options.IsOverconfidence && (hoursSinceLastAffliction >= CONF_THRESHOLD_HOURS) && (IsOvercActive == false))
+            if (Settings.options.IsOverconfidence && (hoursSinceLastAffliction >= CONF_THRESHOLD_HOURS) && (OverconfidenceAffliction.IsOvercActive == false))
             {
                 //MelonLogger.Msg("you are far too confident");
                 new OverconfidenceRiskAffliction(AfflictionBodyArea.Head).Start();

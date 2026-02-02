@@ -1,4 +1,5 @@
-﻿using static Minor_Miseries.Afflictions.Scratch;
+﻿using static Minor_Miseries.Afflictions.Overconfidence;
+using static Minor_Miseries.Afflictions.Scratch;
 using Random = UnityEngine.Random;
 
 namespace Minor_Miseries.Patches
@@ -7,7 +8,6 @@ namespace Minor_Miseries.Patches
     {
         public static float BASE_SUCCESS_SCRATCH_CHANCE = 10f;
         public static float OVERC_SUCCESS_SCRATCH_CHANCE = 20f;
-        private static readonly bool IsOvercActive = Afflictions.Overconfidence.OverconfidenceAffliction.IsOvercActive;
 
         [HarmonyPatch(typeof(Panel_Crafting), nameof(Panel_Crafting.OnCraftingSuccess))]
         internal static class OnCraftingSucessPatch
@@ -17,7 +17,7 @@ namespace Minor_Miseries.Patches
                 if (Settings.options.IsScratch)
                 {
                     float roll = Random.Range(0f, 100f);
-                    if (IsOvercActive)
+                    if (OverconfidenceAffliction.IsOvercActive)
                     {
                         if (roll < OVERC_SUCCESS_SCRATCH_CHANCE)
                         {
@@ -48,7 +48,7 @@ namespace Minor_Miseries.Patches
                 if (Settings.options.IsScratch)
                 {
                     float roll = Random.Range(0f, 100f);
-                    if (IsOvercActive)
+                    if (OverconfidenceAffliction.IsOvercActive)
                     {
                         if (roll < OVERC_INTERRUPTED_SCRATCH_CHANCE)
                         {
