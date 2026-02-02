@@ -9,7 +9,7 @@ using static Minor_Miseries.Afflictions.BadDream;
 using AfflictionComponent.Components;
 using LocalizationUtilities;
 
-[assembly: MelonInfo(typeof(Minor_Miseries.Core), "Minor Miseries", "1.1.1", "EtherSystem", null)]
+[assembly: MelonInfo(typeof(Minor_Miseries.Core), "Minor Miseries", "1.1.2", "EtherSystem", null)]
 [assembly: MelonGame("Hinterland", "TheLongDark")]
 
 namespace Minor_Miseries

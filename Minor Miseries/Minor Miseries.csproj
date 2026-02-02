@@ -44,6 +44,7 @@
 		<Compile Include="Afflictions\Scratch.cs" />
 		<Compile Include="Afflictions\Splinter.cs" />
 		<Compile Include="Afflictions\StuckFood.cs" />
+		<Compile Include="Patches\RepairOnCrashPatch.cs" />
 	</ItemGroup>
 
 	<ItemGroup>

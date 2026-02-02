@@ -1,8 +1,8 @@
-﻿using AfflictionComponent.Components;
-using AfflictionComponent.Enums;
+﻿using static Minor_Miseries.Afflictions.Overconfidence;
 using AfflictionComponent.Interfaces;
+using AfflictionComponent.Components;
+using AfflictionComponent.Enums;
 using Il2CppTLD.IntBackedUnit;
-using static Minor_Miseries.Afflictions.Overconfidence;
 
 namespace Minor_Miseries.Afflictions
 {

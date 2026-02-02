@@ -1,6 +1,6 @@
 ﻿using static Minor_Miseries.Afflictions.Overconfidence;
-using AfflictionComponent.Components;
 using AfflictionComponent.Interfaces;
+using AfflictionComponent.Components;
 using AfflictionComponent.Enums;
 using System.Collections;
 
