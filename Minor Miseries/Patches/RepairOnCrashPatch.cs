@@ -17,7 +17,7 @@
                 if (!_loggedOnce)
                 {
                     _loggedOnce = true;
-                    MelonLogger.Error($"[FirstAidRepair] ClearAfflictionsAtLocationArray crashed -> repairing. icons={icons} arrLen={arrLen} ({__exception.GetType().Name})");
+                    MelonLogger.Warning($"[MinorMiseries] ClearAfflictionsAtLocationArray crashed -> repairing. icons={icons} arrLen={arrLen} ({__exception.GetType().Name})");
                 }
 
                 if (__instance != null && icons > 0)
@@ -29,7 +29,7 @@
             }
             catch (Exception e)
             {
-                MelonLogger.Warning($"[FirstAidRepair] Repair failed: {e.GetType().Name} - {e.Message}");
+                MelonLogger.Error($"[MinorMiseries] Repair failed: {e.GetType().Name} - {e.Message}");
             }
 
             return null;

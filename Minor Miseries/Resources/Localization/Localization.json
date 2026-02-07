@@ -7,6 +7,14 @@
         "Turkish": "Kötü bir rüyanın etkisiyle aniden uyanıyorsunuz",
         "Russian": "Вы внезапно просыпаетесь, потрясенные кошмарным сном"
     },
+    "GAMEPLAY_BadDreamCantSleep": {
+        "English": "You are too shaken to fall back asleep",
+        "French (France)": "Vous êtes trop secoué pour vous rendormir",
+        "Spanish (Spain)": "Estás demasiado conmocionado para volver a dormirte",
+        "German": "Du bist zu erschüttert, um wieder einzuschlafen",
+        "Turkish": "O kadar sarsıldınız ki tekrar uyuyamıyorsunuz",
+        "Russian": "Вы слишком потрясены, чтобы снова заснуть"
+    },
     "GAMEPLAY_SplinterName": {
         "English": "Splinter",
         "French (France)": "Écharde",

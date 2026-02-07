@@ -21,6 +21,7 @@ namespace Minor_Miseries.Afflictions
             }
 
             private readonly float m_LastUpdateTime;
+            public static bool IsBadDreamActive { get; private set; }
             public float Duration { get; set; } = Settings.options.BadDreamDuration;
             public float EndTime { get; set; }
 
@@ -41,12 +42,25 @@ namespace Minor_Miseries.Afflictions
 
             public void OnCure()
             {
-                //when the affliction is cured, apply this code
+                IsBadDreamActive = false;
             }
 
             public override void OnUpdate()
             {
-                // yes theres no effects, its intended
+                IsBadDreamActive = true;
+            }
+
+            [HarmonyPatch(typeof(Panel_Rest), nameof(Panel_Rest.StartRest))]
+            internal static class BadDream_BlockRestPatch
+            {
+                private static bool Prefix()
+                {
+                    if (!IsBadDreamActive) return true;
+
+                    HUDMessage.AddMessage(Localization.Get("GAMEPLAY_BadDreamCantSleep"), 4, false);
+
+                    return false;
+                }
             }
         }
     }

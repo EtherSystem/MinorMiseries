@@ -5,27 +5,41 @@ namespace Minor_Miseries
 {
     internal class MMSettings : JsonModSettings
     {
-        [Section("Affliction Settings")]
+        [Section("Evolving Afflictions")]
 
         [Name("Splinter")]
         [Description("base = yes")]
         public bool IsSplinter = true;
 
-        [Name("Stuck food")]
-        [Description("base = yes")]
-        public bool IsStuckFood = true;
+        [Name("Sensitive Hand")]
+        [Description("base = yes - Requires Splinter")]
+        public bool IsSensi = true;
 
         [Name("Blister")]
         [Description("base = yes")]
         public bool IsBlister = true;
 
-        [Name("Back pain")]
-        [Description("base = yes")]
-        public bool IsBackPain = true;
+        [Name("Bare Skin")]
+        [Description("base = yes - Requires Blister")]
+        public bool IsBareSkin = true;
 
         [Name("Scratch")]
         [Description("base = yes")]
         public bool IsScratch = true;
+
+        [Name("Small Cut")]
+        [Description("base = yes - Requires Scratch")]
+        public bool IsSmallCut = true;
+
+        [Section("Afflictions")]
+
+        [Name("Stuck Food")]
+        [Description("base = yes")]
+        public bool IsStuckFood = true;
+
+        [Name("Back Pain")]
+        [Description("base = yes")]
+        public bool IsBackPain = true;
 
         [Name("Bad Dream")]
         [Description("base = yes")]
@@ -42,7 +56,12 @@ namespace Minor_Miseries
         [Slider(1, 48, 48)]
         public float SplinterDuration = 24f;
 
-        [Name("Stuck food duration")]
+        [Name("Sensitive Hand duration")]
+        [Description("base = 24 hours")]
+        [Slider(1, 48, 48)]
+        public float SensiDuration = 24f;
+
+        [Name("Stuck Food duration")]
         [Description("base = 2 hours")]
         [Slider(1, 48, 48)]
         public float StuckFoodDuration = 2f;
@@ -52,7 +71,12 @@ namespace Minor_Miseries
         [Slider(1, 48, 48)]
         public float BlisterDuration = 30f;
 
-        [Name("Back pain duration")]
+        [Name("Bare Skin duration")]
+        [Description("base = 48 hours")]
+        [Slider(1, 48, 48)]
+        public float BareSkinDuration = 48f;
+
+        [Name("Back Pain duration")]
         [Description("base = 6 hours")]
         [Slider(1, 48, 48)]
         public float BackPainDuration = 6f;
@@ -62,16 +86,31 @@ namespace Minor_Miseries
         [Slider(1, 48, 48)]
         public float ScratchDuration = 40f;
 
+        [Name("Small Cut duration")]
+        [Description("base = 48 hours")]
+        [Slider(1, 48, 48)]
+        public float SmallCutDuration = 48f;
+
         [Name("Bad Dream duration")]
-        [Description("base = 0.25 hour (15min)")]
-        [Slider (0.1f, 1f, 60)]
+        [Description("base = 0.25 hour (15 min)")]
+        [Slider(0.1f, 1f, 60)]
         public float BadDreamDuration = 0.25f;
 
-        protected override void OnConfirm()
+        protected override void OnChange(FieldInfo field, object oldValue, object newValue)
         {
+            if (field.Name == nameof(IsSplinter))
+                Settings.ToggleSplinter((bool)newValue);
+
+            if (field.Name == nameof(IsBlister))
+                Settings.ToggleBlister((bool)newValue);
+
+            if (field.Name == nameof(IsScratch))
+                Settings.ToggleScratch((bool)newValue);
+
             base.OnConfirm();
         }
     }
+
     internal static class Settings
     {
         public static MMSettings options;
@@ -79,7 +118,41 @@ namespace Minor_Miseries
         public static void OnLoad()
         {
             options = new MMSettings();
-            options.AddToModSettings("Minor_Miseries");
+            options.AddToModSettings("Minor Miseries");
+
+            ToggleSplinter(options.IsSplinter);
+            ToggleBlister(options.IsBlister);
+            ToggleScratch(options.IsScratch);
+        }
+
+        internal static void ToggleSplinter(bool enabled)
+        {
+            if (!enabled)
+            {
+                options.IsSensi = false;
+            }
+
+            options.SetFieldVisible(nameof(options.IsSensi), enabled);
+        }
+
+        internal static void ToggleBlister(bool enabled)
+        {
+            if (!enabled)
+            {
+                options.IsBareSkin = false;
+            }
+
+            options.SetFieldVisible(nameof(options.IsBareSkin), enabled);
+        }
+
+        internal static void ToggleScratch(bool enabled)
+        {
+            if (!enabled)
+            {
+                options.IsSmallCut = false;
+            }
+
+            options.SetFieldVisible(nameof(options.IsSmallCut), enabled);
         }
     }
 }

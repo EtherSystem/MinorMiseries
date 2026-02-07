@@ -1,6 +1,8 @@
 ﻿using static Minor_Miseries.Afflictions.Overconfidence;
-using AfflictionComponent.Interfaces;
+using static Minor_Miseries.Afflictions.BareSkin;
 using AfflictionComponent.Components;
+using AfflictionComponent.Interfaces;
+using Random = UnityEngine.Random;
 using AfflictionComponent.Enums;
 
 namespace Minor_Miseries.Afflictions
@@ -22,11 +24,16 @@ namespace Minor_Miseries.Afflictions
             }
 
             private readonly float m_LastUpdateTime;
+            public static float BLISTER_EVOLV_CHANCE = 60f;
+            private bool m_SymptomsCured = false;
             public static bool IsBlisterActive { get; private set; } = false;
             public float Duration { get; set; } = Settings.options.BlisterDuration;
             public float EndTime { get; set; }
 
-            public Tuple<string, int, int>[] RemedyItems { get; set; } = Array.Empty<Tuple<string, int, int>>();
+            public Tuple<string, int, int>[] RemedyItems { get; set; } =
+            {
+                Tuple.Create("GEAR_HeavyBandage", 1, 1)
+            };
             public Tuple<string, int, int>[] AltRemedyItems { get; set; } = Array.Empty<Tuple<string, int, int>>();
 
             public bool InstantHeal { get; set; } = false;
@@ -38,12 +45,18 @@ namespace Minor_Miseries.Afflictions
 
             public void CureSymptoms()
             {
-                //cure symptoms but not the affliction
+                m_SymptomsCured = true;
             }
 
             public void OnCure()
             {
                 IsBlisterActive = false;
+                float roll = Random.Range(0f, 100f);
+                if (!m_SymptomsCured && Settings.options.IsBareSkin && (roll < BLISTER_EVOLV_CHANCE))
+                {
+                    new BareSkinAffliction(AfflictionBodyArea.FootRight).Start();
+                }
+                m_SymptomsCured = false;
             }
 
             public override void OnUpdate()
@@ -58,8 +71,26 @@ namespace Minor_Miseries.Afflictions
                 {
                     if (!IsBlisterActive) return;
 
+                    var afflictionManager = AfflictionManager.GetAfflictionManagerInstance();
+                    if (afflictionManager == null || afflictionManager.m_Afflictions == null) return;
+
+                    BlisterAffliction activeBlisterAffliction = null;
+
+                    foreach (var affliction in afflictionManager.m_Afflictions)
+                    {
+                        if (affliction is BlisterAffliction blisterAffliction)
+                        {
+                            activeBlisterAffliction = blisterAffliction;
+                            break;
+                        }
+                    }
+
+                    if (activeBlisterAffliction == null || activeBlisterAffliction.m_SymptomsCured) return;
+
                     var pm = GameManager.GetPlayerManagerComponent();
-                    if (IsBlisterActive && (pm.PlayerIsClimbing() || pm.PlayerIsSprinting() || pm.PlayerIsWalking() || pm.PlayerIsCrouched()))
+                    if (pm == null) return;
+
+                    if (pm.PlayerIsClimbing() || pm.PlayerIsSprinting() || pm.PlayerIsWalking() || pm.PlayerIsCrouched())
                     {
                         if (OverconfidenceAffliction.IsOvercActive)
                         {

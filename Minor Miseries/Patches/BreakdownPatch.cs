@@ -22,8 +22,6 @@ namespace Minor_Miseries.Patches
                     {
                         if (roll < OVERC_SPLINTER_CHANCE)
                         {
-                            var side = Random.Range(0, 2) == 0
-                                ? AfflictionBodyArea.HandLeft : AfflictionBodyArea.HandRight;
                             //MelonLogger.Msg("an overconfidente splinter has been applied");
                             new SplinterAffliction(AfflictionBodyArea.HandLeft).Start();
                         }
@@ -32,10 +30,8 @@ namespace Minor_Miseries.Patches
                     {
                         if (roll < BASE_SPLINTER_CHANCE)
                         {
-                            var side = Random.Range(0, 2) == 0
-                                ? AfflictionBodyArea.HandLeft : AfflictionBodyArea.HandRight;
                             //MelonLogger.Msg("a splinter has been applied");
-                            new SplinterAffliction(AfflictionBodyArea.HandRight).Start();
+                            new SplinterAffliction(AfflictionBodyArea.HandLeft).Start();
                         }
                     }
                 }

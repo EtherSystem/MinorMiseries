@@ -1,15 +1,18 @@
 ﻿using static Minor_Miseries.Afflictions.OverconfidenceRisk;
 using static Minor_Miseries.Afflictions.Overconfidence;
+using static Minor_Miseries.Afflictions.SensitiveHand;
 using static Minor_Miseries.Afflictions.StuckFood;
 using static Minor_Miseries.Afflictions.Splinter;
 using static Minor_Miseries.Afflictions.BackPain;
+using static Minor_Miseries.Afflictions.BadDream;
+using static Minor_Miseries.Afflictions.BareSkin;
+using static Minor_Miseries.Afflictions.SmallCut;
 using static Minor_Miseries.Afflictions.Blister;
 using static Minor_Miseries.Afflictions.Scratch;
-using static Minor_Miseries.Afflictions.BadDream;
 using AfflictionComponent.Components;
 using LocalizationUtilities;
 
-[assembly: MelonInfo(typeof(Minor_Miseries.Core), "Minor Miseries", "1.1.2", "EtherSystem", null)]
+[assembly: MelonInfo(typeof(Minor_Miseries.Core), "Minor Miseries", "1.2.0", "EtherSystem", null)]
 [assembly: MelonGame("Hinterland", "TheLongDark")]
 
 namespace Minor_Miseries
@@ -43,6 +46,9 @@ namespace Minor_Miseries
                 new BackPainAffliction(AfflictionBodyArea.Chest).Start();
                 new ScratchAffliction(AfflictionBodyArea.Chest).Start();
                 new BadDreamAffliction(AfflictionBodyArea.Head).Start();
+                new SensitiveHandAffliction(AfflictionBodyArea.HandLeft).Start();
+                new BareSkinAffliction(AfflictionBodyArea.FootRight).Start();
+                new SmallCutAffliction(AfflictionBodyArea.Chest).Start();
             }));
 
             uConsole.RegisterCommand("splinter", new Action(() =>
@@ -75,6 +81,21 @@ namespace Minor_Miseries
                 new BadDreamAffliction(AfflictionBodyArea.Head).Start();
             }));
 
+            uConsole.RegisterCommand("sensitivehand", new Action(() =>
+            {
+                new SensitiveHandAffliction(AfflictionBodyArea.HandLeft).Start();
+            }));
+
+            uConsole.RegisterCommand("bareskin", new Action(() =>
+            {
+                new BareSkinAffliction(AfflictionBodyArea.FootRight).Start();
+            }));
+
+            uConsole.RegisterCommand("smallcut", new Action(() =>
+            {
+                new SmallCutAffliction(AfflictionBodyArea.Chest).Start();
+            }));
+
             uConsole.RegisterCommand("mm_afflictions_cure", new Action(() =>
             {
                 var mgr = AfflictionManager.GetAfflictionManagerInstance();
@@ -85,7 +106,15 @@ namespace Minor_Miseries
                     var a = mgr.m_Afflictions[i];
                     if (a == null) continue;
 
-                    if (a is SplinterAffliction || a is StuckFoodAffliction || a is BlisterAffliction || a is BackPainAffliction || a is ScratchAffliction || a is BadDreamAffliction)
+                    if (a is SplinterAffliction
+                    || a is StuckFoodAffliction
+                    || a is BlisterAffliction
+                    || a is BackPainAffliction
+                    || a is ScratchAffliction
+                    || a is BadDreamAffliction
+                    || a is SensitiveHandAffliction
+                    || a is BareSkinAffliction
+                    || a is SmallCutAffliction)
                     {
                         a.Cure();
                     }
@@ -125,7 +154,7 @@ namespace Minor_Miseries
         private float hoursOverloaded = 0f;
         private bool wasResting = false;
         private float badDreamRollTimer = 0f;
-        private const float CONF_THRESHOLD_HOURS = 2f;
+        private const float CONF_THRESHOLD_HOURS = 96f;
         private const float BLIST_THRESHOLD_HOURS = 4f;
         private const float OVERC_BLIST_THRESHOLD_HOURS = 3f;
         private const float BACKPAIN_TRESHOLD_HOURS = 1f;
@@ -137,6 +166,9 @@ namespace Minor_Miseries
         private const float BAD_DREAM_ROLL_EVERY = 1f;
         private bool hadAfflictionLastTick = false;
         private bool wasEating = false;
+        private bool wasInStruggle = false;
+        private float hoursSinceLastAnimalAttack = float.PositiveInfinity;
+        private const float BAD_DREAM_ATTACK_WINDOW_HOURS = 24f;
 
         public static bool HasAnyOtherCustomAfflictionThan(Type ignoredType1, Type ignoredType2)
         {
@@ -183,6 +215,22 @@ namespace Minor_Miseries
             updateTimer = 0f;
             float gameHoursPassed = GameManager.GetTimeOfDayComponent().GetTODHours(realTimeElapsed);
             if (cond == null) return;
+
+            //bad dream conditions
+            var struggle = GameManager.GetPlayerStruggleComponent();
+            bool inStruggle = struggle != null && struggle.InStruggle();
+
+            if (inStruggle && !wasInStruggle)
+            {
+                hoursSinceLastAnimalAttack = 0f;
+            }
+            else
+            {
+                if (!float.IsPositiveInfinity(hoursSinceLastAnimalAttack))
+                    hoursSinceLastAnimalAttack += gameHoursPassed;
+            }
+            wasInStruggle = inStruggle;
+
 
             //StuckFood conditions
             var hunger = GameManager.GetHungerComponent();
@@ -236,15 +284,11 @@ namespace Minor_Miseries
             {
                 if (OverconfidenceAffliction.IsOvercActive && hoursSpentMoving >= OVERC_BLIST_THRESHOLD_HOURS)
                 {
-                    var side = _random.Next(0, 2) == 0
-                        ? AfflictionBodyArea.FootLeft : AfflictionBodyArea.FootRight;
                     //MelonLogger.Msg("an overc blister appeared");
-                    new BlisterAffliction(AfflictionBodyArea.FootLeft).Start();
+                    new BlisterAffliction(AfflictionBodyArea.FootRight).Start();
                 }
                 else if (!OverconfidenceAffliction.IsOvercActive && hoursSpentMoving >= BLIST_THRESHOLD_HOURS)
                 {
-                    var side = _random.Next(0, 2) == 0
-                        ? AfflictionBodyArea.FootLeft : AfflictionBodyArea.FootRight;
                     //MelonLogger.Msg("a blister appeared");
                     new BlisterAffliction(AfflictionBodyArea.FootRight).Start();
                 }
@@ -277,21 +321,28 @@ namespace Minor_Miseries
 
                 if (isSleeping)
                 {
-                    badDreamRollTimer += realTimeElapsed;
+                    bool attackedRecently = hoursSinceLastAnimalAttack <= BAD_DREAM_ATTACK_WINDOW_HOURS;
 
-                    if (badDreamRollTimer >= BAD_DREAM_ROLL_EVERY)
+                    if (!attackedRecently)
                     {
                         badDreamRollTimer = 0f;
-                        float chance = OverconfidenceAffliction.IsOvercActive
-                            ? OVERC_BAD_DREAM_CHANCE
-                            : BAD_DREAM_CHANCE;
+                    }
+                    else
+                    {
+                        badDreamRollTimer += realTimeElapsed;
 
-                        float roll = UnityEngine.Random.Range(0f, 100f);
-                        if (roll < chance)
+                        if (badDreamRollTimer >= BAD_DREAM_ROLL_EVERY)
                         {
-                            rest.m_InterruptionAfterSecondsSleeping = 1;
-                            new BadDreamAffliction(AfflictionBodyArea.Head).Start();
-                            HUDMessage.AddMessage(Localization.Get("GAMEPLAY_BadDreamWakeup"), 4, false);
+                            badDreamRollTimer = 0f;
+                            float chance = OverconfidenceAffliction.IsOvercActive ? OVERC_BAD_DREAM_CHANCE : BAD_DREAM_CHANCE;
+
+                            float roll = UnityEngine.Random.Range(0f, 100f);
+                            if (roll < chance)
+                            {
+                                rest.m_InterruptionAfterSecondsSleeping = 1;
+                                new BadDreamAffliction(AfflictionBodyArea.Head).Start();
+                                HUDMessage.AddMessage(Localization.Get("GAMEPLAY_BadDreamWakeup"), 4, false);
+                            }
                         }
                     }
                 }

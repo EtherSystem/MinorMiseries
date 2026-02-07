@@ -1,6 +1,8 @@
 ﻿using static Minor_Miseries.Afflictions.Overconfidence;
+using static Minor_Miseries.Afflictions.SensitiveHand;
 using AfflictionComponent.Interfaces;
 using AfflictionComponent.Components;
+using Random = UnityEngine.Random;
 using AfflictionComponent.Enums;
 
 namespace Minor_Miseries.Afflictions
@@ -22,6 +24,7 @@ namespace Minor_Miseries.Afflictions
             }
 
             private readonly float m_LastUpdateTime;
+            public static float SPLINTER_EVOLV_CHANCE = 50f;
             public static bool IsSplinterActive { get; private set; } = false;
             public float Duration { get; set; } = Settings.options.SplinterDuration;
             public float EndTime { get; set; }
@@ -44,6 +47,11 @@ namespace Minor_Miseries.Afflictions
             public void OnCure()
             {
                 IsSplinterActive = false;
+                float roll = Random.Range(0f, 100f);
+                if (Settings.options.IsSensi && (roll < SPLINTER_EVOLV_CHANCE))
+                {
+                    new SensitiveHandAffliction(AfflictionBodyArea.HandLeft).Start();
+                }
             }
 
             public override void OnUpdate()
