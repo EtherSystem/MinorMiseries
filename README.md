@@ -4,17 +4,23 @@ These afflictions are not fatal, but they accumulate, are easily forgotten... an
 
 The mod adds the following afflictions :
 
-- Blister: Appears after prolonged exertion, slightly reduces mobility.
+- Blister: Appears after prolonged exertion, slightly reduces mobility (can evolve into Bare Skin).
 
-- Splinter: Can occur during manual actions without protection, reduces crafting and climbing speed.
+- Bare Skin: Can develops from an untreated blister, representing worn and exposed skin that causes stronger movement penalties and carries a risk of infection.
 
-- Scratch: Can occur while the player is crafting, reduces crafting speed.
-
-- Back Pain: Occurs if the player is encumbered for too long, reduces carrying capacity.
+- Splinter: Can occur during manual actions without protection, reduces crafting and climbing speed (can evolve into Sensitive Hand).
+  
+- Sensitive Hand: Develops from an untreated splinter, making fine manual tasks more difficult and further reducing crafting and climbing efficiency.
+  
+- Scratch: Can occur while the player is crafting, reduces crafting speed (can evolve into Small Cut).
+  
+- Small Cut: Can develops from an untreated scratch, introducing a risk of infection if ignored for too long.
+  
+- Back Pain: Occurs if the player is encumbered for too long, reduces carrying capacity. Back Pain currently overrides carry capacity values and may conflict with mods that also modify carry weight (such as Universal Tweaks).
 
 - Food Stuck: Can occur after the player eats, extremely uncomfortable.
   
-- Bad Dream: Can occur while sleeping, abruptly waking the player and disrupting rest.
+- Bad Dream: Can occur during sleep if the player has recently been attacked by wildlife, abruptly waking them and disrupting their rest.
 
 If the player goes too long without suffering any afflictions, they develop a risk of Overconfidence, which, if it reaches its limit, evolves into Overconfidence.
 
