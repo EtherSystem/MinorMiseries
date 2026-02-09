@@ -2,17 +2,17 @@
 using static Minor_Miseries.Afflictions.Overconfidence;
 using static Minor_Miseries.Afflictions.SensitiveHand;
 using static Minor_Miseries.Afflictions.StuckFood;
+using static Minor_Miseries.Afflictions.SmallCut;
 using static Minor_Miseries.Afflictions.Splinter;
 using static Minor_Miseries.Afflictions.BackPain;
 using static Minor_Miseries.Afflictions.BadDream;
 using static Minor_Miseries.Afflictions.BareSkin;
-using static Minor_Miseries.Afflictions.SmallCut;
 using static Minor_Miseries.Afflictions.Blister;
 using static Minor_Miseries.Afflictions.Scratch;
 using AfflictionComponent.Components;
 using LocalizationUtilities;
 
-[assembly: MelonInfo(typeof(Minor_Miseries.Core), "Minor Miseries", "1.2.0", "EtherSystem", null)]
+[assembly: MelonInfo(typeof(Minor_Miseries.Core), "Minor Miseries", "1.2.1", "EtherSystem", null)]
 [assembly: MelonGame("Hinterland", "TheLongDark")]
 
 namespace Minor_Miseries
