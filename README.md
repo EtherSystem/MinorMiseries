@@ -16,7 +16,7 @@ The mod adds the following afflictions :
   
 - Small Cut: Can develops from an untreated scratch, introducing a risk of infection if ignored for too long.
   
-- Back Pain: Occurs if the player is encumbered for too long, reduces carrying capacity.
+- Back Pain: Occurs if the player is encumbered for too long, reduces carrying capacity. Back Pain currently overrides carry capacity values and may conflict with mods that also modify carry weight (such as Universal Tweaks).
 
 - Food Stuck: Can occur after the player eats, extremely uncomfortable.
   
