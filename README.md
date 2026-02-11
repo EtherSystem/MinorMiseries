@@ -22,6 +22,10 @@ The mod adds the following afflictions :
   
 - Bad Dream: Can occur during sleep if the player has recently been attacked by wildlife, abruptly waking them and disrupting their rest.
 
+- Wrist Trauma: Can occur when firing a revolver with low skill. Reduces crafting speed, rope climbing speed, and shortens maximum rifle aim duration.
+
+- Shoulder Trauma: Can occur when firing a rifle with low skill. Reduces crafting speed, rope climbing speed, and shortens maximum rifle aim duration.
+
 If the player goes too long without suffering any afflictions, they develop a risk of Overconfidence, which, if it reaches its limit, evolves into Overconfidence.
 
 As long as Overconfidence is present, the probabilities of all other afflictions are increased, as well as the severity of the first one triggered.
