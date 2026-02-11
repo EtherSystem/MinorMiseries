@@ -57,7 +57,7 @@ namespace Minor_Miseries.Afflictions
             {
                 private static void Postfix(Encumber __instance)
                 {
-                    if (!BackPainAffliction.IsBackPainActive) return;
+                    if (!IsBackPainActive) return;
 
                     EncumberUpdate(__instance);
                 }

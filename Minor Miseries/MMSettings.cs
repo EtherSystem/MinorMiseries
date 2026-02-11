@@ -45,6 +45,14 @@ namespace Minor_Miseries
         [Description("base = yes")]
         public bool IsBadDream = true;
 
+        [Name("Wrist Trauma")]
+        [Description("base = yes")]
+        public bool IsWristRecoil = true;
+
+        [Name("Shoulder Trauma")]
+        [Description("base = yes")]
+        public bool IsShoulderRecoil = true;
+
         [Name("Overconfidence")]
         [Description("base = yes")]
         public bool IsOverconfidence = true;
@@ -90,6 +98,16 @@ namespace Minor_Miseries
         [Description("base = 48 hours")]
         [Slider(1, 48, 48)]
         public float SmallCutDuration = 48f;
+
+        [Name("Wrist Recoil Injury duration")]
+        [Description("base = 50 hours")]
+        [Slider(1, 50, 50)]
+        public float WristRecoilDuration = 50f;
+
+        [Name("Shoulder Recoil Injury duration")]
+        [Description("base = 60 hours")]
+        [Slider(1, 60, 60)]
+        public float ShoulderRecoilDuration = 60f;
 
         [Name("Bad Dream duration")]
         [Description("base = 0.25 hour (15 min)")]

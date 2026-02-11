@@ -1,4 +1,6 @@
-﻿using static Minor_Miseries.Afflictions.OverconfidenceRisk;
+﻿using static Minor_Miseries.Afflictions.ShoulderRecoilTrauma;
+using static Minor_Miseries.Afflictions.OverconfidenceRisk;
+using static Minor_Miseries.Afflictions.WristRecoilTrauma;
 using static Minor_Miseries.Afflictions.Overconfidence;
 using static Minor_Miseries.Afflictions.SensitiveHand;
 using static Minor_Miseries.Afflictions.StuckFood;
@@ -96,6 +98,16 @@ namespace Minor_Miseries
                 new SmallCutAffliction(AfflictionBodyArea.Chest).Start();
             }));
 
+            uConsole.RegisterCommand("wristrecoil", new Action(() =>
+            {
+                new WristRecoilInjuryAffliction(AfflictionBodyArea.HandRight).Start();
+            }));
+
+            uConsole.RegisterCommand("shoulderrecoil", new Action(() =>
+            {
+                new ShoulderRecoilInjuryAffliction(AfflictionBodyArea.Chest).Start();
+            }));
+
             uConsole.RegisterCommand("mm_afflictions_cure", new Action(() =>
             {
                 var mgr = AfflictionManager.GetAfflictionManagerInstance();
@@ -114,7 +126,9 @@ namespace Minor_Miseries
                     || a is BadDreamAffliction
                     || a is SensitiveHandAffliction
                     || a is BareSkinAffliction
-                    || a is SmallCutAffliction)
+                    || a is SmallCutAffliction
+                    || a is WristRecoilInjuryAffliction
+                    || a is ShoulderRecoilInjuryAffliction)
                     {
                         a.Cure();
                     }
