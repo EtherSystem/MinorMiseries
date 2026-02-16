@@ -20,7 +20,6 @@ namespace Minor_Miseries.Afflictions
                 }
             }
 
-            private readonly float m_LastUpdateTime;
             public static bool IsSensiActive { get; private set; } = false;
             public float Duration { get; set; } = Settings.options.SensiDuration;
             public float EndTime { get; set; }
@@ -32,7 +31,6 @@ namespace Minor_Miseries.Afflictions
 
             public SensitiveHandAffliction(AfflictionBodyArea bodyArea) : base("Sensitive Hand", "Local inflammation", "The splinter in your hand has caused irritation, your hand remains sensitive and easily irritated, making your actions more difficult.", null, "ico_injury_sprainedWrist", bodyArea) //customsprite :Minor_Miseries.Resources.Icons.StuckFood.png
             {
-                m_LastUpdateTime = GameManager.GetTimeOfDayComponent().GetHoursPlayedNotPaused();
             }
 
             public void CureSymptoms()

@@ -23,7 +23,6 @@ namespace Minor_Miseries.Afflictions
                 }
             }
 
-            private readonly float m_LastUpdateTime;
             public static float BLISTER_EVOLV_CHANCE = 60f;
             private bool m_SymptomsCured = false;
             public static bool IsBlisterActive { get; private set; } = false;
@@ -40,7 +39,6 @@ namespace Minor_Miseries.Afflictions
 
             public BlisterAffliction(AfflictionBodyArea bodyArea) : base("Blister", "Walked for too long", "You have made a sustained effort for too long", null, "ico_injury_sprainedAnkle", bodyArea) //customsprite :Minor_Miseries.Resources.Icons.Blister.png
             {
-                m_LastUpdateTime = GameManager.GetTimeOfDayComponent().GetHoursPlayedNotPaused();
             }
 
             public void CureSymptoms()

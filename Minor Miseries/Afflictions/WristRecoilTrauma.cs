@@ -21,7 +21,6 @@ namespace Minor_Miseries.Afflictions
                 }
             }
 
-            private readonly float m_LastUpdateTime;
             public static bool IsWristRecoilActive { get; private set; } = false;
             public float Duration { get; set; } = Settings.options.WristRecoilDuration;
             public float EndTime { get; set; }
@@ -33,7 +32,6 @@ namespace Minor_Miseries.Afflictions
 
             public WristRecoilInjuryAffliction(AfflictionBodyArea bodyArea) : base("Wrist Trauma", "Weapon recoil", "The recoil hurt your wrist. Aiming and handling the weapon is more difficult.", null, "ico_injury_pain", bodyArea) //customsprite :Minor_Miseries.Resources.Icons.Splinter.png
             {
-                m_LastUpdateTime = GameManager.GetTimeOfDayComponent().GetHoursPlayedNotPaused();
             }
 
             public void CureSymptoms()
@@ -59,6 +57,7 @@ namespace Minor_Miseries.Afflictions
                     if (!IsWristRecoilActive) return;
 
                     var pm = GameManager.GetPlayerManagerComponent();
+                    if (pm == null) return;
                     if (IsWristRecoilActive && (pm.PlayerIsClimbing()))
                     {
                         if (OverconfidenceAffliction.IsOvercActive)

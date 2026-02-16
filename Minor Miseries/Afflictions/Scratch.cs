@@ -23,7 +23,6 @@ namespace Minor_Miseries.Afflictions
                 }
             }
 
-            private readonly float m_LastUpdateTime;
             private bool m_SymptomsCured = false;
             public static float SCRATCH_EVOLV_CHANCE = 40f;
             public static bool IsScratchActive { get; private set; } = false;
@@ -40,7 +39,6 @@ namespace Minor_Miseries.Afflictions
 
             public ScratchAffliction(AfflictionBodyArea bodyArea) : base("Scratch", "Awkward gesture", "You've scratched your skin, nothing too serious", null, "ico_injury_minorBruising", bodyArea) //customsprite :Minor_Miseries.Resources.Icons.Scratch.png
             {
-                m_LastUpdateTime = GameManager.GetTimeOfDayComponent().GetHoursPlayedNotPaused();
             }
 
             public void CureSymptoms()

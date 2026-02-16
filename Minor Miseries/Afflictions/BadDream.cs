@@ -20,7 +20,6 @@ namespace Minor_Miseries.Afflictions
                 }
             }
 
-            private readonly float m_LastUpdateTime;
             public static bool IsBadDreamActive { get; private set; }
             public float Duration { get; set; } = Settings.options.BadDreamDuration;
             public float EndTime { get; set; }
@@ -32,7 +31,6 @@ namespace Minor_Miseries.Afflictions
 
             public BadDreamAffliction(AfflictionBodyArea bodyArea) : base("Bad Dream", "Troubled sleep", "A disturbing dream snaps you awake, your thoughts racing and sleep refusing to return", null, "ico_injury_headache", bodyArea) //customsprite :Minor_Miseries.Resources.Icons.BadDream.png
             {
-                m_LastUpdateTime = GameManager.GetTimeOfDayComponent().GetHoursPlayedNotPaused();
             }
 
             public void CureSymptoms()

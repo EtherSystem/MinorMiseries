@@ -15,7 +15,6 @@ namespace Minor_Miseries.Afflictions
                 return;//MelonLogger.Msg("splinter duplication");
             }
 
-            private readonly float m_LastUpdateTime;
             public static bool IsOvercActive { get; private set; } = false;
 
             public Tuple<string, int, int>[] RemedyItems { get; set; } = Array.Empty<Tuple<string, int, int>>();
@@ -25,7 +24,6 @@ namespace Minor_Miseries.Afflictions
 
             public OverconfidenceAffliction(AfflictionBodyArea bodyArea) : base("Overconfidence", "Yourself", "You are far too confident, you are paying the price for your experience, and you take your survival for granted. Afflictions are now easier to contract.", null, "ico_injury_headache", bodyArea) //customsprite :Minor_Miseries.Resources.Icons.Overconfidence.png
             {
-                m_LastUpdateTime = GameManager.GetTimeOfDayComponent().GetHoursPlayedNotPaused();
             }
 
             public void CureSymptoms()

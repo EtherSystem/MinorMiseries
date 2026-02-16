@@ -20,7 +20,6 @@ namespace Minor_Miseries.Afflictions
                 }
             }
 
-            private readonly float m_LastUpdateTime;
             public float Duration { get; set; } = Settings.options.StuckFoodDuration;
             public float EndTime { get; set; }
 
@@ -31,7 +30,6 @@ namespace Minor_Miseries.Afflictions
 
             public StuckFoodAffliction(AfflictionBodyArea bodyArea) : base("Stuck Food", "You ate too fast", "It seems that some food is stuck between your teeth", null, "ico_injury_scurvy", bodyArea) //customsprite :Minor_Miseries.Resources.Icons.StuckFood.png
             {
-                m_LastUpdateTime = GameManager.GetTimeOfDayComponent().GetHoursPlayedNotPaused();
             }
 
             public void CureSymptoms()

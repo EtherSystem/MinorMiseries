@@ -20,7 +20,6 @@ namespace Minor_Miseries.Afflictions
                 }
             }
 
-            private readonly float m_LastUpdateTime;
             private float m_StartTime;
             private bool m_InfectionRiskTriggered = false;
             private bool m_SymptomsCured = false;
@@ -38,8 +37,7 @@ namespace Minor_Miseries.Afflictions
 
             public SmallCutAffliction(AfflictionBodyArea bodyArea) : base("Small Cut", "Worsened scratch", "A superficial scratch has opened slightly, requiring attention to prevent further complications.", null, "ico_injury_majorBruising", bodyArea) //customsprite :Minor_Miseries.Resources.Icons.StuckFood.png
             {
-                m_LastUpdateTime = GameManager.GetTimeOfDayComponent().GetHoursPlayedNotPaused();
-                m_StartTime = m_LastUpdateTime;
+                m_StartTime = GameManager.GetTimeOfDayComponent().GetHoursPlayedNotPaused();
             }
 
             public void CureSymptoms()

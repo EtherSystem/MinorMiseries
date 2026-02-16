@@ -14,7 +14,7 @@ using static Minor_Miseries.Afflictions.Scratch;
 using AfflictionComponent.Components;
 using LocalizationUtilities;
 
-[assembly: MelonInfo(typeof(Minor_Miseries.Core), "Minor Miseries", "1.3.0", "EtherSystem", null)]
+[assembly: MelonInfo(typeof(Minor_Miseries.Core), "Minor Miseries", "1.3.1", "EtherSystem", null)]
 [assembly: MelonGame("Hinterland", "TheLongDark")]
 
 namespace Minor_Miseries

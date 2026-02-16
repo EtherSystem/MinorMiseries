@@ -23,7 +23,6 @@ namespace Minor_Miseries.Afflictions
                 }
             }
 
-            private readonly float m_LastUpdateTime;
             public static float SPLINTER_EVOLV_CHANCE = 50f;
             public static bool IsSplinterActive { get; private set; } = false;
             public float Duration { get; set; } = Settings.options.SplinterDuration;
@@ -36,7 +35,6 @@ namespace Minor_Miseries.Afflictions
 
             public SplinterAffliction(AfflictionBodyArea bodyArea): base("Splinter", "Unprotected hands", "A splinter is lodged in your skin", null, "ico_injury_sprainedWrist", bodyArea) //customsprite :Minor_Miseries.Resources.Icons.Splinter.png
             {
-                m_LastUpdateTime = GameManager.GetTimeOfDayComponent().GetHoursPlayedNotPaused();
             }
 
             public void CureSymptoms()

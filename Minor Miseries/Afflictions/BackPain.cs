@@ -22,7 +22,6 @@ namespace Minor_Miseries.Afflictions
                 }
             }
 
-            private readonly float m_LastUpdateTime;
             public static bool IsBackPainActive { get; private set; } = false;
             public float Duration { get; set; } = Settings.options.BackPainDuration;
             public float EndTime { get; set; }
@@ -34,7 +33,6 @@ namespace Minor_Miseries.Afflictions
 
             public BackPainAffliction(AfflictionBodyArea bodyArea) : base("Back Pain", "A too heavy backpack", "Being encumbered for too long has consequences...", null, "ico_injury_burdened", bodyArea) //customsprite :Minor_Miseries.Resources.Icons.BackPain.png
             {
-                m_LastUpdateTime = GameManager.GetTimeOfDayComponent().GetHoursPlayedNotPaused();
             }
 
             public void CureSymptoms()

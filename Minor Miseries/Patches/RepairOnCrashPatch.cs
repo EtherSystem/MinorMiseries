@@ -1,38 +1,84 @@
-﻿namespace Minor_Miseries.Patches
+﻿using AfflictionComponent.Components;
+
+namespace Minor_Miseries.Patches
 {
-    [HarmonyPatch(typeof(Panel_FirstAid), nameof(Panel_FirstAid.ClearAfflictionsAtLocationArray))]
-    internal static class FirstAid_Clear_RepairOnCrash
+    internal static class AfflictionComponentCrashGuards
     {
-        private static bool _loggedOnce;
+        private static bool _loggedColorGuard;
+        private static bool _loggedBodyGuard;
 
-        private static Exception Finalizer(Panel_FirstAid __instance, Exception __exception)
+        private static bool IsCustomIndexValid(int idx, out int customCount)
         {
-            if (__exception == null) return null;
+            var mgr = AfflictionManager.GetAfflictionManagerInstance();
+            customCount = mgr?.m_Afflictions?.Count ?? 0;
+            return idx >= 0 && idx < customCount;
+        }
 
-            try
+        [HarmonyPatch]
+        internal static class Guard_AC_GetColorBasedOnAffliction_Postfix
+        {
+            private static MethodBase TargetMethod()
             {
-                int icons = __instance?.m_BodyIconList != null ? __instance.m_BodyIconList.Count : -1;
-                int arrLen = __instance?.m_AfflictionsAtLocationArray != null ? __instance.m_AfflictionsAtLocationArray.Length : -1;
-
-                if (!_loggedOnce)
-                {
-                    _loggedOnce = true;
-                    MelonLogger.Warning($"[MinorMiseries] ClearAfflictionsAtLocationArray crashed -> repairing. icons={icons} arrLen={arrLen} ({__exception.GetType().Name})");
-                }
-
-                if (__instance != null && icons > 0)
-                {
-                    __instance.m_AfflictionsAtLocationArray = new Panel_FirstAid.AfflictionsAtLocation[icons];
-                    for (int i = 0; i < icons; i++)
-                        __instance.m_AfflictionsAtLocationArray[i] = new Panel_FirstAid.AfflictionsAtLocation((AfflictionBodyArea)i);
-                }
-            }
-            catch (Exception e)
-            {
-                MelonLogger.Error($"[MinorMiseries] Repair failed: {e.GetType().Name} - {e.Message}");
+                var t = AccessTools.TypeByName("AfflictionComponent.Patches.AfflictionButtonPatches.GetColorBasedOnAffliction+GetColorBasedOnCustomAffliction");
+                return AccessTools.Method(t, "Postfix");
             }
 
-            return null;
+            private static bool Prefix(AfflictionButton __instance, AfflictionType m_AfflictionType)
+            {
+                if (m_AfflictionType != AfflictionType.Generic) return true;
+
+                int idx = __instance?.m_Index ?? -1;
+                if (!IsCustomIndexValid(idx, out int customCount))
+                {
+                    if (!_loggedColorGuard)
+                    {
+                        _loggedColorGuard = true;
+                        MelonLogger.Warning($"Skip GetColorBasedOnCustomAffliction.Postfix (idx={idx}, customCount={customCount})");
+                    }
+                    return false;
+                }
+                return true;
+            }
+        }
+
+        [HarmonyPatch]
+        internal static class Guard_AC_UpdateBodyIconColors_Postfix
+        {
+            private static MethodBase TargetMethod()
+            {
+                var t = AccessTools.TypeByName("AfflictionComponent.Patches.PanelFirstAidPatches.UpdateBodyIconColors+OverrideUpdateBodyIconColors");
+                return AccessTools.Method(t, "Postfix");
+            }
+
+            private static bool Prefix(Panel_FirstAid __instance, AfflictionButton afflictionButton, int bodyIconIndex)
+            {
+                if (__instance == null || afflictionButton == null) return false;
+
+                if (afflictionButton.m_AfflictionType != AfflictionType.Generic) return true;
+
+                int iconCount = __instance.m_BodyIconList?.Count ?? 0;
+                if (bodyIconIndex < 0 || bodyIconIndex >= iconCount)
+                {
+                    if (!_loggedBodyGuard)
+                    {
+                        _loggedBodyGuard = true;
+                        MelonLogger.Warning($"Skip UpdateBodyIconColors.Postfix (bodyIconIndex={bodyIconIndex}, iconCount={iconCount})");
+                    }
+                    return false;
+                }
+
+                int idx = afflictionButton.m_Index;
+                if (!IsCustomIndexValid(idx, out int customCount))
+                {
+                    if (!_loggedBodyGuard)
+                    {
+                        _loggedBodyGuard = true;
+                        MelonLogger.Warning($"Skip UpdateBodyIconColors.Postfix (idx={idx}, customCount={customCount})");
+                    }
+                    return false;
+                }
+                return true;
+            }
         }
     }
 }

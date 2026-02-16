@@ -21,7 +21,6 @@ namespace Minor_Miseries.Afflictions
                 }
             }
 
-            private readonly float m_LastUpdateTime;
             public static bool IsShoulderRecoilActive { get; private set; } = false;
             public float Duration { get; set; } = Settings.options.ShoulderRecoilDuration;
             public float EndTime { get; set; }
@@ -33,7 +32,6 @@ namespace Minor_Miseries.Afflictions
 
             public ShoulderRecoilInjuryAffliction(AfflictionBodyArea bodyArea) : base("Shoulder Trauma", "Weapon recoil", "The recoil hurt your shoulder. Aiming and handling the weapon is more difficult.", null, "ico_injury_pain", bodyArea) //customsprite :Minor_Miseries.Resources.Icons.Splinter.png
             {
-                m_LastUpdateTime = GameManager.GetTimeOfDayComponent().GetHoursPlayedNotPaused();
             }
 
             public void CureSymptoms()
@@ -58,6 +56,7 @@ namespace Minor_Miseries.Afflictions
                     if (!IsShoulderRecoilActive) return;
 
                     var pm = GameManager.GetPlayerManagerComponent();
+                    if (pm == null) return;
                     if (IsShoulderRecoilActive && (pm.PlayerIsClimbing()))
                     {
                         if (OverconfidenceAffliction.IsOvercActive)

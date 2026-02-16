@@ -14,7 +14,9 @@ namespace Minor_Miseries.Patches
         {
             public static void Postfix()
             {
-                bool noGloves = GameManager.GetPlayerManagerComponent().GetClothingInSlot(ClothingRegion.Hands, ClothingLayer.Base) == null;
+                var pm = GameManager.GetPlayerManagerComponent();
+                if (pm == null) return;
+                bool noGloves = pm.GetClothingInSlot(ClothingRegion.Hands, ClothingLayer.Base) == null;
                 if (Settings.options.IsSplinter && noGloves)
                 {
                     float roll = Random.Range(0f, 100f);

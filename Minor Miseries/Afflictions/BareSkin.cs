@@ -11,16 +11,18 @@ namespace Minor_Miseries.Afflictions
             public InstanceType Type { get; set; } = InstanceType.Single;
             public void OnFoundExistingInstance(CustomAffliction existingAffliction)
             {
-                //MelonLogger.Msg("bare skin duplication");
                 if (existingAffliction is BareSkinAffliction bareSkin)
                 {
                     bareSkin.ResetAffliction(resetRemedies: false);
+
                     var now = GameManager.GetTimeOfDayComponent().GetHoursPlayedNotPaused();
                     bareSkin.EndTime = now + bareSkin.Duration;
+
+                    bareSkin.m_StartTime = now;
+                    bareSkin.m_InfectionRiskTriggered = false;
                 }
             }
 
-            private readonly float m_LastUpdateTime;
             private float m_StartTime;
             private static bool m_SymptomsCured = false;
             private bool m_InfectionRiskTriggered = false;
@@ -38,8 +40,7 @@ namespace Minor_Miseries.Afflictions
 
             public BareSkinAffliction(AfflictionBodyArea bodyArea) : base("Bare Skin", "Repeated friction", "Skin worn down by repeated friction becomes tender, making prolonged movement uncomfortable.", null, "ico_injury_sprainedAnkle", bodyArea) //customsprite :Minor_Miseries.Resources.Icons.StuckFood.png
             {
-                m_LastUpdateTime = GameManager.GetTimeOfDayComponent().GetHoursPlayedNotPaused();
-                m_StartTime = m_LastUpdateTime;
+                m_StartTime = GameManager.GetTimeOfDayComponent().GetHoursPlayedNotPaused();
             }
 
             public void CureSymptoms()
