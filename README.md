@@ -18,9 +18,13 @@ The mod adds the following afflictions :
   
 - Back Pain: Occurs if the player is encumbered for too long, reduces carrying capacity. Back Pain currently overrides carry capacity values and may conflict with mods that also modify carry weight (such as Universal Tweaks).
 
-- Food Stuck: Can occur after the player eats, extremely uncomfortable.
+- Food Stuck: Can occur after the player eats, extremely uncomfortable (can be gained from drinking things that give calories, that's not intended).
   
 - Bad Dream: Can occur during sleep if the player has recently been attacked by wildlife, abruptly waking them and disrupting their rest.
+
+- Wrist Trauma: Can occur when firing a revolver with low skill. Reduces crafting speed, rope climbing speed, and shortens maximum rifle aim duration.
+
+- Shoulder Trauma: Can occur when firing a rifle with low skill. Reduces crafting speed, rope climbing speed, and shortens maximum rifle aim duration.
 
 If the player goes too long without suffering any afflictions, they develop a risk of Overconfidence, which, if it reaches its limit, evolves into Overconfidence.
 
