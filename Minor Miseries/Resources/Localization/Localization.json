@@ -4,7 +4,7 @@
         "French (France)": "Vous vous réveillez brusquement, secoué par un mauvais rêve",
         "Spanish (Spain)": "Te despiertas de repente, sacudido por una mala pesadilla",
         "German": "Du wachst plötzlich auf, erschüttert von einem Albtraum",
-        "Turkish": "Kötü bir rüyanın etkisiyle aniden uyanıyorsunuz",
+        "Turkish": "Kötü bir rüyanın etkisiyle aniden uyanıyorsun",
         "Russian": "Вы внезапно просыпаетесь, потрясенные кошмарным сном"
     },
     "GAMEPLAY_BadDreamCantSleep": {
@@ -12,7 +12,7 @@
         "French (France)": "Vous êtes trop secoué pour vous rendormir",
         "Spanish (Spain)": "Estás demasiado conmocionado para volver a dormirte",
         "German": "Du bist zu erschüttert, um wieder einzuschlafen",
-        "Turkish": "O kadar sarsıldınız ki tekrar uyuyamıyorsunuz",
+        "Turkish": "O kadar sarsıldınız ki tekrar uyuyamıyorsun",
         "Russian": "Вы слишком потрясены, чтобы снова заснуть"
     },
     "GAMEPLAY_SplinterName": {
@@ -20,7 +20,7 @@
         "French (France)": "Écharde",
         "Spanish (Spain)": "",
         "German": "",
-        "Turkish": "",
+        "Turkish": "Kıymık Batması",
         "Russian": ""
     },
     "GAMEPLAY_SplinterCause": {
@@ -28,7 +28,7 @@
         "French (France)": "Mains non protégées",
         "Spanish (Spain)": "",
         "German": "",
-        "Turkish": "",
+        "Turkish": "Çıplak Eller",
         "Russian": ""
     },
     "GAMEPLAY_SplinterDescription": {
@@ -36,7 +36,7 @@
         "French (France)": "Une écharde est logée sous ta peau",
         "Spanish (Spain)": "",
         "German": "",
-        "Turkish": "",
+        "Turkish": "Cildinize bir kıymık saplandı.",
         "Russian": ""
     },
 
@@ -47,7 +47,7 @@
         "French (France)": "Nourriture bloquée",
         "Spanish (Spain)": "",
         "German": "",
-        "Turkish": "",
+        "Turkish": "Gıda Sıkışması",
         "Russian": ""
     },
     "GAMEPLAY_StuckFoodCause": {
@@ -55,7 +55,7 @@
         "French (France)": "Vous avez mangé trop vite",
         "Spanish (Spain)": "",
         "German": "",
-        "Turkish": "",
+        "Turkish": "Çok hızlı yedin.",
         "Russian": ""
     },
     "GAMEPLAY_StuckFoodDescription": {
@@ -63,7 +63,7 @@
         "French (France)": "Il semblerait que de la nourriture se soit bloquée entre tes dents",
         "Spanish (Spain)": "",
         "German": "",
-        "Turkish": "",
+        "Turkish": "Dişlerinizin arasında yiyecek artıkları sıkışmış gibi görünüyor.",
         "Russian": ""
     },
 
@@ -74,7 +74,7 @@
         "French (France)": "Ampoule",
         "Spanish (Spain)": "",
         "German": "",
-        "Turkish": "",
+        "Turkish": "Su Toplaması",
         "Russian": ""
     },
     "GAMEPLAY_BlisterCause": {
@@ -82,7 +82,7 @@
         "French (France)": "Marcher trop longtemps",
         "Spanish (Spain)": "",
         "German": "",
-        "Turkish": "",
+        "Turkish": "Çok uzun yürüdün",
         "Russian": ""
     },
     "GAMEPLAY_BlisterDescription": {
@@ -90,7 +90,7 @@
         "French (France)": "Tu as fais un effort soutenu pendant trop longtemps",
         "Spanish (Spain)": "",
         "German": "",
-        "Turkish": "",
+        "Turkish": "Çok uzun süredir çaba sarf ediyorsunuz.",
         "Russian": ""
     },
 
@@ -101,7 +101,7 @@
         "French (France)": "Mal de dos",
         "Spanish (Spain)": "",
         "German": "",
-        "Turkish": "",
+        "Turkish": "Bel Ağrısı",
         "Russian": ""
     },
     "GAMEPLAY_BackPainCause": {
@@ -109,7 +109,7 @@
         "French (France)": "Un sac à dos trop lourd",
         "Spanish (Spain)": "",
         "German": "",
-        "Turkish": "",
+        "Turkish": "çok ağır bir sırt çantası",
         "Russian": ""
     },
     "GAMEPLAY_BackPainDescription": {
@@ -117,7 +117,7 @@
         "French (France)": "Être encombré pendant trop longtemps a des conséquences...",
         "Spanish (Spain)": "",
         "German": "",
-        "Turkish": "",
+        "Turkish": "Uzun süre boyunca bir yükle boğuşmanın sonuçları olur...",
         "Russian": ""
     },
 
@@ -128,7 +128,7 @@
         "French (France)": "Égratignure",
         "Spanish (Spain)": "",
         "German": "",
-        "Turkish": "",
+        "Turkish": "Çizik",
         "Russian": ""
     },
     "GAMEPLAY_ScratchCause": {
@@ -136,7 +136,7 @@
         "French (France)": "Geste maladroit",
         "Spanish (Spain)": "",
         "German": "",
-        "Turkish": "",
+        "Turkish": "Garip bir his",
         "Russian": ""
     },
     "GAMEPLAY_ScratchDescription": {
@@ -144,7 +144,7 @@
         "French (France)": "Tu a égratigné ta peau, rien de trop sérieux",
         "Spanish (Spain)": "",
         "German": "",
-        "Turkish": "",
+        "Turkish": "Cildinizi çizmişsiniz, çok ciddi bir şey değil.",
         "Russian": ""
     },
 
@@ -153,7 +153,7 @@
         "French (France)": "Mauvais Rêve",
         "Spanish (Spain)": "",
         "German": "",
-        "Turkish": "",
+        "Turkish": "Kötü Rüya",
         "Russian": ""
     },
     "GAMEPLAY_BadDreamCause": {
@@ -161,7 +161,7 @@
         "French (France)": "Sommeil troublé",
         "Spanish (Spain)": "",
         "German": "",
-        "Turkish": "",
+        "Turkish": "Uyku sorunları",
         "Russian": ""
     },
     "GAMEPLAY_BadDreamDescription": {
@@ -169,7 +169,7 @@
         "French (France)": "Un mauvais rêve vous réveille en sursant, vos pensées s'emballent et le sommeil refuse de revenir",
         "Spanish (Spain)": "",
         "German": "",
-        "Turkish": "",
+        "Turkish": "Rahatsız edici bir rüya sizi uykunuzdan uyandırır, düşünceleriniz hızla akar ve uykuya bir türlü dalamıyorsun.",
         "Russian": ""
     },
 
@@ -178,7 +178,7 @@
         "French (France)": "Surconfiance",
         "Spanish (Spain)": "",
         "German": "",
-        "Turkish": "",
+        "Turkish": "Aşırı özgüven",
         "Russian": ""
     },
     "GAMEPLAY_OverconfidenceRiskCause": {
@@ -186,7 +186,7 @@
         "French (France)": "Toi-même",
         "Spanish (Spain)": "",
         "German": "",
-        "Turkish": "",
+        "Turkish": "Kendin",
         "Russian": ""
     },
     "GAMEPLAY_OverconfidenceRiskDescription": {
@@ -194,7 +194,7 @@
         "French (France)": "Tout semble si simple, n'est-ce pas ?",
         "Spanish (Spain)": "",
         "German": "",
-        "Turkish": "",
+        "Turkish": "Her şey çok basit görünüyor, değil mi?",
         "Russian": ""
     },
 
@@ -205,7 +205,7 @@
         "French (France)": "Surconfiance",
         "Spanish (Spain)": "",
         "German": "",
-        "Turkish": "",
+        "Turkish": "Aşırı özgüven",
         "Russian": ""
     },
     "GAMEPLAY_OverconfidenceCause": {
@@ -213,7 +213,7 @@
         "French (France)": "Toi-même",
         "Spanish (Spain)": "",
         "German": "",
-        "Turkish": "",
+        "Turkish": "Kendin",
         "Russian": ""
     },
     "GAMEPLAY_OverconfidenceDescription": {
@@ -221,7 +221,7 @@
         "French (France)": "Tu es bien trop confiant, tu payes le prix de ton expérience et tiens ta survie pour acquise. Les maladies sont désormais plus faciles à contracter.",
         "Spanish (Spain)": "",
         "German": "",
-        "Turkish": "",
+        "Turkish": "Aşırı derecede özgüvenlisiniz, tecrübenizin bedelini ödüyorsunuz ve hayatta kalmanızı hafife alıyorsunuz. Artık hastalıklara yakalanmanız daha kolay.",
         "Russian": ""
     }
 }
