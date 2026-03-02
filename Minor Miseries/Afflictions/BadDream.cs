@@ -29,7 +29,7 @@ namespace Minor_Miseries.Afflictions
 
             public bool InstantHeal { get; set; } = true;
 
-            public BadDreamAffliction(AfflictionBodyArea bodyArea) : base("Bad Dream", "Troubled sleep", "A disturbing dream snaps you awake, your thoughts racing and sleep refusing to return", null, "ico_injury_headache", bodyArea) //customsprite :Minor_Miseries.Resources.Icons.BadDream.png
+            public BadDreamAffliction(AfflictionBodyArea bodyArea) : base("GAMEPLAY_BadDreamName", "GAMEPLAY_BadDreamCause", "GAMEPLAY_BadDreamDescription", null, "Minor_Miseries.Resources.Icons.BadDream.png", bodyArea, true)
             {
             }
 
@@ -46,19 +46,6 @@ namespace Minor_Miseries.Afflictions
             public override void OnUpdate()
             {
                 IsBadDreamActive = true;
-            }
-
-            [HarmonyPatch(typeof(Panel_Rest), nameof(Panel_Rest.StartRest))]
-            internal static class BadDream_BlockRestPatch
-            {
-                private static bool Prefix()
-                {
-                    if (!IsBadDreamActive) return true;
-
-                    HUDMessage.AddMessage(Localization.Get("GAMEPLAY_BadDreamCantSleep"), 4, false);
-
-                    return false;
-                }
             }
         }
     }

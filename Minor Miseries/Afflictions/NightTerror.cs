@@ -1,26 +1,27 @@
-﻿using AfflictionComponent.Components;
-using AfflictionComponent.Interfaces;
+﻿using AfflictionComponent.Interfaces;
+using AfflictionComponent.Components;
 using AfflictionComponent.Enums;
 
 namespace Minor_Miseries.Afflictions
 {
-    internal class StuckFood
+    internal class NightTerror
     {
-        public class StuckFoodAffliction : CustomAffliction, IDuration, IRemedies, IInstance
+        public class NightTerrorAffliction : CustomAffliction, IDuration, IRemedies, IInstance
         {
             public InstanceType Type { get; set; } = InstanceType.Single;
             public void OnFoundExistingInstance(CustomAffliction existingAffliction)
             {
-                //MelonLogger.Msg("stuck food duplication");
-                if (existingAffliction is StuckFoodAffliction stuckFood)
+                //MelonLogger.Msg("night terror duplication");
+                if (existingAffliction is NightTerrorAffliction nightTerror)
                 {
-                    stuckFood.ResetAffliction(resetRemedies: false);
+                    nightTerror.ResetAffliction(resetRemedies: false);
                     var now = GameManager.GetTimeOfDayComponent().GetHoursPlayedNotPaused();
-                    stuckFood.EndTime = now + stuckFood.Duration;
+                    nightTerror.EndTime = now + nightTerror.Duration;
                 }
             }
 
-            public float Duration { get; set; } = Settings.options.StuckFoodDuration;
+            public static bool IsNightTerrorActive { get; private set; }
+            public float Duration { get; set; } = Settings.options.BadDreamDuration * 2;
             public float EndTime { get; set; }
 
             public Tuple<string, int, int>[] RemedyItems { get; set; } = Array.Empty<Tuple<string, int, int>>();
@@ -28,7 +29,7 @@ namespace Minor_Miseries.Afflictions
 
             public bool InstantHeal { get; set; } = true;
 
-            public StuckFoodAffliction(AfflictionBodyArea bodyArea) : base("GAMEPLAY_StuckFoodName", "GAMEPLAY_StuckFoodCause", "GAMEPLAY_StuckFoodDescription", null, "Minor_Miseries.Resources.Icons.StuckFood.png", bodyArea, true)
+            public NightTerrorAffliction(AfflictionBodyArea bodyArea) : base("GAMEPLAY_NightTerrorName", "GAMEPLAY_NightTerrorCause", "GAMEPLAY_NightTerrorDescription", null, "Minor_Miseries.Resources.Icons.NightTerror.png", bodyArea, true)
             {
             }
 
@@ -39,12 +40,12 @@ namespace Minor_Miseries.Afflictions
 
             public void OnCure()
             {
-                //when the affliction is cured, apply this code
+                IsNightTerrorActive = false;
             }
 
             public override void OnUpdate()
             {
-                // yes theres no effects, its intended
+                IsNightTerrorActive = true;
             }
         }
     }

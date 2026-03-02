@@ -2,7 +2,7 @@
 	<PropertyGroup>
 		<TargetFramework>net6.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
-		<Nullable>disable</Nullable>
+		<Nullable>enable</Nullable>
 		<RootNamespace>Minor_Miseries</RootNamespace>
 		<LangVersion>Latest</LangVersion>
 		<IsPackable>false</IsPackable>
@@ -10,8 +10,6 @@
 		<FileVersion>1.0.0.0</FileVersion>
 		<NeutralLanguage>en-US</NeutralLanguage>
 		<AssemblyName>Minor_Miseries</AssemblyName>
-		<LangVersion>latest</LangVersion>
-		<ImplicitUsings>enable</ImplicitUsings>
 		<Platforms>AnyCPU;x64</Platforms>
 	</PropertyGroup>
 
@@ -22,7 +20,22 @@
 
 	
 	<ItemGroup>
+	  <None Remove="Afflictions\Scratch.cs~RF1fa6777.TMP" />
+	  <None Remove="Resources\Icons\BackPain.png" />
+	  <None Remove="Resources\Icons\BadDream.png" />
+	  <None Remove="Resources\Icons\BareSkin.png" />
+	  <None Remove="Resources\Icons\Blister.png" />
+	  <None Remove="Resources\Icons\NightTerror.png" />
+	  <None Remove="Resources\Icons\Overconfidence.png" />
+	  <None Remove="Resources\Icons\OverconfidenceRisk.png" />
+	  <None Remove="Resources\Icons\Scratch.png" />
+	  <None Remove="Resources\Icons\SensitiveHand.png" />
+	  <None Remove="Resources\Icons\ShoulderTrauma.png" />
+	  <None Remove="Resources\Icons\SmallCut.png" />
+	  <None Remove="Resources\Icons\SoreNeck.png" />
 	  <None Remove="Resources\Icons\Splinter.png" />
+	  <None Remove="Resources\Icons\StuckFood.png" />
+	  <None Remove="Resources\Icons\WristTrauma.png" />
 	  <None Remove="Resources\Localization\Localization.json" />
 	</ItemGroup>
 
@@ -32,16 +45,21 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<Compile Include="AfflictionLogic.cs" />
 		<Compile Include="Afflictions\BackPain.cs" />
 		<Compile Include="Afflictions\BadDream.cs" />
 		<Compile Include="Afflictions\BareSkin.cs" />
 		<Compile Include="Afflictions\Blister.cs" />
+		<Compile Include="Afflictions\NightTerror.cs" />
 		<Compile Include="Afflictions\Overconfidence.cs" />
 		<Compile Include="Afflictions\SensitiveHand.cs" />
-		<Compile Include="Afflictions\ShoulderRecoilTrauma.cs" />
+		<Compile Include="Afflictions\ShoulderTrauma.cs" />
 		<Compile Include="Afflictions\SmallCut.cs" />
-		<Compile Include="Afflictions\WristRecoilTrauma.cs" />
+		<Compile Include="Afflictions\SoreNeck.cs" />
+		<Compile Include="Afflictions\WristTrauma.cs" />
 		<Compile Include="Core.cs" />
+		<Compile Include="DevConsoleCommands.cs" />
+		<Compile Include="Patches\AfflictionEffects.cs" />
 		<Compile Include="Patches\BreakdownPatch.cs" />
 		<Compile Include="Patches\CraftingPatch.cs" />
 		<Compile Include="MMSettings.cs" />
@@ -51,10 +69,26 @@
 		<Compile Include="Afflictions\StuckFood.cs" />
 		<Compile Include="Patches\FirearmsPatch.cs" />
 		<Compile Include="Patches\RepairOnCrashPatch.cs" />
+		<Compile Include="Persistence\MMState.cs" />
+		<Compile Include="Persistence\SaveDataManager.cs" />
 	</ItemGroup>
 
 	<ItemGroup>
+	  <EmbeddedResource Include="Resources\Icons\BackPain.png" />
+	  <EmbeddedResource Include="Resources\Icons\BadDream.png" />
+	  <EmbeddedResource Include="Resources\Icons\BareSkin.png" />
+	  <EmbeddedResource Include="Resources\Icons\Blister.png" />
+	  <EmbeddedResource Include="Resources\Icons\NightTerror.png" />
+	  <EmbeddedResource Include="Resources\Icons\Overconfidence.png" />
+	  <EmbeddedResource Include="Resources\Icons\OverconfidenceRisk.png" />
+	  <EmbeddedResource Include="Resources\Icons\Scratch.png" />
+	  <EmbeddedResource Include="Resources\Icons\SensitiveHand.png" />
+	  <EmbeddedResource Include="Resources\Icons\ShoulderTrauma.png" />
+	  <EmbeddedResource Include="Resources\Icons\SmallCut.png" />
+	  <EmbeddedResource Include="Resources\Icons\SoreNeck.png" />
 	  <EmbeddedResource Include="Resources\Icons\Splinter.png" />
+	  <EmbeddedResource Include="Resources\Icons\StuckFood.png" />
+	  <EmbeddedResource Include="Resources\Icons\WristTrauma.png" />
 	  <EmbeddedResource Include="Resources\Localization\Localization.json" />
 	</ItemGroup>
 
@@ -67,6 +101,9 @@
 		</Reference>
 		<Reference Include="ModComponent">
 			<HintPath>$(TheLongDarkPath)\Mods\ModComponent.dll</HintPath>
+		</Reference>
+		<Reference Include="ModData">
+			<HintPath>$(TheLongDarkPath)\Mods\ModData.dll</HintPath>
 		</Reference>
 	</ItemGroup>
 

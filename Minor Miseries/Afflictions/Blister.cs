@@ -1,5 +1,4 @@
-﻿using static Minor_Miseries.Afflictions.Overconfidence;
-using static Minor_Miseries.Afflictions.BareSkin;
+﻿using static Minor_Miseries.Afflictions.BareSkin;
 using AfflictionComponent.Components;
 using AfflictionComponent.Interfaces;
 using Random = UnityEngine.Random;
@@ -23,8 +22,9 @@ namespace Minor_Miseries.Afflictions
                 }
             }
 
-            public static float BLISTER_EVOLV_CHANCE = 60f;
-            private bool m_SymptomsCured = false;
+            private const float BLISTER_EVOLV_CHANCE = 60f;
+            internal bool m_SymptomsCured = false;
+            internal bool SymptomsCured => m_SymptomsCured;
             public static bool IsBlisterActive { get; private set; } = false;
             public float Duration { get; set; } = Settings.options.BlisterDuration;
             public float EndTime { get; set; }
@@ -37,7 +37,7 @@ namespace Minor_Miseries.Afflictions
 
             public bool InstantHeal { get; set; } = false;
 
-            public BlisterAffliction(AfflictionBodyArea bodyArea) : base("Blister", "Walked for too long", "You have made a sustained effort for too long", null, "ico_injury_sprainedAnkle", bodyArea) //customsprite :Minor_Miseries.Resources.Icons.Blister.png
+            public BlisterAffliction(AfflictionBodyArea bodyArea) : base("GAMEPLAY_BlisterName", "GAMEPLAY_BlisterCause", "GAMEPLAY_BlisterDescription", null, "Minor_Miseries.Resources.Icons.Blister.png", bodyArea, true)
             {
             }
 
@@ -60,46 +60,6 @@ namespace Minor_Miseries.Afflictions
             public override void OnUpdate()
             {
                 IsBlisterActive = true;
-            }
-
-            [HarmonyPatch(typeof(vp_FPSController), nameof(vp_FPSController.GetSlopeMultiplier))]
-            internal static class MovementSpeedPatch
-            {
-                private static void Postfix(ref float __result)
-                {
-                    if (!IsBlisterActive) return;
-
-                    var afflictionManager = AfflictionManager.GetAfflictionManagerInstance();
-                    if (afflictionManager == null || afflictionManager.m_Afflictions == null) return;
-
-                    BlisterAffliction activeBlisterAffliction = null;
-
-                    foreach (var affliction in afflictionManager.m_Afflictions)
-                    {
-                        if (affliction is BlisterAffliction blisterAffliction)
-                        {
-                            activeBlisterAffliction = blisterAffliction;
-                            break;
-                        }
-                    }
-
-                    if (activeBlisterAffliction == null || activeBlisterAffliction.m_SymptomsCured) return;
-
-                    var pm = GameManager.GetPlayerManagerComponent();
-                    if (pm == null) return;
-
-                    if (pm.PlayerIsClimbing() || pm.PlayerIsSprinting() || pm.PlayerIsWalking() || pm.PlayerIsCrouched())
-                    {
-                        if (OverconfidenceAffliction.IsOvercActive)
-                        {
-                            __result *= 0.8f;
-                        }
-                        else
-                        {
-                            __result *= 0.9f;
-                        }
-                    }
-                }
             }
         }
     }

@@ -1,5 +1,5 @@
-﻿using static Minor_Miseries.Afflictions.ShoulderRecoilTrauma;
-using static Minor_Miseries.Afflictions.WristRecoilTrauma;
+﻿using static Minor_Miseries.Afflictions.ShoulderTrauma;
+using static Minor_Miseries.Afflictions.WristTrauma;
 using static Minor_Miseries.Afflictions.Overconfidence;
 
 namespace Minor_Miseries.Patches
@@ -11,7 +11,7 @@ namespace Minor_Miseries.Patches
         {
             private static void Postfix(GunItem __instance)
             {
-                if (!Settings.options.IsWristRecoil) return;
+                if (!Settings.options.IsWristTrauma) return;
 
                 if (__instance == null) return;
 
@@ -30,7 +30,7 @@ namespace Minor_Miseries.Patches
                 else if (level == 4) chance = 2f;
                 else if (level > 4) chance = 0f;
 
-                if (OverconfidenceAffliction.IsOvercActive)
+                if (OverconfidenceAffliction.IsActive)
                 {
                     chance *= 2f;
                 }
@@ -39,7 +39,7 @@ namespace Minor_Miseries.Patches
 
                 if (roll < chance)
                 {
-                    new WristRecoilInjuryAffliction(AfflictionBodyArea.HandRight).Start();
+                    new WristTraumaAffliction(AfflictionBodyArea.HandRight).Start();
                 }
             }
         }
@@ -49,7 +49,7 @@ namespace Minor_Miseries.Patches
         {
             private static void Postfix(GunItem __instance)
             {
-                if (!Settings.options.IsShoulderRecoil) return;
+                if (!Settings.options.IsShoulderTrauma) return;
 
                 if (__instance == null) return;
 
@@ -68,7 +68,7 @@ namespace Minor_Miseries.Patches
                 else if (level == 4) chance = 2f;
                 else if (level > 4) chance = 0f;
 
-                if (OverconfidenceAffliction.IsOvercActive)
+                if (OverconfidenceAffliction.IsActive)
                 {
                     chance *= 2f;
                 }
@@ -77,48 +77,8 @@ namespace Minor_Miseries.Patches
 
                 if (roll < chance)
                 {
-                    new ShoulderRecoilInjuryAffliction(AfflictionBodyArea.Chest).Start();
+                    new ShoulderTraumaAffliction(AfflictionBodyArea.Chest).Start();
                 }
-            }
-        }
-
-        [HarmonyPatch(typeof(GunItem), nameof(GunItem.Update))]
-        internal static class GunAimStaminaPatch
-        {
-            private static void Postfix(GunItem __instance)
-            {
-                if (__instance == null) return;
-
-                const float BASE_INCREASE = 0.1f;
-                const float BASE_DECREASE = 0.15f;
-
-                bool wrist = WristRecoilInjuryAffliction.IsWristRecoilActive;
-                bool shoulder = ShoulderRecoilInjuryAffliction.IsShoulderRecoilActive;
-
-                if (!wrist && !shoulder)
-                {
-                    __instance.m_SwayIncreasePerSecond = BASE_INCREASE;
-                    __instance.m_SwayDecreasePerSecond = BASE_DECREASE;
-                    return;
-                }
-
-                float increaseMult = 1f;
-                float decreaseMult = 1f;
-
-                if (wrist)
-                {
-                    increaseMult *= 1.6f;
-                    decreaseMult *= 0.6f;
-                }
-
-                if (shoulder)
-                {
-                    increaseMult *= 1.8f;
-                    decreaseMult *= 0.5f;
-                }
-
-                __instance.m_SwayIncreasePerSecond = BASE_INCREASE * increaseMult;
-                __instance.m_SwayDecreasePerSecond = BASE_DECREASE * decreaseMult;
             }
         }
     }

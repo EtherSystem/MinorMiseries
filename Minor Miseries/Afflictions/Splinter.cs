@@ -1,5 +1,4 @@
-﻿using static Minor_Miseries.Afflictions.Overconfidence;
-using static Minor_Miseries.Afflictions.SensitiveHand;
+﻿using static Minor_Miseries.Afflictions.SensitiveHand;
 using AfflictionComponent.Interfaces;
 using AfflictionComponent.Components;
 using Random = UnityEngine.Random;
@@ -33,7 +32,7 @@ namespace Minor_Miseries.Afflictions
 
             public bool InstantHeal { get; set; } = true;
 
-            public SplinterAffliction(AfflictionBodyArea bodyArea): base("Splinter", "Unprotected hands", "A splinter is lodged in your skin", null, "ico_injury_sprainedWrist", bodyArea) //customsprite :Minor_Miseries.Resources.Icons.Splinter.png
+            public SplinterAffliction(AfflictionBodyArea bodyArea): base("GAMEPLAY_SplinterName", "GAMEPLAY_SplinterCause", "GAMEPLAY_SplinterDescription", null, "Minor_Miseries.Resources.Icons.Splinter.png", bodyArea, true)
             {
             }
 
@@ -55,48 +54,6 @@ namespace Minor_Miseries.Afflictions
             public override void OnUpdate()
             {
                 IsSplinterActive = true;
-            }
-
-            [HarmonyPatch(typeof(Panel_Crafting), nameof(Panel_Crafting.GetModifiedCraftingDuration))]
-            private static class CraftingDurationPatch
-            {
-                private static void Postfix(ref int __result)
-                {
-                    if (!IsSplinterActive) return;
-
-                    if (IsSplinterActive)
-                    {
-                        if (OverconfidenceAffliction.IsOvercActive)
-                        {
-                            __result = (int)(__result * 1.2f);
-                        }
-                        else
-                        {
-                            __result = (int)(__result * 1.1f);
-                        }
-                    }
-                }
-            }
-            [HarmonyPatch(typeof(vp_FPSController), nameof(vp_FPSController.GetSlopeMultiplier))]
-            internal static class MovementSpeedPatch
-            {
-                private static void Postfix(ref float __result)
-                {
-                    if (!IsSplinterActive) return;
-
-                    var pm = GameManager.GetPlayerManagerComponent();
-                    if (IsSplinterActive && (pm.PlayerIsClimbing()))
-                    {
-                        if (OverconfidenceAffliction.IsOvercActive)
-                        {
-                            __result *= 0.8f;
-                        }
-                        else
-                        {
-                            __result *= 0.9f;
-                        }
-                    }
-                }
             }
         }
     }

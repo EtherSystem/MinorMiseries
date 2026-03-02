@@ -41,17 +41,21 @@ namespace Minor_Miseries
         [Description("base = yes")]
         public bool IsBackPain = true;
 
-        [Name("Bad Dream")]
+        [Name("Sore Neck")]
+        [Description("base = yes")]
+        public bool IsSoreNeck = true;
+
+        [Name("Bad Dream & Night Terror")]
         [Description("base = yes")]
         public bool IsBadDream = true;
 
         [Name("Wrist Trauma")]
         [Description("base = yes")]
-        public bool IsWristRecoil = true;
+        public bool IsWristTrauma = true;
 
         [Name("Shoulder Trauma")]
         [Description("base = yes")]
-        public bool IsShoulderRecoil = true;
+        public bool IsShoulderTrauma = true;
 
         [Name("Overconfidence")]
         [Description("base = yes")]
@@ -61,71 +65,81 @@ namespace Minor_Miseries
 
         [Name("Splinter duration")]
         [Description("base = 24 hours")]
-        [Slider(1, 48, 48)]
-        public float SplinterDuration = 24f;
+        [Slider(1, 48, 47, NumberFormat = "{0:0}h")]
+        public int SplinterDuration = 24;
 
         [Name("Sensitive Hand duration")]
         [Description("base = 24 hours")]
-        [Slider(1, 48, 48)]
-        public float SensiDuration = 24f;
+        [Slider(1, 48, 47, NumberFormat = "{0:0}h")]
+        public int SensiDuration = 24;
 
         [Name("Stuck Food duration")]
         [Description("base = 2 hours")]
-        [Slider(1, 48, 48)]
-        public float StuckFoodDuration = 2f;
+        [Slider(1, 48, 47, NumberFormat = "{0:0}h")]
+        public int StuckFoodDuration = 2;
 
         [Name("Blister duration")]
         [Description("base = 30 hours")]
-        [Slider(1, 48, 48)]
-        public float BlisterDuration = 30f;
+        [Slider(1, 48, 47, NumberFormat = "{0:0}h")]
+        public int BlisterDuration = 30;
 
         [Name("Bare Skin duration")]
         [Description("base = 48 hours")]
-        [Slider(1, 48, 48)]
-        public float BareSkinDuration = 48f;
+        [Slider(1, 48, 47, NumberFormat = "{0:0}h")]
+        public int BareSkinDuration = 48;
 
         [Name("Back Pain duration")]
         [Description("base = 6 hours")]
-        [Slider(1, 48, 48)]
-        public float BackPainDuration = 6f;
+        [Slider(1, 48, 47, NumberFormat = "{0:0}h")]
+        public int BackPainDuration = 6;
+
+        [Name("Sore Neck duration")]
+        [Description("base = 6 hours")]
+        [Slider (1, 24, 23, NumberFormat = "{0:0}h")]
+        public int SoreNeckDuration = 6;
 
         [Name("Scratch duration")]
         [Description("base = 40 hours")]
-        [Slider(1, 48, 48)]
-        public float ScratchDuration = 40f;
+        [Slider(1, 48, 47, NumberFormat = "{0:0}h")]
+        public int ScratchDuration = 40;
 
         [Name("Small Cut duration")]
         [Description("base = 48 hours")]
-        [Slider(1, 48, 48)]
-        public float SmallCutDuration = 48f;
+        [Slider(1, 48, 47, NumberFormat = "{0:0}h")]
+        public int SmallCutDuration = 48;
 
         [Name("Wrist Recoil Injury duration")]
         [Description("base = 50 hours")]
-        [Slider(1, 50, 50)]
-        public float WristRecoilDuration = 50f;
+        [Slider(1, 50, 49, NumberFormat = "{0:0}h")]
+        public int WristTraumaDuration = 50;
 
         [Name("Shoulder Recoil Injury duration")]
         [Description("base = 60 hours")]
-        [Slider(1, 60, 60)]
-        public float ShoulderRecoilDuration = 60f;
+        [Slider(1, 60, 59, NumberFormat = "{0:0}h")]
+        public int ShoulderTraumaDuration = 60;
 
         [Name("Bad Dream duration")]
-        [Description("base = 0.25 hour (15 min)")]
-        [Slider(0.1f, 1f, 60)]
-        public float BadDreamDuration = 0.25f;
+        [Description("base = 15 min - consider that Night Terror lasts twice as long")]
+        [Slider(1f, 60f, 59, NumberFormat = "{0:0}min")]
+        public int BadDreamDurationMinutes = 15;
 
-        protected override void OnChange(FieldInfo field, object oldValue, object newValue)
+        public float BadDreamDuration => BadDreamDurationMinutes / 60f;
+
+        [Section("Advanced")]
+
+        [Name("ML Logging")]
+        [Description("Add logs for ModData in the ML console.")]
+        public bool IsLogging = false;
+
+        protected override void OnChange(FieldInfo field, object? oldValue, object? newValue)
         {
-            if (field.Name == nameof(IsSplinter))
-                Settings.ToggleSplinter((bool)newValue);
+            if (field.Name == nameof(IsSplinter) && newValue is bool splinter) Settings.ToggleSplinter(splinter);
 
-            if (field.Name == nameof(IsBlister))
-                Settings.ToggleBlister((bool)newValue);
+            if (field.Name == nameof(IsBlister) && newValue is bool blister) Settings.ToggleBlister(blister);
 
-            if (field.Name == nameof(IsScratch))
-                Settings.ToggleScratch((bool)newValue);
+            if (field.Name == nameof(IsScratch) && newValue is bool scratch) Settings.ToggleScratch(scratch);
 
-            base.OnConfirm();
+            base.OnChange(field, oldValue, newValue);
         }
     }
 

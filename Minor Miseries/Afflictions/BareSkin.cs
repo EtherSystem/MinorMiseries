@@ -25,6 +25,7 @@ namespace Minor_Miseries.Afflictions
 
             private float m_StartTime;
             private static bool m_SymptomsCured = false;
+            internal static bool SymptomsCured => m_SymptomsCured;
             private bool m_InfectionRiskTriggered = false;
             public static bool IsBareSkinActive { get; private set; } = false;
             public float Duration { get; set; } = Settings.options.BareSkinDuration;
@@ -32,20 +33,21 @@ namespace Minor_Miseries.Afflictions
 
             public Tuple<string, int, int>[] RemedyItems { get; set; } =
             {
-                Tuple.Create("GEAR_HeavyBandage", 1, 1)
+                Tuple.Create("GEAR_HeavyBandage", 1, 1),
+                Tuple.Create("GEAR_OldMansBeardDressing", 1, 1),
             };
             public Tuple<string, int, int>[] AltRemedyItems { get; set; } = Array.Empty<Tuple<string, int, int>>();
 
             public bool InstantHeal { get; set; } = false;
 
-            public BareSkinAffliction(AfflictionBodyArea bodyArea) : base("Bare Skin", "Repeated friction", "Skin worn down by repeated friction becomes tender, making prolonged movement uncomfortable.", null, "ico_injury_sprainedAnkle", bodyArea) //customsprite :Minor_Miseries.Resources.Icons.StuckFood.png
+            public BareSkinAffliction(AfflictionBodyArea bodyArea) : base("GAMEPLAY_BareSkinName", "GAMEPLAY_BareSkinCause", "GAMEPLAY_BareSkinDescription", null, "Minor_Miseries.Resources.Icons.BareSkin.png", bodyArea, true)
             {
                 m_StartTime = GameManager.GetTimeOfDayComponent().GetHoursPlayedNotPaused();
             }
 
             public void CureSymptoms()
             {
-                m_SymptomsCured = true;
+                if (!NeedsRemedy()) m_SymptomsCured = true;
             }
 
             public void OnCure()
@@ -66,25 +68,8 @@ namespace Minor_Miseries.Afflictions
 
                 if (elapsed >= (Settings.options.BareSkinDuration) / 3)
                 {
-                    GameManager.GetInfectionRiskComponent().InfectionRiskStart("Untreated skin abrasion", AfflictionBodyArea.FootRight, true);
+                    GameManager.GetInfectionRiskComponent().InfectionRiskStart(Localization.Get("GAMEPLAY_BareSkinInfection"), AfflictionBodyArea.FootRight, true);
                     m_InfectionRiskTriggered = true;
-                }
-            }
-
-            [HarmonyPatch(typeof(vp_FPSController), nameof(vp_FPSController.GetSlopeMultiplier))]
-            internal static class MovementSpeedPatch
-            {
-                private static void Postfix(ref float __result)
-                {
-                    if (!IsBareSkinActive) return;
-                    if (m_SymptomsCured) return;
-
-                    var pm = GameManager.GetPlayerManagerComponent();
-                    if (pm == null) return;
-                    if (IsBareSkinActive && (pm.PlayerIsClimbing() || pm.PlayerIsSprinting() || pm.PlayerIsWalking() || pm.PlayerIsCrouched()))
-                    {
-                        __result *= 0.7f;
-                    }
                 }
             }
         }

@@ -1,5 +1,4 @@
-﻿using static Minor_Miseries.Afflictions.Overconfidence;
-using static Minor_Miseries.Afflictions.SmallCut;
+﻿using static Minor_Miseries.Afflictions.SmallCut;
 using AfflictionComponent.Interfaces;
 using AfflictionComponent.Components;
 using Random = UnityEngine.Random;
@@ -23,8 +22,9 @@ namespace Minor_Miseries.Afflictions
                 }
             }
 
-            private bool m_SymptomsCured = false;
             public static float SCRATCH_EVOLV_CHANCE = 40f;
+            private bool m_SymptomsCured = false;
+            internal bool SymptomsCured => m_SymptomsCured;
             public static bool IsScratchActive { get; private set; } = false;
             public float Duration { get; set; } = Settings.options.ScratchDuration;
             public float EndTime { get; set; }
@@ -37,7 +37,7 @@ namespace Minor_Miseries.Afflictions
 
             public bool InstantHeal { get; set; } = false;
 
-            public ScratchAffliction(AfflictionBodyArea bodyArea) : base("Scratch", "Awkward gesture", "You've scratched your skin, nothing too serious", null, "ico_injury_minorBruising", bodyArea) //customsprite :Minor_Miseries.Resources.Icons.Scratch.png
+            public ScratchAffliction(AfflictionBodyArea bodyArea) : base("GAMEPLAY_ScratchName", "GAMEPLAY_ScratchCause", "GAMEPLAY_ScratchDescription", null, "Minor_Miseries.Resources.Icons.Scratch.png", bodyArea, true)
             {
             }
 
@@ -60,35 +60,6 @@ namespace Minor_Miseries.Afflictions
             public override void OnUpdate()
             {
                 IsScratchActive = true;
-            }
-
-            [HarmonyPatch(typeof(Panel_Crafting), nameof(Panel_Crafting.GetModifiedCraftingDuration))]
-            private static class CraftingDurationPatch
-            {
-                private static void Postfix(ref int __result)
-                {
-                    if (!IsScratchActive) return;
-
-                    var afflictionManager = AfflictionManager.GetAfflictionManagerInstance();
-                    if (afflictionManager == null || afflictionManager.m_Afflictions == null) return;
-
-                    foreach (var affliction in afflictionManager.m_Afflictions)
-                    {
-                        if (affliction is ScratchAffliction scratchAffliction)
-                        {
-                            if (scratchAffliction.m_SymptomsCured) return;
-
-                            if (OverconfidenceAffliction.IsOvercActive)
-                            {
-                                __result = (int)(__result * 1.2f);
-                            }
-                            else
-                            {
-                                __result = (int)(__result * 1.1f);
-                            }
-                        }
-                    }
-                }
             }
         }
     }

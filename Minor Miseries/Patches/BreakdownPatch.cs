@@ -20,7 +20,7 @@ namespace Minor_Miseries.Patches
                 if (Settings.options.IsSplinter && noGloves)
                 {
                     float roll = Random.Range(0f, 100f);
-                    if (OverconfidenceAffliction.IsOvercActive)
+                    if (OverconfidenceAffliction.IsActive)
                     {
                         if (roll < OVERC_SPLINTER_CHANCE)
                         {

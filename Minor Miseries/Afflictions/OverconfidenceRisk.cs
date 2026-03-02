@@ -10,7 +10,7 @@ namespace Minor_Miseries.Afflictions
     {
         public class OverconfidenceRiskAffliction : CustomAffliction, IRemedies, IInstance, IRiskPercentage
         {
-            private static bool IsOvercActive => OverconfidenceAffliction.IsOvercActive;
+            private static bool IsActive => OverconfidenceAffliction.IsActive;
 
             public InstanceType Type { get; set; } = InstanceType.Single;
             public void OnFoundExistingInstance(CustomAffliction existingAffliction)
@@ -27,7 +27,7 @@ namespace Minor_Miseries.Afflictions
 
             public bool InstantHeal { get; set; } = true;
 
-            public OverconfidenceRiskAffliction(AfflictionBodyArea bodyArea) : base("Overconfidence Risk", "Yourself", "Everything seems so simple, doesn't it ?", null, "ico_injury_pain", bodyArea) //customsprite :Minor_Miseries.Resources.Icons.OverconfidenceRisk.png
+            public OverconfidenceRiskAffliction(AfflictionBodyArea bodyArea) : base("GAMEPLAY_OverconfidenceRiskName", "GAMEPLAY_OverconfidenceRiskCause", "GAMEPLAY_OverconfidenceRiskDescription", null, "Minor_Miseries.Resources.Icons.OverconfidenceRisk.png", bodyArea, true)
             {
                 m_LastUpdateTime = GameManager.GetTimeOfDayComponent().GetHoursPlayedNotPaused();
             }
@@ -60,9 +60,9 @@ namespace Minor_Miseries.Afflictions
                 {
                     var cond = GameManager.GetConditionComponent();
                     bool hasAffliction = (cond != null && cond.HasAffliction());
-                    bool hasCustomAffliction = Minor_Miseries.Core.HasAnyOtherCustomAfflictionThan(typeof(OverconfidenceRiskAffliction), typeof(OverconfidenceAffliction));
+                    bool hasCustomAffliction = AfflictionLogic.HasAnyOtherCustomAfflictionThan(typeof(OverconfidenceRiskAffliction), typeof(OverconfidenceAffliction));
 
-                    if (hasAffliction || hasCustomAffliction || (IsOvercActive == true))
+                    if (hasAffliction || hasCustomAffliction || (IsActive == true))
                     {
                         Cure();
                         m_LastUpdateTime = GameManager.GetTimeOfDayComponent().GetHoursPlayedNotPaused();

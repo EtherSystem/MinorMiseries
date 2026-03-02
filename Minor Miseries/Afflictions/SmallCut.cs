@@ -29,20 +29,21 @@ namespace Minor_Miseries.Afflictions
 
             public Tuple<string, int, int>[] RemedyItems { get; set; } =
             {
-                Tuple.Create("GEAR_HeavyBandage", 1, 1)
+                Tuple.Create("GEAR_HeavyBandage", 1, 1),
+                Tuple.Create("GEAR_OldMansBeardDressing", 1, 1),
             };
             public Tuple<string, int, int>[] AltRemedyItems { get; set; } = Array.Empty<Tuple<string, int, int>>();
 
             public bool InstantHeal { get; set; } = false;
 
-            public SmallCutAffliction(AfflictionBodyArea bodyArea) : base("Small Cut", "Worsened scratch", "A superficial scratch has opened slightly, requiring attention to prevent further complications.", null, "ico_injury_majorBruising", bodyArea) //customsprite :Minor_Miseries.Resources.Icons.StuckFood.png
+            public SmallCutAffliction(AfflictionBodyArea bodyArea) : base("GAMEPLAY_SmallCutName", "GAMEPLAY_SmallCutCause", "GAMEPLAY_SmallCutDescription", null, "Minor_Miseries.Resources.Icons.SmallCut.png", bodyArea, true)
             {
                 m_StartTime = GameManager.GetTimeOfDayComponent().GetHoursPlayedNotPaused();
             }
 
             public void CureSymptoms()
             {
-                m_SymptomsCured = true;
+                if (!NeedsRemedy()) m_SymptomsCured = true;
             }
 
             public void OnCure()
@@ -63,7 +64,7 @@ namespace Minor_Miseries.Afflictions
 
                 if (elapsed >= (Settings.options.SmallCutDuration) / 2)
                 {
-                    GameManager.GetInfectionRiskComponent().InfectionRiskStart("Untreated small cut", AfflictionBodyArea.Chest,true);
+                    GameManager.GetInfectionRiskComponent().InfectionRiskStart(Localization.Get("GAMEPLAY_SmallCutInfection"), AfflictionBodyArea.Chest, true);
 
                     m_InfectionRiskTriggered = true;
                 }

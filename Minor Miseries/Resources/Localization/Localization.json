@@ -1,4 +1,12 @@
 {
+    "GAMEPLAY_NightTerrorWakeup": {
+        "English": "You jolt awake in sheer panic, gripped by a night terror",
+        "French (France)": "Vous vous réveillez en sursaut, pris de panique, en proie à une terreur nocturne.",
+        "Spanish (Spain)": "Te despiertas sobresaltado, presa del pánico, presa de un terror nocturno",
+        "German": "Du schreckst in blanker Panik auf, gepackt von einem Albtraum",
+        "Turkish": "Bir gece kabusunun pençesine düşmüş, büyük bir panikle aniden uyanıyorsunuz",
+        "Russian": "Вы резко просыпаетесь в состоянии паники, охваченные ночным кошмаром"
+    },
     "GAMEPLAY_BadDreamWakeup": {
         "English": "You wake up suddenly, shaken by a bad dream",
         "French (France)": "Vous vous réveillez brusquement, secoué par un mauvais rêve",
@@ -7,7 +15,7 @@
         "Turkish": "Kötü bir rüyanın etkisiyle aniden uyanıyorsunuz",
         "Russian": "Вы внезапно просыпаетесь, потрясенные кошмарным сном"
     },
-    "GAMEPLAY_BadDreamCantSleep": {
+    "GAMEPLAY_CantSleep": {
         "English": "You are too shaken to fall back asleep",
         "French (France)": "Vous êtes trop secoué pour vous rendormir",
         "Spanish (Spain)": "Estás demasiado conmocionado para volver a dormirte",
@@ -15,158 +23,334 @@
         "Turkish": "O kadar sarsıldınız ki tekrar uyuyamıyorsunuz",
         "Russian": "Вы слишком потрясены, чтобы снова заснуть"
     },
+
+
     "GAMEPLAY_SplinterName": {
         "English": "Splinter",
         "French (France)": "Écharde",
-        "Spanish (Spain)": "",
-        "German": "",
-        "Turkish": "",
-        "Russian": ""
+        "Spanish (Spain)": "Astilla",
+        "German": "Splitter",
+        "Turkish": "Kıymık",
+        "Russian": "Заноза"
     },
     "GAMEPLAY_SplinterCause": {
         "English": "Unprotected hands",
         "French (France)": "Mains non protégées",
-        "Spanish (Spain)": "",
-        "German": "",
-        "Turkish": "",
-        "Russian": ""
+        "Spanish (Spain)": "Manos sin protección",
+        "German": "Ungeschützte Hände",
+        "Turkish": "Korunmasız eller",
+        "Russian": "Незащищённые руки"
     },
     "GAMEPLAY_SplinterDescription": {
-        "English": "A splinter is lodged in your skin",
-        "French (France)": "Une écharde est logée sous ta peau",
-        "Spanish (Spain)": "",
-        "German": "",
-        "Turkish": "",
-        "Russian": ""
+        "English": "A splinter is lodged in your skin.",
+        "French (France)": "Une écharde est logée sous ta peau.",
+        "Spanish (Spain)": "Una astilla se ha clavado en tu piel.",
+        "German": "Ein Splitter steckt in deiner Haut.",
+        "Turkish": "Cildinize bir kıymık battı.",
+        "Russian": "В кожу вонзилась заноза."
     },
 
-
-
-    "GAMEPLAY_StuckFoodName": {
-        "English": "Stuck Food",
-        "French (France)": "Nourriture bloquée",
-        "Spanish (Spain)": "",
-        "German": "",
-        "Turkish": "",
-        "Russian": ""
+    "GAMEPLAY_SensitiveHandName": {
+        "English": "Sensitive Hand",
+        "French (France)": "Main sensible",
+        "Spanish (Spain)": "Mano sensible",
+        "German": "Empfindliche Hand",
+        "Turkish": "Hassas el",
+        "Russian": "Чувствительная рука"
     },
-    "GAMEPLAY_StuckFoodCause": {
-        "English": "You ate too fast",
-        "French (France)": "Vous avez mangé trop vite",
-        "Spanish (Spain)": "",
-        "German": "",
-        "Turkish": "",
-        "Russian": ""
+    "GAMEPLAY_SensitiveHandCause": {
+        "English": "Local inflammation",
+        "French (France)": "Inflammation locale",
+        "Spanish (Spain)": "Inflamación local",
+        "German": "Lokale Entzündung",
+        "Turkish": "Yerel iltihaplanma",
+        "Russian": "Местное воспаление"
     },
-    "GAMEPLAY_StuckFoodDescription": {
-        "English": "It seems that some food is stuck between your teeth",
-        "French (France)": "Il semblerait que de la nourriture se soit bloquée entre tes dents",
-        "Spanish (Spain)": "",
-        "German": "",
-        "Turkish": "",
-        "Russian": ""
+    "GAMEPLAY_SensitiveHandDescription": {
+        "English": "The splinter in your hand has caused irritation, your hand remains sensitive and easily irritated, making your actions more difficult.",
+        "French (France)": "L'écharde dans ta main a provoqué une irritation, ta main reste sensible et s'irrite facilement, rendant tes actions plus difficiles.",
+        "Spanish (Spain)": "La astilla en tu mano ha causado irritación; tu mano sigue sensible y se irrita con facilidad, lo que dificulta tus acciones.",
+        "German": "Der Splitter in deiner Hand hat Reizungen verursacht; deine Hand bleibt empfindlich und entzündet sich leicht, was deine Handlungen erschwert.",
+        "Turkish": "Elinizdeki kıymık tahrişe neden oldu; eliniz hassas kaldı ve kolayca tahriş oluyor, bu da eylemlerinizi zorlaştırıyor.",
+        "Russian": "Заноза в руке вызвала раздражение: рука остаётся чувствительной и легко воспаляется, из-за чего действовать сложнее."
     },
-
 
 
     "GAMEPLAY_BlisterName": {
         "English": "Blister",
         "French (France)": "Ampoule",
-        "Spanish (Spain)": "",
-        "German": "",
-        "Turkish": "",
-        "Russian": ""
+        "Spanish (Spain)": "Ampolla",
+        "German": "Blase",
+        "Turkish": "Su toplaması",
+        "Russian": "Мозоль"
     },
     "GAMEPLAY_BlisterCause": {
         "English": "Walked for too long",
-        "French (France)": "Marcher trop longtemps",
-        "Spanish (Spain)": "",
-        "German": "",
-        "Turkish": "",
-        "Russian": ""
+        "French (France)": "Marche trop longue",
+        "Spanish (Spain)": "Has caminado demasiado tiempo",
+        "German": "Zu lange gelaufen",
+        "Turkish": "Çok uzun yürüdünüz",
+        "Russian": "Слишком долго ходили"
     },
     "GAMEPLAY_BlisterDescription": {
-        "English": "You have made a sustained effort for too long",
-        "French (France)": "Tu as fais un effort soutenu pendant trop longtemps",
-        "Spanish (Spain)": "",
-        "German": "",
-        "Turkish": "",
-        "Russian": ""
+        "English": "You have made a sustained effort for too long.",
+        "French (France)": "Tu as fais un effort soutenu pendant trop longtemps.",
+        "Spanish (Spain)": "Has hecho un esfuerzo prolongado durante demasiado tiempo.",
+        "German": "Du hast dich zu lange dauerhaft angestrengt.",
+        "Turkish": "Çok uzun süre sürekli efor sarf ettiniz.",
+        "Russian": "Вы слишком долго прилагали непрерывные усилия."
     },
 
-
-
-    "GAMEPLAY_BackPainName": {
-        "English": "Back Pain",
-        "French (France)": "Mal de dos",
-        "Spanish (Spain)": "",
-        "German": "",
-        "Turkish": "",
-        "Russian": ""
+    "GAMEPLAY_BareSkinName": {
+        "English": "Bare Skin",
+        "French (France)": "Peau à vif",
+        "Spanish (Spain)": "Piel en carne viva",
+        "German": "Aufgescheuerte Haut",
+        "Turkish": "Tahriş olmuş cilt",
+        "Russian": "Натёртая кожа"
     },
-    "GAMEPLAY_BackPainCause": {
-        "English": "A too heavy backpack",
-        "French (France)": "Un sac à dos trop lourd",
-        "Spanish (Spain)": "",
-        "German": "",
-        "Turkish": "",
-        "Russian": ""
+    "GAMEPLAY_BareSkinCause": {
+        "English": "Repeated friction",
+        "French (France)": "Frottements répétés",
+        "Spanish (Spain)": "Rozaduras repetidas",
+        "German": "Wiederholte Reibung",
+        "Turkish": "Tekrarlayan sürtünme",
+        "Russian": "Повторяющееся трение"
     },
-    "GAMEPLAY_BackPainDescription": {
-        "English": "Being encumbered for too long has consequences...",
-        "French (France)": "Être encombré pendant trop longtemps a des conséquences...",
-        "Spanish (Spain)": "",
-        "German": "",
-        "Turkish": "",
-        "Russian": ""
+    "GAMEPLAY_BareSkinDescription": {
+        "English": "Skin worn down by repeated friction becomes tender, making prolonged movement uncomfortable.",
+        "French (France)": "La peau, usée par des frottements répétés, devient à vif, rendant les déplacements prolongés inconfortables.",
+        "Spanish (Spain)": "La piel, desgastada por la fricción repetida, se vuelve sensible, haciendo incómodo moverse durante mucho tiempo.",
+        "German": "Durch wiederholte Reibung aufgescheuerte Haut wird empfindlich und macht längere Bewegungen unangenehm.",
+        "Turkish": "Tekrarlayan sürtünmeyle aşınan cildiniz hassaslaşır; uzun süre hareket etmek rahatsız edici olur.",
+        "Russian": "Кожа, натёртая повторяющимся трением, становится болезненной, и длительное движение причиняет дискомфорт."
     },
-
 
 
     "GAMEPLAY_ScratchName": {
         "English": "Scratch",
         "French (France)": "Égratignure",
-        "Spanish (Spain)": "",
-        "German": "",
-        "Turkish": "",
-        "Russian": ""
+        "Spanish (Spain)": "Arañazo",
+        "German": "Schramme",
+        "Turkish": "Sıyrık",
+        "Russian": "Царапина"
     },
     "GAMEPLAY_ScratchCause": {
         "English": "Awkward gesture",
         "French (France)": "Geste maladroit",
-        "Spanish (Spain)": "",
-        "German": "",
-        "Turkish": "",
-        "Russian": ""
+        "Spanish (Spain)": "Movimiento torpe",
+        "German": "Ungeschickte Bewegung",
+        "Turkish": "Sakarlık",
+        "Russian": "Неуклюжее движение"
     },
     "GAMEPLAY_ScratchDescription": {
-        "English": "You've scratched your skin, nothing too serious",
-        "French (France)": "Tu a égratigné ta peau, rien de trop sérieux",
-        "Spanish (Spain)": "",
-        "German": "",
-        "Turkish": "",
-        "Russian": ""
+        "English": "You've scratched your skin, nothing too serious...",
+        "French (France)": "Tu a égratigné ta peau, rien de trop sérieux...",
+        "Spanish (Spain)": "Te has arañado la piel, nada demasiado serio...",
+        "German": "Du hast dir die Haut aufgeschürft, nichts allzu Ernstes...",
+        "Turkish": "Cildinizi sıyırdınız, çok da ciddi değil...",
+        "Russian": "Вы поцарапали кожу — ничего слишком серьёзного..."
     },
+
+    "GAMEPLAY_SmallCutName": {
+        "English": "Small Cut",
+        "French (France)": "Petite coupure",
+        "Spanish (Spain)": "Pequeño corte",
+        "German": "Kleine Schnittwunde",
+        "Turkish": "Küçük kesik",
+        "Russian": "Небольшой порез"
+    },
+    "GAMEPLAY_SmallCutCause": {
+        "English": "Worsened scratch",
+        "French (France)": "Égratignure aggravée",
+        "Spanish (Spain)": "Arañazo empeorado",
+        "German": "Verschlimmerte Schramme",
+        "Turkish": "Kötüleşen sıyrık",
+        "Russian": "Ухудшившаяся царапина"
+    },
+    "GAMEPLAY_SmallCutDescription": {
+        "English": "A superficial scratch has opened slightly, requiring attention to prevent further complications.",
+        "French (France)": "Une égratignure superficielle s'est légèrement ouverte, nécessitant des soins pour éviter des complications.",
+        "Spanish (Spain)": "Un arañazo superficial se ha abierto un poco; requiere atención para evitar complicaciones.",
+        "German": "Eine oberflächliche Schramme hat sich leicht geöffnet und braucht Pflege, um weitere Komplikationen zu vermeiden.",
+        "Turkish": "Yüzeysel bir sıyrık biraz açıldı; daha fazla sorun yaşamamak için ilgilenmeniz gerekiyor.",
+        "Russian": "Поверхностная царапина немного разошлась; за ней нужно присмотреть, чтобы избежать осложнений."
+    },
+
+
+    "GAMEPLAY_StuckFoodName": {
+        "English": "Stuck Food",
+        "French (France)": "Nourriture bloquée",
+        "Spanish (Spain)": "Comida atascada",
+        "German": "Steckengebliebene Nahrung",
+        "Turkish": "Takılan yiyecek",
+        "Russian": "Застрявшая еда"
+    },
+    "GAMEPLAY_StuckFoodCause": {
+        "English": "You ate too fast",
+        "French (France)": "Vous avez mangé trop vite",
+        "Spanish (Spain)": "Comiste demasiado rápido",
+        "German": "Du hast zu schnell gegessen",
+        "Turkish": "Çok hızlı yediniz",
+        "Russian": "Вы ели слишком быстро"
+    },
+    "GAMEPLAY_StuckFoodDescription": {
+        "English": "It seems that some food is stuck between your teeth, and that's terribly annoying !",
+        "French (France)": "Il semblerait que de la nourriture se soit bloquée entre tes dents, et c'est terriblement ennuyant !",
+        "Spanish (Spain)": "Parece que se te ha quedado comida entre los dientes, ¡y es terriblemente molesto !",
+        "German": "Es scheint, als hätte sich Essen zwischen deinen Zähnen festgesetzt, und das ist furchtbar nervig !",
+        "Turkish": "Dişlerinizin arasına yiyecek sıkışmış gibi görünüyor ve bu inanılmaz derecede sinir bozucu !",
+        "Russian": "Похоже, еда застряла между зубами — и это ужасно раздражает !"
+    },
+
+
+    "GAMEPLAY_BackPainName": {
+        "English": "Back Pain",
+        "French (France)": "Mal de dos",
+        "Spanish (Spain)": "Dolor de espalda",
+        "German": "Rückenschmerzen",
+        "Turkish": "Sırt ağrısı",
+        "Russian": "Боль в спине"
+    },
+    "GAMEPLAY_BackPainCause": {
+        "English": "A too heavy backpack",
+        "French (France)": "Un sac à dos trop lourd",
+        "Spanish (Spain)": "Una mochila demasiado pesada",
+        "German": "Ein zu schwerer Rucksack",
+        "Turkish": "Çok ağır bir sırt çantası",
+        "Russian": "Слишком тяжёлый рюкзак"
+    },
+    "GAMEPLAY_BackPainDescription": {
+        "English": "Being encumbered for too long has consequences...",
+        "French (France)": "Être encombré pendant trop longtemps a des conséquences...",
+        "Spanish (Spain)": "Estar demasiado cargado durante mucho tiempo tiene consecuencias...",
+        "German": "Zu lange überlastet zu sein hat Folgen...",
+        "Turkish": "Çok uzun süre aşırı yüklü kalmanın sonuçları olur...",
+        "Russian": "Долго быть перегруженным имеет последствия..."
+    },
+
 
     "GAMEPLAY_BadDreamName": {
         "English": "Bad Dream",
         "French (France)": "Mauvais Rêve",
-        "Spanish (Spain)": "",
-        "German": "",
-        "Turkish": "",
-        "Russian": ""
+        "Spanish (Spain)": "Pesadilla",
+        "German": "Albtraum",
+        "Turkish": "Kötü rüya",
+        "Russian": "Кошмар"
     },
     "GAMEPLAY_BadDreamCause": {
         "English": "Troubled sleep",
         "French (France)": "Sommeil troublé",
+        "Spanish (Spain)": "Sueño inquieto",
+        "German": "Unruhiger Schlaf",
+        "Turkish": "Huzursuz uyku",
+        "Russian": "Беспокойный сон"
+    },
+    "GAMEPLAY_BadDreamDescription": {
+        "English": "A disturbing dream snaps you awake, your throughts racing and sleep refusing to return.",
+        "French (France)": "Un mauvais rêve vous réveille en sursant, vos pensées s'emballent et le sommeil refuse de revenir.",
+        "Spanish (Spain)": "Un sueño inquietante te despierta de golpe; tus pensamientos se aceleran y el sueño se niega a volver.",
+        "German": "Ein verstörender Traum reißt dich aus dem Schlaf; deine Gedanken rasen und der Schlaf will nicht zurückkehren.",
+        "Turkish": "Rahatsız edici bir rüya sizi aniden uyandırır; düşünceleriniz yarışır ve uyku geri gelmez.",
+        "Russian": "Тревожный сон резко будит вас: мысли несутся, и сон никак не возвращается."
+    },
+
+    "GAMEPLAY_NightTerrorName": {
+        "English": "Night Terror",
+        "French (France)": "Terreur nocturne",
+        "Spanish (Spain)": "Terror nocturno",
+        "German": "Nachtschreck",
+        "Turkish": "Gece terörü",
+        "Russian": "Ночной ужас"
+    },
+    "GAMEPLAY_NightTerrorCause": {
+        "English": "Troubled sleep",
+        "French (France)": "Sommeil troublé",
+        "Spanish (Spain)": "Sueño inquieto",
+        "German": "Unruhiger Schlaf",
+        "Turkish": "Huzursuz uyku",
+        "Russian": "Беспокойный сон"
+    },
+    "GAMEPLAY_NightTerrorDescription": {
+        "English": "You woke in intense panic, heart racing and mind clouded. The lingering fear makes it hard to calm down and regain your composure.",
+        "French (France)": "Tu t'es réveillé en panique intense, le cœur battant et l'esprit embrumé. La peur persistante rend difficile de te calmer et de reprendre tes esprits.",
+        "Spanish (Spain)": "Te despertaste en un pánico intenso, con el corazón acelerado y la mente nublada. El miedo persistente dificulta calmarte y recuperar la compostura.",
+        "German": "Du bist in heftiger Panik aufgewacht, mit rasendem Herz und vernebeltem Kopf. Die anhaltende Angst macht es schwer, dich zu beruhigen und dich wieder zu fangen.",
+        "Turkish": "Yoğun bir panikle uyandınız; kalbiniz hızla çarpıyor, zihniniz bulanık. Süren korku, sakinleşmenizi ve kendinize gelmenizi zorlaştırıyor.",
+        "Russian": "Вы проснулись в сильной панике: сердце колотится, в голове туман. Оставшийся страх мешает успокоиться и прийти в себя."
+    },
+
+
+    "GAMEPLAY_WristTraumaName": {
+        "English": "Wrist Trauma",
+        "French (France)": "Traumatisme du poignet",
+        "Spanish (Spain)": "Traumatismo de muñeca",
+        "German": "Handgelenkverletzung",
+        "Turkish": "Bilek travması",
+        "Russian": "Травма запястья"
+    },
+    "GAMEPLAY_WristTraumaCause": {
+        "English": "Weapon recoil",
+        "French (France)": "Recul de l'arme",
+        "Spanish (Spain)": "Retroceso del arma",
+        "German": "Waffenrückstoß",
+        "Turkish": "Silah geri tepmesi",
+        "Russian": "Отдача оружия"
+    },
+    "GAMEPLAY_WristTraumaDescription": {
+        "English": "The recoil hurt your wrist. Aiming and handling the weapon is more difficult.",
+        "French (France)": "Le recul a blessé ton poignet. Viser et manipuler l'arme est plus difficile.",
+        "Spanish (Spain)": "El retroceso te ha lesionado la muñeca. Apuntar y manejar el arma es más difícil.",
+        "German": "Der Rückstoß hat dein Handgelenk verletzt. Zielen und das Handling der Waffe sind schwieriger.",
+        "Turkish": "Geri tepme bileğinizi incitti. Nişan almak ve silahı kullanmak daha zor.",
+        "Russian": "Отдача повредила запястье. Целиться и обращаться с оружием стало сложнее."
+    },
+
+
+    "GAMEPLAY_ShoulderTraumaName": {
+        "English": "Shoulder Trauma",
+        "French (France)": "Traumatisme de l'épaule",
+        "Spanish (Spain)": "Traumatismo de hombro",
+        "German": "Schulterverletzung",
+        "Turkish": "Omuz travması",
+        "Russian": "Травма плеча"
+    },
+    "GAMEPLAY_ShoulderTraumaCause": {
+        "English": "Weapon recoil",
+        "French (France)": "Recul de l'arme",
+        "Spanish (Spain)": "Retroceso del arma",
+        "German": "Waffenrückstoß",
+        "Turkish": "Silah geri tepmesi",
+        "Russian": "Отдача оружия"
+    },
+    "GAMEPLAY_ShoulderTraumaDescription": {
+        "English": "The recoil hurt your shoulder. Aiming and handling the weapon is more difficult.",
+        "French (France)": "Le recul a blessé ton épaule. Viser et manipuler l'arme est plus difficile.",
+        "Spanish (Spain)": "El retroceso te ha lesionado el hombro. Apuntar y manejar el arma es más difícil.",
+        "German": "Der Rückstoß hat deine Schulter verletzt. Zielen und das Handling der Waffe sind schwieriger.",
+        "Turkish": "Geri tepme omzunuzu incitti. Nişan almak ve silahı kullanmak daha zor.",
+        "Russian": "Отдача повредила плечо. Целиться и обращаться с оружием стало сложнее."
+    },
+
+    "GAMEPLAY_SoreNeckName": {
+        "English": "Sore Neck",
+        "French (France)": "",
         "Spanish (Spain)": "",
         "German": "",
         "Turkish": "",
         "Russian": ""
     },
-    "GAMEPLAY_BadDreamDescription": {
-        "English": "A disturbing dream snaps you awake, your throughts racing and sleep refusing to return",
-        "French (France)": "Un mauvais rêve vous réveille en sursant, vos pensées s'emballent et le sommeil refuse de revenir",
+    "GAMEPLAY_SoreNeckCause": {
+        "English": "Bad sleeping position",
+        "French (France)": "",
+        "Spanish (Spain)": "",
+        "German": "",
+        "Turkish": "",
+        "Russian": ""
+    },
+    "GAMEPLAY_SoreNeckDescription": {
+        "English": "You slept in a very uncomfortable position, your neck is aching terribly.",
+        "French (France)": "",
         "Spanish (Spain)": "",
         "German": "",
         "Turkish": "",
@@ -174,54 +358,71 @@
     },
 
     "GAMEPLAY_OverconfidenceRiskName": {
-        "English": "Overconfidence",
-        "French (France)": "Surconfiance",
-        "Spanish (Spain)": "",
-        "German": "",
-        "Turkish": "",
-        "Russian": ""
+        "English": "Overconfidence Risk",
+        "French (France)": "Risque de surconfiance",
+        "Spanish (Spain)": "Riesgo de exceso de confianza",
+        "German": "Risiko der Selbstüberschätzung",
+        "Turkish": "Aşırı özgüven riski",
+        "Russian": "Риск самоуверенности"
     },
     "GAMEPLAY_OverconfidenceRiskCause": {
         "English": "Yourself",
         "French (France)": "Toi-même",
-        "Spanish (Spain)": "",
-        "German": "",
-        "Turkish": "",
-        "Russian": ""
+        "Spanish (Spain)": "Tú mismo",
+        "German": "Du selbst",
+        "Turkish": "Kendiniz",
+        "Russian": "Вы сами"
     },
     "GAMEPLAY_OverconfidenceRiskDescription": {
         "English": "Everything seems so simple, doesn't it ?",
         "French (France)": "Tout semble si simple, n'est-ce pas ?",
-        "Spanish (Spain)": "",
-        "German": "",
-        "Turkish": "",
-        "Russian": ""
+        "Spanish (Spain)": "Todo parece tan sencillo, ¿verdad?",
+        "German": "Alles wirkt so einfach, oder ?",
+        "Turkish": "Her şey çok basit görünüyor, değil mi ?",
+        "Russian": "Всё кажется таким простым, не так ли ?"
     },
-
 
 
     "GAMEPLAY_OverconfidenceName": {
         "English": "Overconfidence",
         "French (France)": "Surconfiance",
-        "Spanish (Spain)": "",
-        "German": "",
-        "Turkish": "",
-        "Russian": ""
+        "Spanish (Spain)": "Exceso de confianza",
+        "German": "Selbstüberschätzung",
+        "Turkish": "Aşırı özgüven",
+        "Russian": "Самоуверенность"
     },
     "GAMEPLAY_OverconfidenceCause": {
         "English": "Yourself",
         "French (France)": "Toi-même",
-        "Spanish (Spain)": "",
-        "German": "",
-        "Turkish": "",
-        "Russian": ""
+        "Spanish (Spain)": "Tú mismo",
+        "German": "Du selbst",
+        "Turkish": "Kendiniz",
+        "Russian": "Вы сами"
     },
     "GAMEPLAY_OverconfidenceDescription": {
         "English": "You are far too confident, you are paying the price for your experience, and you take your survival for granted. Afflictions are now easier to contract.",
         "French (France)": "Tu es bien trop confiant, tu payes le prix de ton expérience et tiens ta survie pour acquise. Les maladies sont désormais plus faciles à contracter.",
-        "Spanish (Spain)": "",
-        "German": "",
-        "Turkish": "",
-        "Russian": ""
+        "Spanish (Spain)": "Eres demasiado confiado, pagas el precio de tu experiencia y das tu supervivencia por hecha. Ahora es más fácil contraer aflicciones.",
+        "German": "Du bist viel zu selbstsicher, Du zahlst den Preis deiner Erfahrung und nimmst dein Überleben als selbstverständlich. Leiden lassen sich nun leichter zuziehen.",
+        "Turkish": "Fazlasıyla kendinize güveniyorsunuz, tecrübenizin bedelini ödüyor ve hayatta kalmanızı garanti görüyorsunuz. Artık rahatsızlıkları kapmak daha kolay.",
+        "Russian": "Вы слишком самоуверенны, вы платите цену за свой опыт и воспринимаете выживание как должное. Теперь недуги подхватить проще."
+    },
+
+
+    "GAMEPLAY_BareSkinInfection": {
+        "English": "Untreated bare skin",
+        "French (France)": "Peau à vif non traitée",
+        "Spanish (Spain)": "Piel en carne viva sin tratar",
+        "German": "Unbehandelte aufgescheuerte Haut",
+        "Turkish": "Tedavi edilmemiş tahriş olmuş cilt",
+        "Russian": "Нелеченная натёртая кожа"
+    },
+    "GAMEPLAY_SmallCutInfection": {
+        "English": "Untreated small cut",
+        "French (France)": "Petite coupure non traitée",
+        "Spanish (Spain)": "Pequeño corte sin tratar",
+        "German": "Unbehandelte kleine Schnittwunde",
+        "Turkish": "Tedavi edilmemiş küçük kesik",
+        "Russian": "Нелеченный небольшой порез"
     }
 }

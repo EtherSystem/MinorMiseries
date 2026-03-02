@@ -1,20 +1,7 @@
-﻿using static Minor_Miseries.Afflictions.ShoulderRecoilTrauma;
-using static Minor_Miseries.Afflictions.OverconfidenceRisk;
-using static Minor_Miseries.Afflictions.WristRecoilTrauma;
-using static Minor_Miseries.Afflictions.Overconfidence;
-using static Minor_Miseries.Afflictions.SensitiveHand;
-using static Minor_Miseries.Afflictions.StuckFood;
-using static Minor_Miseries.Afflictions.SmallCut;
-using static Minor_Miseries.Afflictions.Splinter;
-using static Minor_Miseries.Afflictions.BackPain;
-using static Minor_Miseries.Afflictions.BadDream;
-using static Minor_Miseries.Afflictions.BareSkin;
-using static Minor_Miseries.Afflictions.Blister;
-using static Minor_Miseries.Afflictions.Scratch;
-using AfflictionComponent.Components;
+﻿using Minor_Miseries.Persistence;
 using LocalizationUtilities;
 
-[assembly: MelonInfo(typeof(Minor_Miseries.Core), "Minor Miseries", "1.3.1", "EtherSystem", null)]
+[assembly: MelonInfo(typeof(Minor_Miseries.Core), "Minor Miseries", "1.4.0", "EtherSystem, Flower Field", null)]
 [assembly: MelonGame("Hinterland", "TheLongDark")]
 
 namespace Minor_Miseries
@@ -33,347 +20,114 @@ namespace Minor_Miseries
             }
             return result;
         }
+
+        // -----------ModData persistence--------------------
+        public static Core? Instance { get; private set; }
+        internal static MMState State = new();
+        private bool _dirty = false;
+
+        // ---------------------------------------------------
+
         public override void OnInitializeMelon()
         {
+            Instance = this;
             LocalizationManager.LoadJsonLocalization(LoadEmbeddedJSON("Localization.json"));
             LoggerInstance.Msg("Initialized.");
             Settings.OnLoad();
 
             //dev console commands
-            uConsole.RegisterCommand("mm_afflictions", new Action(() =>
-            {
-                new SplinterAffliction(AfflictionBodyArea.HandLeft).Start();
-                new StuckFoodAffliction(AfflictionBodyArea.Head).Start();
-                new BlisterAffliction(AfflictionBodyArea.FootLeft).Start();
-                new BackPainAffliction(AfflictionBodyArea.Chest).Start();
-                new ScratchAffliction(AfflictionBodyArea.Chest).Start();
-                new BadDreamAffliction(AfflictionBodyArea.Head).Start();
-                new SensitiveHandAffliction(AfflictionBodyArea.HandLeft).Start();
-                new BareSkinAffliction(AfflictionBodyArea.FootRight).Start();
-                new SmallCutAffliction(AfflictionBodyArea.Chest).Start();
-            }));
-
-            uConsole.RegisterCommand("splinter", new Action(() =>
-            {
-                new SplinterAffliction(AfflictionBodyArea.HandLeft).Start();
-            }));
-
-            uConsole.RegisterCommand("stuckfood", new Action(() =>
-            {
-                new StuckFoodAffliction(AfflictionBodyArea.Head).Start();
-            }));
-
-            uConsole.RegisterCommand("blister", new Action(() =>
-            {
-                new BlisterAffliction(AfflictionBodyArea.FootLeft).Start();
-            }));
-
-            uConsole.RegisterCommand("backpain", new Action(() =>
-            {
-                new BackPainAffliction(AfflictionBodyArea.Chest).Start();
-            }));
-
-            uConsole.RegisterCommand("scratch", new Action(() =>
-            {
-                new ScratchAffliction(AfflictionBodyArea.Chest).Start();
-            }));
-
-            uConsole.RegisterCommand("baddream", new Action(() =>
-            {
-                new BadDreamAffliction(AfflictionBodyArea.Head).Start();
-            }));
-
-            uConsole.RegisterCommand("sensitivehand", new Action(() =>
-            {
-                new SensitiveHandAffliction(AfflictionBodyArea.HandLeft).Start();
-            }));
-
-            uConsole.RegisterCommand("bareskin", new Action(() =>
-            {
-                new BareSkinAffliction(AfflictionBodyArea.FootRight).Start();
-            }));
-
-            uConsole.RegisterCommand("smallcut", new Action(() =>
-            {
-                new SmallCutAffliction(AfflictionBodyArea.Chest).Start();
-            }));
-
-            uConsole.RegisterCommand("wristrecoil", new Action(() =>
-            {
-                new WristRecoilInjuryAffliction(AfflictionBodyArea.HandRight).Start();
-            }));
-
-            uConsole.RegisterCommand("shoulderrecoil", new Action(() =>
-            {
-                new ShoulderRecoilInjuryAffliction(AfflictionBodyArea.Chest).Start();
-            }));
-
-            uConsole.RegisterCommand("mm_afflictions_cure", new Action(() =>
-            {
-                var mgr = AfflictionManager.GetAfflictionManagerInstance();
-                if (mgr?.m_Afflictions == null) return;
-
-                for (int i = mgr.m_Afflictions.Count - 1; i >= 0; i--)
-                {
-                    var a = mgr.m_Afflictions[i];
-                    if (a == null) continue;
-
-                    if (a is SplinterAffliction
-                    || a is StuckFoodAffliction
-                    || a is BlisterAffliction
-                    || a is BackPainAffliction
-                    || a is ScratchAffliction
-                    || a is BadDreamAffliction
-                    || a is SensitiveHandAffliction
-                    || a is BareSkinAffliction
-                    || a is SmallCutAffliction
-                    || a is WristRecoilInjuryAffliction
-                    || a is ShoulderRecoilInjuryAffliction)
-                    {
-                        a.Cure();
-                    }
-                }
-            }));
-
-            uConsole.RegisterCommand("overcrisk", new Action(() =>
-            {
-                new OverconfidenceRiskAffliction(AfflictionBodyArea.Head).Start();
-            }));
-
-            uConsole.RegisterCommand("overc", new Action(() =>
-            {
-                new OverconfidenceAffliction(AfflictionBodyArea.Head).Start();
-            }));
-
-            uConsole.RegisterCommand("overc_cure", new Action(() =>
-            {
-                var mgr = AfflictionManager.GetAfflictionManagerInstance();
-                if (mgr?.m_Afflictions == null) return;
-
-                for (int i = mgr.m_Afflictions.Count - 1; i >= 0; i--)
-                {
-                    var a = mgr.m_Afflictions[i];
-                    if (a == null) continue;
-
-                    if (a is OverconfidenceRiskAffliction || a is OverconfidenceAffliction)
-                        a.Cure();
-                }
-            }));
+            DevConsoleCommands.Register();
         }
 
-        private readonly System.Random _random = new();
         private float updateTimer = 0f;
-        private float hoursSinceLastAffliction = 0f;
-        private float hoursSpentMoving = 0f;
-        private float hoursOverloaded = 0f;
         private bool wasResting = false;
         private float badDreamRollTimer = 0f;
-        private const float CONF_THRESHOLD_HOURS = 96f;
-        private const float BLIST_THRESHOLD_HOURS = 4f;
-        private const float OVERC_BLIST_THRESHOLD_HOURS = 3f;
-        private const float BACKPAIN_TRESHOLD_HOURS = 1f;
-        private const float OVERC_BACKPAIN_TRESHOLD_HOURS = 0.5f;
-        private const float STUCKFOOD_CHANCE = 5f;
-        private const float OVERC_STUCKFOOD_CHANCE = 10f;
-        private const float BAD_DREAM_CHANCE = 4f;
-        private const float OVERC_BAD_DREAM_CHANCE = 8f;
-        private const float BAD_DREAM_ROLL_EVERY = 1f;
+        private float _stoppedHours = 0f;
         private bool hadAfflictionLastTick = false;
         private bool wasEating = false;
         private bool wasInStruggle = false;
-        private float hoursSinceLastAnimalAttack = float.PositiveInfinity;
-        private const float BAD_DREAM_ATTACK_WINDOW_HOURS = 24f;
 
-        public static bool HasAnyOtherCustomAfflictionThan(Type ignoredType1, Type ignoredType2)
+        public void SaveIfDirty()
         {
-            var mgr = AfflictionManager.GetAfflictionManagerInstance();
-            if (mgr?.m_Afflictions == null) return false;
-
-            foreach (var a in mgr.m_Afflictions)
-            {
-                if (a == null) continue;
-
-                var t = a.GetType();
-                if (t == ignoredType1 || t == ignoredType2)
-                    continue;
-
-                return true;
-            }
-            return false;
+            if (!_dirty) return;
+            SaveDataManager.OnSave();
+            _dirty = false;
         }
-        public static bool IsPlayerOverloaded()
+
+        public void ResetRuntime()
         {
-            var enc = GameManager.GetEncumberComponent();
-            if (enc == null) return false;
-            return enc.m_GearWeightKG > enc.m_MaxCarryCapacity;
+            _dirty = false;
+
+            updateTimer = 0f;
+            badDreamRollTimer = 0f;
+            _stoppedHours = 0f;
+
+            hadAfflictionLastTick = false;
+            wasEating = false;
+            wasInStruggle = false;
+            wasResting = false;
+        }
+
+        public void OnStateLoaded()
+        {
+            bool changed = false;
+
+            float oldScore = Core.State.AnimalStressScore;
+            Core.State.AnimalStressScore = Mathf.Max(0f, Core.State.AnimalStressScore);
+            if (!Mathf.Approximately(oldScore, Core.State.AnimalStressScore)) changed = true;
+
+            if (float.IsPositiveInfinity(Core.State.AnimalStressTimer) || Core.State.AnimalStressTimer < 0f)
+            {
+                Core.State.AnimalStressTimer = -1f;
+                changed = true;
+            }
+
+            float oldSince = Core.State.HoursSinceLastAffliction;
+            float oldMove = Core.State.HoursSpentMoving;
+            float oldOver = Core.State.HoursOverloaded;
+
+            Core.State.HoursSinceLastAffliction = Mathf.Max(0f, Core.State.HoursSinceLastAffliction);
+            Core.State.HoursSpentMoving = Mathf.Max(0f, Core.State.HoursSpentMoving);
+            Core.State.HoursOverloaded = Mathf.Max(0f, Core.State.HoursOverloaded);
+
+            if (!Mathf.Approximately(oldSince, Core.State.HoursSinceLastAffliction)) changed = true;
+            if (!Mathf.Approximately(oldMove, Core.State.HoursSpentMoving)) changed = true;
+            if (!Mathf.Approximately(oldOver, Core.State.HoursOverloaded)) changed = true;
+
+            if (changed) _dirty = true;
+        }
+
+        public void ResetAll()
+        {
+            SaveDataManager.OnNewGame();
+            ResetRuntime();
         }
 
         public override void OnUpdate()
         {
-            if (GameManager.m_Instance == null) return;
+            if (GameManager.m_Instance == null || GameManager.m_IsPaused) return;
             string scene = GameManager.m_ActiveScene;
             if (scene == "MainMenu" || scene == "Boot" || scene == "Empty") return;
 
             var cond = GameManager.GetConditionComponent();
-
-            var firstAid = InterfaceManager.GetPanel<Panel_FirstAid>();
-            if (firstAid != null && firstAid.isActiveAndEnabled)
-            {
-                return;
-            }
-
-            //clock
-            updateTimer += Time.deltaTime;
-            if (updateTimer < 1.0f) return;
-            float realTimeElapsed = updateTimer;
-            updateTimer = 0f;
-            float gameHoursPassed = GameManager.GetTimeOfDayComponent().GetTODHours(realTimeElapsed);
             if (cond == null) return;
 
-            //bad dream conditions
-            var struggle = GameManager.GetPlayerStruggleComponent();
-            bool inStruggle = struggle != null && struggle.InStruggle();
+            // clock (1 tick / sec)
+            updateTimer += Time.deltaTime;
+            if (updateTimer < 1.0f) return;
 
-            if (inStruggle && !wasInStruggle)
-            {
-                hoursSinceLastAnimalAttack = 0f;
-            }
-            else
-            {
-                if (!float.IsPositiveInfinity(hoursSinceLastAnimalAttack))
-                    hoursSinceLastAnimalAttack += gameHoursPassed;
-            }
-            wasInStruggle = inStruggle;
+            float realTimeElapsed = updateTimer;
+            updateTimer = 0f;
 
+            var tod = GameManager.GetTimeOfDayComponent();
+            if (tod == null) return;
 
-            //StuckFood conditions
-            var hunger = GameManager.GetHungerComponent();
-            if (hunger == null) return;
-            bool isEating = hunger.IsEatingInProgress();
+            float gameHoursPassed = tod.GetTODHours(realTimeElapsed);
+            if (gameHoursPassed <= 0f) return;
 
-            //Blister conditions
-            bool isWalking = GameManager.GetPlayerManagerComponent().PlayerIsWalking();
-            bool isSprinting = GameManager.GetPlayerManagerComponent().PlayerIsSprinting();
-            bool isMoving = (isWalking || isSprinting);
-            if (isMoving) hoursSpentMoving += gameHoursPassed;
-            else hoursSpentMoving = 0f;
+            AfflictionLogic.Tick(this, cond, gameHoursPassed, ref badDreamRollTimer, ref _stoppedHours, ref hadAfflictionLastTick, ref wasEating, ref wasInStruggle, ref wasResting, ref _dirty);
 
-            //back pain conditions
-            bool overloaded = IsPlayerOverloaded();
-            if (overloaded) hoursOverloaded += gameHoursPassed;
-            else hoursOverloaded = 0f;
-
-            //Overconfidence conditions
-            bool hasAfflictionNow = (cond.HasAffliction() || HasAnyOtherCustomAfflictionThan(typeof(OverconfidenceRiskAffliction), typeof(OverconfidenceAffliction)));
-            if (!hadAfflictionLastTick && hasAfflictionNow) hoursSinceLastAffliction = 0f;
-            if (!hasAfflictionNow) hoursSinceLastAffliction += gameHoursPassed;
-            hadAfflictionLastTick = hasAfflictionNow;
-
-            //stuck food
-            if (Settings.options.IsStuckFood && wasEating && !isEating)
-            {
-                if (OverconfidenceAffliction.IsOvercActive)
-                {
-                    float roll = UnityEngine.Random.Range(0f, 100f);
-                    if (roll < OVERC_STUCKFOOD_CHANCE)
-                    {
-                        //MelonLogger.Msg("some overc food got stuck");
-                        new StuckFoodAffliction(AfflictionBodyArea.Head).Start();
-                    }
-                }
-                else
-                {
-                    float roll = UnityEngine.Random.Range(0f, 100f);
-                    if (roll < STUCKFOOD_CHANCE)
-                    {
-                        //MelonLogger.Msg("some food got stuck");
-                        new StuckFoodAffliction(AfflictionBodyArea.Head).Start();
-                    }
-                }
-            }
-            wasEating = isEating;
-
-            //blister
-            if (Settings.options.IsBlister)
-            {
-                if (OverconfidenceAffliction.IsOvercActive && hoursSpentMoving >= OVERC_BLIST_THRESHOLD_HOURS)
-                {
-                    //MelonLogger.Msg("an overc blister appeared");
-                    new BlisterAffliction(AfflictionBodyArea.FootRight).Start();
-                }
-                else if (!OverconfidenceAffliction.IsOvercActive && hoursSpentMoving >= BLIST_THRESHOLD_HOURS)
-                {
-                    //MelonLogger.Msg("a blister appeared");
-                    new BlisterAffliction(AfflictionBodyArea.FootRight).Start();
-                }
-            }
-
-            //back pain
-            if (Settings.options.IsBackPain)
-            {
-                if (OverconfidenceAffliction.IsOvercActive && (hoursOverloaded >= OVERC_BACKPAIN_TRESHOLD_HOURS))
-                {
-                    //MelonLogger.Msg("you have an overc back pain");
-                    new BackPainAffliction(AfflictionBodyArea.Chest).Start();
-                    hoursOverloaded = 0f;
-                }
-                else if (!OverconfidenceAffliction.IsOvercActive && (hoursOverloaded >= BACKPAIN_TRESHOLD_HOURS))
-                {
-                    //MelonLogger.Msg("you have back pain");
-                    new BackPainAffliction(AfflictionBodyArea.Chest).Start();
-                    hoursOverloaded = 0f;
-                }
-            }
-
-            //bad dream
-            if (Settings.options.IsBadDream)
-            {
-                var rest = GameManager.GetRestComponent();
-                if (rest == null) return;
-
-                bool isSleeping = rest.IsSleeping();
-
-                if (isSleeping)
-                {
-                    bool attackedRecently = hoursSinceLastAnimalAttack <= BAD_DREAM_ATTACK_WINDOW_HOURS;
-
-                    if (!attackedRecently)
-                    {
-                        badDreamRollTimer = 0f;
-                    }
-                    else
-                    {
-                        badDreamRollTimer += realTimeElapsed;
-
-                        if (badDreamRollTimer >= BAD_DREAM_ROLL_EVERY)
-                        {
-                            badDreamRollTimer = 0f;
-                            float chance = OverconfidenceAffliction.IsOvercActive ? OVERC_BAD_DREAM_CHANCE : BAD_DREAM_CHANCE;
-
-                            float roll = UnityEngine.Random.Range(0f, 100f);
-                            if (roll < chance)
-                            {
-                                rest.m_InterruptionAfterSecondsSleeping = 1;
-                                new BadDreamAffliction(AfflictionBodyArea.Head).Start();
-                                HUDMessage.AddMessage(Localization.Get("GAMEPLAY_BadDreamWakeup"), 4, false);
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    badDreamRollTimer = 0f;
-                }
-                wasResting = isSleeping;
-            }
-
-            //overconfidence
-            if (Settings.options.IsOverconfidence && (hoursSinceLastAffliction >= CONF_THRESHOLD_HOURS) && (OverconfidenceAffliction.IsOvercActive == false))
-            {
-                //MelonLogger.Msg("you are far too confident");
-                new OverconfidenceRiskAffliction(AfflictionBodyArea.Head).Start();
-                hoursSinceLastAffliction = 0f;
-            }
+            Patches.AfflictionEffects.ForceRefresh();
         }
     }
 }

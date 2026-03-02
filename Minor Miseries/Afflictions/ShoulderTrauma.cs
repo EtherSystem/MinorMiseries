@@ -4,24 +4,24 @@ using AfflictionComponent.Enums;
 
 namespace Minor_Miseries.Afflictions
 {
-    internal class SensitiveHand
+    internal class ShoulderTrauma
     {
-        public class SensitiveHandAffliction : CustomAffliction, IDuration, IRemedies, IInstance
+        public class ShoulderTraumaAffliction : CustomAffliction, IDuration, IRemedies, IInstance
         {
             public InstanceType Type { get; set; } = InstanceType.Single;
             public void OnFoundExistingInstance(CustomAffliction existingAffliction)
             {
-                //MelonLogger.Msg("sensitive hand duplication");
-                if (existingAffliction is SensitiveHandAffliction sensitiveHand)
+                //MelonLogger.Msg("Shoulder Trauma duplication");
+                if (existingAffliction is ShoulderTraumaAffliction shoulderTrauma)
                 {
-                    sensitiveHand.ResetAffliction(resetRemedies: false);
+                    shoulderTrauma.ResetAffliction(resetRemedies: false);
                     var now = GameManager.GetTimeOfDayComponent().GetHoursPlayedNotPaused();
-                    sensitiveHand.EndTime = now + sensitiveHand.Duration;
+                    shoulderTrauma.EndTime = now + shoulderTrauma.Duration;
                 }
             }
 
-            public static bool IsSensiActive { get; private set; } = false;
-            public float Duration { get; set; } = Settings.options.SensiDuration;
+            public static bool IsShoulderTraumaActive { get; private set; } = false;
+            public float Duration { get; set; } = Settings.options.ShoulderTraumaDuration;
             public float EndTime { get; set; }
 
             public Tuple<string, int, int>[] RemedyItems { get; set; } = Array.Empty<Tuple<string, int, int>>();
@@ -29,23 +29,22 @@ namespace Minor_Miseries.Afflictions
 
             public bool InstantHeal { get; set; } = true;
 
-            public SensitiveHandAffliction(AfflictionBodyArea bodyArea) : base("GAMEPLAY_SensitiveHandName", "GAMEPLAY_SensitiveHandCause", "GAMEPLAY_SensitiveHandDescription", null, "Minor_Miseries.Resources.Icons.SensitiveHand.png", bodyArea, true)
+            public ShoulderTraumaAffliction(AfflictionBodyArea bodyArea) : base("GAMEPLAY_ShoulderTraumaName", "GAMEPLAY_ShoulderTraumaCause", "GAMEPLAY_ShoulderTraumaDescription", null, "Minor_Miseries.Resources.Icons.ShoulderTrauma.png", bodyArea, true)
             {
             }
 
             public void CureSymptoms()
             {
-                //cure symptoms but not the affliction
+                //apply this code when symptoms are cured
             }
 
             public void OnCure()
             {
-                IsSensiActive = false;
+                IsShoulderTraumaActive = false;
             }
-
             public override void OnUpdate()
             {
-                IsSensiActive = true;
+                IsShoulderTraumaActive = true;
             }
         }
     }

@@ -1,8 +1,6 @@
-﻿using static Minor_Miseries.Afflictions.Overconfidence;
-using AfflictionComponent.Interfaces;
+﻿using AfflictionComponent.Interfaces;
 using AfflictionComponent.Components;
 using AfflictionComponent.Enums;
-using Il2CppTLD.IntBackedUnit;
 
 namespace Minor_Miseries.Afflictions
 {
@@ -31,7 +29,7 @@ namespace Minor_Miseries.Afflictions
 
             public bool InstantHeal { get; set; } = true;
 
-            public BackPainAffliction(AfflictionBodyArea bodyArea) : base("Back Pain", "A too heavy backpack", "Being encumbered for too long has consequences...", null, "ico_injury_burdened", bodyArea) //customsprite :Minor_Miseries.Resources.Icons.BackPain.png
+            public BackPainAffliction(AfflictionBodyArea bodyArea) : base("GAMEPLAY_BackPainName", "GAMEPLAY_BackPainCause", "GAMEPLAY_BackPainDescription", null, "Minor_Miseries.Resources.Icons.BackPain.png", bodyArea, true)
             {
             }
 
@@ -48,41 +46,6 @@ namespace Minor_Miseries.Afflictions
             public override void OnUpdate()
             {
                 IsBackPainActive = true;
-            }
-
-            [HarmonyPatch(typeof(Encumber), nameof(Encumber.Update))]
-            internal static class CarryCapacityPatch
-            {
-                private static void Postfix(Encumber __instance)
-                {
-                    if (!IsBackPainActive) return;
-
-                    EncumberUpdate(__instance);
-                }
-            }
-
-            internal static void EncumberUpdate(Encumber encumber)
-            {
-                if (OverconfidenceAffliction.IsOvercActive)
-                {
-                    encumber.m_MaxCarryCapacity = ItemWeight.FromKilograms(30f - 7.5f);
-                    encumber.m_MaxCarryCapacityWhenExhausted = ItemWeight.FromKilograms(15f - 7.5f);
-                    encumber.m_NoSprintCarryCapacity = ItemWeight.FromKilograms(40f - 7.5f);
-                    encumber.m_NoWalkCarryCapacity = ItemWeight.FromKilograms(60f - 7.5f);
-                    encumber.m_EncumberLowThreshold = ItemWeight.FromKilograms(31f - 7.5f);
-                    encumber.m_EncumberMedThreshold = ItemWeight.FromKilograms(40f - 7.5f);
-                    encumber.m_EncumberHighThreshold = ItemWeight.FromKilograms(60f - 7.5f);
-                }
-                else
-                {
-                    encumber.m_MaxCarryCapacity = ItemWeight.FromKilograms(30f - 5f);
-                    encumber.m_MaxCarryCapacityWhenExhausted = ItemWeight.FromKilograms(15f - 5f);
-                    encumber.m_NoSprintCarryCapacity = ItemWeight.FromKilograms(40f - 5f);
-                    encumber.m_NoWalkCarryCapacity = ItemWeight.FromKilograms(60f - 5f);
-                    encumber.m_EncumberLowThreshold = ItemWeight.FromKilograms(31f - 5f);
-                    encumber.m_EncumberMedThreshold = ItemWeight.FromKilograms(40f - 5f);
-                    encumber.m_EncumberHighThreshold = ItemWeight.FromKilograms(60f - 5f);
-                }
             }
         }
     }

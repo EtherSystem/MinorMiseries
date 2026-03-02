@@ -15,14 +15,14 @@ namespace Minor_Miseries.Afflictions
                 return;//MelonLogger.Msg("splinter duplication");
             }
 
-            public static bool IsOvercActive { get; private set; } = false;
+            public static bool IsActive { get; private set; } = false;
 
             public Tuple<string, int, int>[] RemedyItems { get; set; } = Array.Empty<Tuple<string, int, int>>();
             public Tuple<string, int, int>[] AltRemedyItems { get; set; } = Array.Empty<Tuple<string, int, int>>();
 
             public bool InstantHeal { get; set; } = true;
 
-            public OverconfidenceAffliction(AfflictionBodyArea bodyArea) : base("Overconfidence", "Yourself", "You are far too confident, you are paying the price for your experience, and you take your survival for granted. Afflictions are now easier to contract.", null, "ico_injury_headache", bodyArea) //customsprite :Minor_Miseries.Resources.Icons.Overconfidence.png
+            public OverconfidenceAffliction(AfflictionBodyArea bodyArea) : base("GAMEPLAY_OverconfidenceName", "GAMEPLAY_OverconfidenceCause", "GAMEPLAY_OverconfidenceDescription", null, "Minor_Miseries.Resources.Icons.Overconfidence.png", bodyArea, true)
             {
             }
 
@@ -33,7 +33,7 @@ namespace Minor_Miseries.Afflictions
 
             public void OnCure()
             {
-                IsOvercActive = false;
+                IsActive = false;
             }
 
             public override void OnUpdate()
@@ -44,14 +44,14 @@ namespace Minor_Miseries.Afflictions
                     return;
                 }
 
-                IsOvercActive = true;
+                IsActive = true;
                 var cond = GameManager.GetConditionComponent();
                 bool hasAffliction = (cond != null && cond.HasAffliction());
-                bool hasCustomAffliction = Minor_Miseries.Core.HasAnyOtherCustomAfflictionThan(typeof(OverconfidenceRiskAffliction), typeof(OverconfidenceAffliction));
+                bool hasCustomAffliction = AfflictionLogic.HasAnyOtherCustomAfflictionThan(typeof(OverconfidenceRiskAffliction), typeof(OverconfidenceAffliction));
                 if (hasAffliction || hasCustomAffliction)
                 {
                     Cure();
-                    IsOvercActive = false;
+                    IsActive = false;
                     return;
                 }
             }

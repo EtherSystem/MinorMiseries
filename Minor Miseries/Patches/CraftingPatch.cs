@@ -17,7 +17,7 @@ namespace Minor_Miseries.Patches
                 if (Settings.options.IsScratch)
                 {
                     float roll = Random.Range(0f, 100f);
-                    if (OverconfidenceAffliction.IsOvercActive)
+                    if (OverconfidenceAffliction.IsActive)
                     {
                         if (roll < OVERC_SUCCESS_SCRATCH_CHANCE)
                         {
@@ -48,7 +48,7 @@ namespace Minor_Miseries.Patches
                 if (Settings.options.IsScratch)
                 {
                     float roll = Random.Range(0f, 100f);
-                    if (OverconfidenceAffliction.IsOvercActive)
+                    if (OverconfidenceAffliction.IsActive)
                     {
                         if (roll < OVERC_INTERRUPTED_SCRATCH_CHANCE)
                         {
