@@ -9,7 +9,6 @@ These afflictions are not lethal, they are minor and easy to ignore.
 
 Small problems accumulate. Neglect has consequences. Comfort is never permanent.
 
-
 ## Overview
 
 Minor Miseries adds a collection of non-fatal afflictions that trigger under specific gameplay conditions.
@@ -18,6 +17,7 @@ Some afflictions can evolve if left untreated, becoming more severe or introduci
 
 The system is designed around escalation, persistence, and cumulative pressure rather than sudden punishment.
 
+ALSO A HUGE THANK YOU TO FLOWER FIELD FOR THESE MAGNIFICENT ICONS !
 
 ## Afflictions
 
@@ -59,10 +59,12 @@ Reduces crafting speed, rope climbing speed, and shortens maximum rifle aim dura
 Can occur after eating. Causes **extreme** discomfort.  
 (Currently may also trigger from calorie-giving drinks — unintended behavior.)
 
-**Bad Dream**  
-May occur during sleep if the player has recently been attacked by wildlife.  
+**Bad Dream / Night Terror**  
+May occur during sleep if the player has recently been attacked by wildlife.
 Abruptly wakes the player and interrupts rest.
+Each type of attack varies in severity, the more attacks the player has suffered, the greater the chance of contracting Night Terror instead of Bad Dream.
 
+Here is the order of severity of predator attacks: Wolves -> Moose -> Cougar -> Bear.
 
 ## Overconfidence System
 
