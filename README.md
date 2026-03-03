@@ -59,6 +59,9 @@ Reduces crafting speed, rope climbing speed, and shortens maximum rifle aim dura
 Can occur after eating. Causes **extreme** discomfort.  
 (Currently may also trigger from calorie-giving drinks — unintended behavior.)
 
+**Food Stuck**  
+Can occur after sleeping inside a car (60% chance) or a snow shelter (40% chance).
+
 **Bad Dream / Night Terror**  
 May occur during sleep if the player has recently been attacked by wildlife.
 Abruptly wakes the player and interrupts rest.
