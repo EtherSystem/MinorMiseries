@@ -69,6 +69,8 @@ Each type of attack varies in severity, the more attacks the player has suffered
 
 Here is the order of severity of predator attacks: Wolves -> Moose -> Cougar -> Bear.
 
+Keep in mind that Night Terror will always be twice as long as Bad Dream.
+
 ## Overconfidence System
 
 If the player goes too long without suffering any affliction, they develop a growing **Overconfidence Risk**.
