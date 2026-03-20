@@ -164,16 +164,6 @@ Cures both Overconfidence Risk and Overconfidence if present.
 
 </details>
 
-
-## Visual Assets
-
-Custom affliction sprites are planned for Minor Miseries.
-
-At the moment, technical limitations prevent a clean and stable implementation.
-
-This feature is intended for a future update.
-
-
 ## Installation
 
 1. Install MelonLoader.
