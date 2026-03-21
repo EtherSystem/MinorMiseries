@@ -337,7 +337,7 @@
         "French (France)": "",
         "Spanish (Spain)": "",
         "German": "",
-        "Turkish": "",
+        "Turkish": "Boyun ağrısı",
         "Russian": ""
     },
     "GAMEPLAY_SoreNeckCause": {
@@ -345,7 +345,7 @@
         "French (France)": "",
         "Spanish (Spain)": "",
         "German": "",
-        "Turkish": "",
+        "Turkish": "Kötü uyku pozisyonu",
         "Russian": ""
     },
     "GAMEPLAY_SoreNeckDescription": {
@@ -353,7 +353,7 @@
         "French (France)": "",
         "Spanish (Spain)": "",
         "German": "",
-        "Turkish": "",
+        "Turkish": "Çok rahatsız bir pozisyonda uyudun, boynun çok ağrıyor.",
         "Russian": ""
     },
 
