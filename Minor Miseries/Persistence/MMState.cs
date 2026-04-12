@@ -8,5 +8,6 @@
         public float HoursSinceLastAffliction = 0f;
         public float HoursSpentMoving = 0f;
         public float HoursOverloaded = 0f;
+        public float HoursSinceLastWildlifeAttack = 0f;
     }
 }

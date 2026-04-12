@@ -1,17 +1,25 @@
 ﻿using AfflictionComponent.Interfaces;
 using AfflictionComponent.Components;
 using AfflictionComponent.Enums;
+using Minor_Miseries.Resources.Localization;
 
 namespace Minor_Miseries.Afflictions
 {
     internal class BadDream
     {
-        public class BadDreamAffliction : CustomAffliction, IDuration, IRemedies, IInstance
+        public class BadDreamAffliction : CustomAffliction, IDuration, IRemedies, IInstance, ILocalizableAffliction
         {
+            private const string NAME_KEY = "GAMEPLAY_BadDreamName";
+            private const string CAUSE_KEY = "GAMEPLAY_BadDreamCause";
+            private const string DESC_KEY = "GAMEPLAY_BadDreamDescription";
+
+            private const string ICON = "Minor_Miseries.Resources.Icons.Afflictions.Classic.BadDream.png";
+            private const string ALT_ICON = "Minor_Miseries.Resources.Icons.Afflictions.Alt.BadDream_ALT.png";
+
             public InstanceType Type { get; set; } = InstanceType.Single;
             public void OnFoundExistingInstance(CustomAffliction existingAffliction)
             {
-                //MelonLogger.Msg("bad dream duplication");
+                //Core.Log("bad dream duplication");
                 if (existingAffliction is BadDreamAffliction badDream)
                 {
                     badDream.ResetAffliction(resetRemedies: false);
@@ -29,7 +37,7 @@ namespace Minor_Miseries.Afflictions
 
             public bool InstantHeal { get; set; } = true;
 
-            public BadDreamAffliction(AfflictionBodyArea bodyArea) : base("GAMEPLAY_BadDreamName", "GAMEPLAY_BadDreamCause", "GAMEPLAY_BadDreamDescription", null, "Minor_Miseries.Resources.Icons.BadDream.png", bodyArea, true)
+            public BadDreamAffliction(AfflictionBodyArea bodyArea) : base(NAME_KEY, CAUSE_KEY, DESC_KEY, null, UnityEngine.Random.Range(0f, 100f) < Settings.options.AltAfflictionIconChance ? ALT_ICON : ICON, bodyArea, true)
             {
             }
 
@@ -46,6 +54,18 @@ namespace Minor_Miseries.Afflictions
             public override void OnUpdate()
             {
                 IsBadDreamActive = true;
+            }
+
+            public void RefreshLocalization()
+            {
+                string oldName = m_Name;
+
+                m_Name = Localization.Get(NAME_KEY);
+                m_CauseText = Localization.Get(CAUSE_KEY);
+                m_Description = Localization.Get(DESC_KEY);
+                m_DescriptionNoHeal = null;
+
+                Core.Log($"BadDream refresh -> '{oldName}' => '{m_Name}'");
             }
         }
     }

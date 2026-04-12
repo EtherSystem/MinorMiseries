@@ -3,19 +3,28 @@ using AfflictionComponent.Interfaces;
 using AfflictionComponent.Components;
 using AfflictionComponent.Enums;
 using System.Collections;
+using Minor_Miseries.Afflictions.Buffs;
+using Minor_Miseries.Resources.Localization;
 
 namespace Minor_Miseries.Afflictions
 {
     internal class OverconfidenceRisk
     {
-        public class OverconfidenceRiskAffliction : CustomAffliction, IRemedies, IInstance, IRiskPercentage
+        public class OverconfidenceRiskAffliction : CustomAffliction, IRemedies, IInstance, IRiskPercentage, ILocalizableAffliction
         {
+            private const string NAME_KEY = "GAMEPLAY_OverconfidenceRiskName";
+            private const string CAUSE_KEY = "GAMEPLAY_OverconfidenceRiskCause";
+            private const string DESC_KEY = "GAMEPLAY_OverconfidenceRiskDescription";
+
+            private const string ICON = "Minor_Miseries.Resources.Icons.Afflictions.Classic.OverconfidenceRisk.png";
+            private const string ALT_ICON = "Minor_Miseries.Resources.Icons.Afflictions.Alt.OverconfidenceRisk_ALT.png";
+
             private static bool IsActive => OverconfidenceAffliction.IsActive;
 
             public InstanceType Type { get; set; } = InstanceType.Single;
             public void OnFoundExistingInstance(CustomAffliction existingAffliction)
             {
-                return;//MelonLogger.Msg("splinter duplication");
+                return;//Core.Log("splinter duplication");
             }
 
             private float m_RiskValue = 0f;
@@ -27,7 +36,7 @@ namespace Minor_Miseries.Afflictions
 
             public bool InstantHeal { get; set; } = true;
 
-            public OverconfidenceRiskAffliction(AfflictionBodyArea bodyArea) : base("GAMEPLAY_OverconfidenceRiskName", "GAMEPLAY_OverconfidenceRiskCause", "GAMEPLAY_OverconfidenceRiskDescription", null, "Minor_Miseries.Resources.Icons.OverconfidenceRisk.png", bodyArea, true)
+            public OverconfidenceRiskAffliction(AfflictionBodyArea bodyArea) : base(NAME_KEY, CAUSE_KEY, DESC_KEY, null, UnityEngine.Random.Range(0f, 100f) < Settings.options.AltAfflictionIconChance ? ALT_ICON : ICON, bodyArea, true)
             {
                 m_LastUpdateTime = GameManager.GetTimeOfDayComponent().GetHoursPlayedNotPaused();
             }
@@ -60,7 +69,7 @@ namespace Minor_Miseries.Afflictions
                 {
                     var cond = GameManager.GetConditionComponent();
                     bool hasAffliction = (cond != null && cond.HasAffliction());
-                    bool hasCustomAffliction = AfflictionLogic.HasAnyOtherCustomAfflictionThan(typeof(OverconfidenceRiskAffliction), typeof(OverconfidenceAffliction));
+                    bool hasCustomAffliction = AfflictionLogic.HasAnyOtherCustomAfflictionThan(typeof(OverconfidenceRiskAffliction), typeof(OverconfidenceAffliction), typeof(ProtectedHandsBuff), typeof(ProtectedArmsBuff), typeof(PeaceOfMindBuff));
 
                     if (hasAffliction || hasCustomAffliction || (IsActive == true))
                     {
@@ -99,6 +108,19 @@ namespace Minor_Miseries.Afflictions
             {
                 yield return null;
                 new OverconfidenceAffliction(AfflictionBodyArea.Head).Start();
+                AfflictionSaveHelper.QueueSurvivalSave();
+            }
+
+            public void RefreshLocalization()
+            {
+                string oldName = m_Name;
+
+                m_Name = Localization.Get(NAME_KEY);
+                m_CauseText = Localization.Get(CAUSE_KEY);
+                m_Description = Localization.Get(DESC_KEY);
+                m_DescriptionNoHeal = null;
+
+                Core.Log($"OverconfidenceRisk refresh -> '{oldName}' => '{m_Name}'");
             }
         }
     }

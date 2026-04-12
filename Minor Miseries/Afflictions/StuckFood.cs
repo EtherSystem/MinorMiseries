@@ -1,17 +1,25 @@
 ﻿using AfflictionComponent.Components;
 using AfflictionComponent.Interfaces;
 using AfflictionComponent.Enums;
+using Minor_Miseries.Resources.Localization;
 
 namespace Minor_Miseries.Afflictions
 {
     internal class StuckFood
     {
-        public class StuckFoodAffliction : CustomAffliction, IDuration, IRemedies, IInstance
+        public class StuckFoodAffliction : CustomAffliction, IDuration, IRemedies, IInstance, ILocalizableAffliction
         {
+            private const string NAME_KEY = "GAMEPLAY_StuckFoodName";
+            private const string CAUSE_KEY = "GAMEPLAY_StuckFoodCause";
+            private const string DESC_KEY = "GAMEPLAY_StuckFoodDescription";
+
+            private const string ICON = "Minor_Miseries.Resources.Icons.Afflictions.Classic.StuckFood.png";
+            private const string ALT_ICON = "Minor_Miseries.Resources.Icons.Afflictions.Alt.StuckFood_ALT.png";
+
             public InstanceType Type { get; set; } = InstanceType.Single;
             public void OnFoundExistingInstance(CustomAffliction existingAffliction)
             {
-                //MelonLogger.Msg("stuck food duplication");
+                //Core.Log("stuck food duplication");
                 if (existingAffliction is StuckFoodAffliction stuckFood)
                 {
                     stuckFood.ResetAffliction(resetRemedies: false);
@@ -28,7 +36,7 @@ namespace Minor_Miseries.Afflictions
 
             public bool InstantHeal { get; set; } = true;
 
-            public StuckFoodAffliction(AfflictionBodyArea bodyArea) : base("GAMEPLAY_StuckFoodName", "GAMEPLAY_StuckFoodCause", "GAMEPLAY_StuckFoodDescription", null, "Minor_Miseries.Resources.Icons.StuckFood.png", bodyArea, true)
+            public StuckFoodAffliction(AfflictionBodyArea bodyArea) : base(NAME_KEY, CAUSE_KEY, DESC_KEY, null, UnityEngine.Random.Range(0f, 100f) < Settings.options.AltAfflictionIconChance ? ALT_ICON : ICON, bodyArea, true)
             {
             }
 
@@ -45,6 +53,18 @@ namespace Minor_Miseries.Afflictions
             public override void OnUpdate()
             {
                 // yes theres no effects, its intended
+            }
+
+            public void RefreshLocalization()
+            {
+                string oldName = m_Name;
+
+                m_Name = Localization.Get(NAME_KEY);
+                m_CauseText = Localization.Get(CAUSE_KEY);
+                m_Description = Localization.Get(DESC_KEY);
+                m_DescriptionNoHeal = null;
+
+                Core.Log($"StuckFood refresh -> '{oldName}' => '{m_Name}'");
             }
         }
     }

@@ -6,6 +6,7 @@ using static Minor_Miseries.Afflictions.SoreNeck;
 using static Minor_Miseries.Afflictions.BackPain;
 using static Minor_Miseries.Afflictions.BadDream;
 using static Minor_Miseries.Afflictions.Blister;
+using Minor_Miseries.Afflictions.Buffs;
 using AfflictionComponent.Components;
 
 namespace Minor_Miseries
@@ -74,6 +75,41 @@ namespace Minor_Miseries
 
         public static void UpdateStress(Core core, float gameHoursPassed, ref bool wasInStruggle, ref bool dirty)
         {
+            if (!Settings.options.IsBadDream)
+            {
+                bool changed = false;
+
+                if (Core.State.AnimalStressScore > 0f)
+                {
+                    Core.State.AnimalStressScore = 0f;
+                    changed = true;
+                }
+
+                if (Core.State.AnimalStressTimer != -1f)
+                {
+                    Core.State.AnimalStressTimer = -1f;
+                    changed = true;
+                }
+
+                if (Core.State.HoursSinceLastWildlifeAttack != 0f)
+                {
+                    Core.State.HoursSinceLastWildlifeAttack = 0f;
+                    changed = true;
+                }
+
+                if (wasInStruggle)
+                {
+                    wasInStruggle = false;
+                }
+
+                if (changed)
+                {
+                    BuffLogic.CurePeaceOfMind();
+                    dirty = true;
+                }
+                return;
+            }
+
             var struggle = GameManager.GetPlayerStruggleComponent();
             bool inStruggle = struggle != null && struggle.InStruggle();
 
@@ -89,14 +125,33 @@ namespace Minor_Miseries
                 if (OverconfidenceAffliction.IsActive)
                 {
                     addedScore += 1f;
-                    if (Settings.options.IsLogging) core.LoggerInstance.Msg("Overconfidence amplified stress (+1)");
+                    Core.Log("Overconfidence amplified stress (+1)");
                 }
 
-                Core.State.AnimalStressScore += addedScore;
-                Core.State.AnimalStressTimer = 0f;
+                Core.State.HoursSinceLastWildlifeAttack = 0f;
                 dirty = true;
 
-                if (Settings.options.IsLogging) core.LoggerInstance.Msg($"Stress Added → +{addedScore} | total:{Core.State.AnimalStressScore:0.###}");
+                if (BuffLogic.HasPeaceOfMind())
+                {
+                    Core.Log($"Peace Of Mind absorbed wildlife stress (+{addedScore:0.###})");
+
+                    BuffLogic.CurePeaceOfMind();
+                }
+                else
+                {
+                    Core.State.AnimalStressScore += addedScore;
+                    Core.State.AnimalStressTimer = 0f;
+
+                    Core.Log($"Stress Added → +{addedScore} | total:{Core.State.AnimalStressScore:0.###}");
+                }
+            }
+            else if (!inStruggle)
+            {
+                float oldSinceAttack = Core.State.HoursSinceLastWildlifeAttack;
+                Core.State.HoursSinceLastWildlifeAttack += gameHoursPassed;
+
+                if (!Mathf.Approximately(oldSinceAttack, Core.State.HoursSinceLastWildlifeAttack))
+                    dirty = true;
             }
 
             if (Core.State.AnimalStressTimer >= 0f)
@@ -106,8 +161,7 @@ namespace Minor_Miseries
 
                 if (Core.State.AnimalStressTimer >= STRESS_WINDOW_HOURS)
                 {
-                    if (Settings.options.IsLogging && Core.State.AnimalStressScore > 0f)
-                        core.LoggerInstance.Msg("Stress expired");
+                    Core.Log("Stress expired");
 
                     Core.State.AnimalStressScore = 0f;
                     Core.State.AnimalStressTimer = -1f;
@@ -130,7 +184,12 @@ namespace Minor_Miseries
                 float chance = OverconfidenceAffliction.IsActive ? OVERC_STUCKFOOD_CHANCE : STUCKFOOD_CHANCE;
                 float roll = UnityEngine.Random.Range(0f, 100f);
 
-                if (roll < chance) new StuckFoodAffliction(AfflictionBodyArea.Head).Start();
+                if (roll < chance)
+                {
+                    new StuckFoodAffliction(AfflictionBodyArea.Head).Start();
+                    GameAudioManager.PlaySound(Il2CppAK.EVENTS.PLAY_VOBREATHMEDIUMINTENSITYNOSPRINT, GameManager.GetPlayerObject());
+                    AfflictionSaveHelper.QueueSurvivalSave();
+                }
             }
             wasEating = isEating;
         }
@@ -166,6 +225,8 @@ namespace Minor_Miseries
             if (Core.State.HoursSpentMoving >= threshold)
             {
                 new BlisterAffliction(AfflictionBodyArea.FootRight).Start();
+                GameAudioManager.PlaySound(Il2CppAK.EVENTS.PLAY_EXERTIONLOW, GameManager.GetPlayerObject());
+                AfflictionSaveHelper.QueueSurvivalSave();
 
                 Core.State.HoursSpentMoving = 0f;
                 stoppedHours = 0f;
@@ -189,6 +250,8 @@ namespace Minor_Miseries
             if (Core.State.HoursOverloaded >= threshold)
             {
                 new BackPainAffliction(AfflictionBodyArea.Chest).Start();
+                GameAudioManager.PlaySound(Il2CppAK.EVENTS.PLAY_GENERALINJURYLOW, GameManager.GetPlayerObject());
+                AfflictionSaveHelper.QueueSurvivalSave();
                 Core.State.HoursOverloaded = 0f;
                 dirty = true;
             }
@@ -196,7 +259,7 @@ namespace Minor_Miseries
 
         public static void UpdateOverconfidenceTracking(Condition cond, float gameHoursPassed, ref bool hadAfflictionLastTick, ref bool dirty)
         {
-            bool hasAfflictionNow = cond.HasAffliction() || HasAnyOtherCustomAfflictionThan(typeof(OverconfidenceRiskAffliction), typeof(OverconfidenceAffliction));
+            bool hasAfflictionNow = cond.HasAffliction() || HasAnyOtherCustomAfflictionThan(typeof(OverconfidenceRiskAffliction), typeof(OverconfidenceAffliction), typeof(ProtectedHandsBuff), typeof(ProtectedArmsBuff), typeof(PeaceOfMindBuff));
 
             float oldSince = Core.State.HoursSinceLastAffliction;
 
@@ -244,9 +307,16 @@ namespace Minor_Miseries
                             default:
                                 if (score >= 7)
                                 {
-                                    badDreamChance = 0f; nightTerrorChance = 10f;
+                                    badDreamChance = 0f;
+                                    nightTerrorChance = 10f;
                                 }
                                 break;
+                        }
+
+                        if (BuffLogic.HasPeaceOfMind())
+                        {
+                            badDreamChance = 0f;
+                            nightTerrorChance = 0f;
                         }
 
                         float rollNT = UnityEngine.Random.Range(0f, 100f);
@@ -254,6 +324,8 @@ namespace Minor_Miseries
                         {
                             rest.m_InterruptionAfterSecondsSleeping = 1;
                             new NightTerrorAffliction(AfflictionBodyArea.Head).Start();
+                            GameAudioManager.PlaySound(Il2CppAK.EVENTS.PLAY_VOBREATHHIGHINTENSITYNOLOOP, GameManager.GetPlayerObject());
+                            AfflictionSaveHelper.QueueSurvivalSave();
                             HUDMessage.AddMessage(Localization.Get("GAMEPLAY_NightTerrorWakeup"), 4, false);
 
                             Core.State.AnimalStressScore = 0f;
@@ -261,7 +333,7 @@ namespace Minor_Miseries
                             badDreamRollTimer = 0f;
                             dirty = true;
 
-                            if (Settings.options.IsLogging) core.LoggerInstance.Msg("Stress cleared due to sleep event");
+                            Core.Log("Stress cleared due to sleep event");
                             break;
                         }
 
@@ -270,6 +342,8 @@ namespace Minor_Miseries
                         {
                             rest.m_InterruptionAfterSecondsSleeping = 1;
                             new BadDreamAffliction(AfflictionBodyArea.Head).Start();
+                            GameAudioManager.PlaySound(Il2CppAK.EVENTS.PLAY_VOBREATHMEDIUMINTENSITYNOLOOP, GameManager.GetPlayerObject());
+                            AfflictionSaveHelper.QueueSurvivalSave();
                             HUDMessage.AddMessage(Localization.Get("GAMEPLAY_BadDreamWakeup"), 4, false);
 
                             Core.State.AnimalStressScore = 0f;
@@ -277,7 +351,7 @@ namespace Minor_Miseries
                             badDreamRollTimer = 0f;
                             dirty = true;
 
-                            if (Settings.options.IsLogging) core.LoggerInstance.Msg("Stress cleared due to sleep event");
+                            Core.Log("Stress cleared due to sleep event");
                             break;
                         }
                     }
@@ -300,12 +374,13 @@ namespace Minor_Miseries
             if (Settings.options.IsOverconfidence && Core.State.HoursSinceLastAffliction >= CONF_THRESHOLD_HOURS && OverconfidenceAffliction.IsActive == false)
             {
                 new OverconfidenceRiskAffliction(AfflictionBodyArea.Head).Start();
+                AfflictionSaveHelper.QueueSurvivalSave();
                 Core.State.HoursSinceLastAffliction = 0f;
                 dirty = true;
             }
         }
 
-        public static bool HasAnyOtherCustomAfflictionThan(Type ignoredType1, Type ignoredType2)
+        public static bool HasAnyOtherCustomAfflictionThan(Type ignoredType1, Type ignoredType2, Type ignoredType3, Type ignoredType4, Type ignoredType5)
         {
             var mgr = AfflictionManager.GetAfflictionManagerInstance();
             if (mgr?.m_Afflictions == null) return false;
@@ -314,7 +389,7 @@ namespace Minor_Miseries
             {
                 if (a == null) continue;
                 var t = a.GetType();
-                if (t == ignoredType1 || t == ignoredType2)
+                if (t == ignoredType1 || t == ignoredType2 || t == ignoredType3 || t == ignoredType4 || t == ignoredType5)
                     continue;
 
                 return true;
@@ -326,7 +401,8 @@ namespace Minor_Miseries
         {
             var enc = GameManager.GetEncumberComponent();
             if (enc == null) return false;
-            return enc.m_GearWeightKG > enc.m_MaxCarryCapacity;
+
+            return enc.GetGearWeightKG() > enc.GetEffectiveCarryCapacityKG();
         }
 
         public static void UpdateSoreNeck(Core core)
@@ -379,18 +455,20 @@ namespace Minor_Miseries
                         chance += SORENECK_OVERC_BONUS;
                         if (chance > 100f) chance = 100f;
 
-                        if (Settings.options.IsLogging) core.LoggerInstance.Msg($"Overconfidence amplified Sore Neck chance (+{SORENECK_OVERC_BONUS:0.##}) -> {chance:0.##}%");
+                        Core.Log($"Overconfidence amplified Sore Neck chance (+{SORENECK_OVERC_BONUS:0.##}) -> {chance:0.##}%");
                     }
 
                     float roll = UnityEngine.Random.Range(0f, 100f);
                     if (roll < chance)
                     {
                         new SoreNeckAffliction(AfflictionBodyArea.Neck).Start();
-                        if (Settings.options.IsLogging) core.LoggerInstance.Msg($"Sore Neck triggered ({ctx}) roll={roll:0.##} < {chance:0.##}");
+                        GameAudioManager.PlaySound(Il2CppAK.EVENTS.PLAY_EXERTIONLOW, GameManager.GetPlayerObject());
+                        AfflictionSaveHelper.QueueSurvivalSave();
+                        Core.Log($"Sore Neck triggered ({ctx}) roll={roll:0.##} < {chance:0.##}");
                     }
                     else
                     {
-                        if (Settings.options.IsLogging) core.LoggerInstance.Msg($"Sore Neck avoided ({ctx}) roll={roll:0.##} >= {chance:0.##}");
+                        Core.Log($"Sore Neck avoided ({ctx}) roll={roll:0.##} >= {chance:0.##}");
                     }
                 }
                 SoreNeckSleptInVehicle = false;

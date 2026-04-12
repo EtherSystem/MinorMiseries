@@ -13,6 +13,7 @@ using static Minor_Miseries.Afflictions.SmallCut;
 using static Minor_Miseries.Afflictions.Splinter;
 using static Minor_Miseries.Afflictions.Blister;
 using static Minor_Miseries.Afflictions.Scratch;
+using static Minor_Miseries.Afflictions.DebugAff;
 using AfflictionComponent.Components;
 
 namespace Minor_Miseries
@@ -27,15 +28,20 @@ namespace Minor_Miseries
                 new StuckFoodAffliction(AfflictionBodyArea.Head).Start();
                 new BlisterAffliction(AfflictionBodyArea.FootLeft).Start();
                 new BackPainAffliction(AfflictionBodyArea.Chest).Start();
-                new ScratchAffliction(AfflictionBodyArea.Chest).Start();
+                new ScratchAffliction(AfflictionBodyArea.ArmLeft).Start();
                 new BadDreamAffliction(AfflictionBodyArea.Head).Start();
                 new SensitiveHandAffliction(AfflictionBodyArea.HandLeft).Start();
                 new BareSkinAffliction(AfflictionBodyArea.FootRight).Start();
-                new SmallCutAffliction(AfflictionBodyArea.Chest).Start();
+                new SmallCutAffliction(AfflictionBodyArea.ArmLeft).Start();
                 new WristTraumaAffliction(AfflictionBodyArea.HandRight).Start();
                 new ShoulderTraumaAffliction(AfflictionBodyArea.Chest).Start();
                 new NightTerrorAffliction(AfflictionBodyArea.Head).Start();
                 new SoreNeckAffliction(AfflictionBodyArea.Neck).Start();
+            }));
+
+            uConsole.RegisterCommand("debugaff", new Action(() =>
+            {
+                new DebugAffliction(AfflictionBodyArea.Head).Start();
             }));
 
             uConsole.RegisterCommand("splinter", new Action(() =>
@@ -60,7 +66,7 @@ namespace Minor_Miseries
 
             uConsole.RegisterCommand("scratch", new Action(() =>
             {
-                new ScratchAffliction(AfflictionBodyArea.Chest).Start();
+                new ScratchAffliction(AfflictionBodyArea.ArmLeft).Start();
             }));
 
             uConsole.RegisterCommand("baddream", new Action(() =>
@@ -85,7 +91,7 @@ namespace Minor_Miseries
 
             uConsole.RegisterCommand("smallcut", new Action(() =>
             {
-                new SmallCutAffliction(AfflictionBodyArea.Chest).Start();
+                new SmallCutAffliction(AfflictionBodyArea.ArmLeft).Start();
             }));
 
             uConsole.RegisterCommand("wristrecoil", new Action(() =>
@@ -125,7 +131,8 @@ namespace Minor_Miseries
                         || a is SmallCutAffliction
                         || a is WristTraumaAffliction
                         || a is ShoulderTraumaAffliction
-                        || a is SoreNeckAffliction)
+                        || a is SoreNeckAffliction
+                        || a is DebugAffliction)
                     {
                         a.Cure();
                     }

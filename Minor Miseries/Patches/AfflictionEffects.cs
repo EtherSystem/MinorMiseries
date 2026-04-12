@@ -311,72 +311,86 @@ namespace Minor_Miseries.Patches
             }
         }
 
-        [HarmonyPatch(typeof(Encumber), nameof(Encumber.Update))]
-        internal static class BackPainCarryCapacityPatch
+        private static ItemWeight GetBackPainPenalty()
         {
-            private struct EncumberSnapshot
+            RefreshIfNeeded();
+
+            if (!_cache.BackPain)
+                return ItemWeight.FromKilograms(0f);
+
+            float deltaKg = _cache.Overconfidence ? 7.5f : 5f;
+            return ItemWeight.FromKilograms(deltaKg);
+        }
+
+        private static void ApplyBackPainPenalty(ref ItemWeight result)
+        {
+            ItemWeight penalty = GetBackPainPenalty();
+            if (penalty <= ItemWeight.FromKilograms(0f))
+                return;
+
+            result = ItemWeight.Max(result - penalty, ItemWeight.FromKilograms(0f));
+        }
+
+        [HarmonyPatch(typeof(Encumber), nameof(Encumber.GetMaxCarryCapacityKG))]
+        internal static class BackPainMaxCarryCapacityPatch
+        {
+            private static void Postfix(ref ItemWeight __result)
             {
-                public ItemWeight MaxCarryCapacity;
-                public ItemWeight MaxCarryCapacityWhenExhausted;
-                public ItemWeight NoSprintCarryCapacity;
-                public ItemWeight NoWalkCarryCapacity;
-                public ItemWeight EncumberLowThreshold;
-                public ItemWeight EncumberMedThreshold;
-                public ItemWeight EncumberHighThreshold;
+                ApplyBackPainPenalty(ref __result);
             }
+        }
 
-            private static bool _hasSnapshot;
-            private static Encumber? _snapshotOwner;
-            private static EncumberSnapshot _snapshot;
-
-            private static void Prefix(Encumber __instance)
+        [HarmonyPatch(typeof(Encumber), nameof(Encumber.GetMaxCarryCapacityWhenExhaustedKG))]
+        internal static class BackPainMaxCarryCapacityWhenExhaustedPatch
+        {
+            private static void Postfix(ref ItemWeight __result)
             {
-                if (!_hasSnapshot) return;
-                if (__instance == null) { _hasSnapshot = false; _snapshotOwner = null; return; }
-                if (!ReferenceEquals(__instance, _snapshotOwner)) { _hasSnapshot = false; _snapshotOwner = null; return; }
-
-                __instance.m_MaxCarryCapacity = _snapshot.MaxCarryCapacity;
-                __instance.m_MaxCarryCapacityWhenExhausted = _snapshot.MaxCarryCapacityWhenExhausted;
-                __instance.m_NoSprintCarryCapacity = _snapshot.NoSprintCarryCapacity;
-                __instance.m_NoWalkCarryCapacity = _snapshot.NoWalkCarryCapacity;
-                __instance.m_EncumberLowThreshold = _snapshot.EncumberLowThreshold;
-                __instance.m_EncumberMedThreshold = _snapshot.EncumberMedThreshold;
-                __instance.m_EncumberHighThreshold = _snapshot.EncumberHighThreshold;
-
-                _hasSnapshot = false;
-                _snapshotOwner = null;
+                ApplyBackPainPenalty(ref __result);
             }
+        }
 
-            private static void Postfix(Encumber __instance)
+        [HarmonyPatch(typeof(Encumber), nameof(Encumber.GetNoSprintCarryCapacityKG))]
+        internal static class BackPainNoSprintCarryCapacityPatch
+        {
+            private static void Postfix(ref ItemWeight __result)
             {
-                if (__instance == null) return;
+                ApplyBackPainPenalty(ref __result);
+            }
+        }
 
-                RefreshIfNeeded();
-                if (!_cache.BackPain) return;
+        [HarmonyPatch(typeof(Encumber), nameof(Encumber.GetNoWalkCarryCapacityKG))]
+        internal static class BackPainNoWalkCarryCapacityPatch
+        {
+            private static void Postfix(ref ItemWeight __result)
+            {
+                ApplyBackPainPenalty(ref __result);
+            }
+        }
 
-                _snapshotOwner = __instance;
-                _snapshot = new EncumberSnapshot
-                {
-                    MaxCarryCapacity = __instance.m_MaxCarryCapacity,
-                    MaxCarryCapacityWhenExhausted = __instance.m_MaxCarryCapacityWhenExhausted,
-                    NoSprintCarryCapacity = __instance.m_NoSprintCarryCapacity,
-                    NoWalkCarryCapacity = __instance.m_NoWalkCarryCapacity,
-                    EncumberLowThreshold = __instance.m_EncumberLowThreshold,
-                    EncumberMedThreshold = __instance.m_EncumberMedThreshold,
-                    EncumberHighThreshold = __instance.m_EncumberHighThreshold,
-                };
-                _hasSnapshot = true;
+        [HarmonyPatch(typeof(Encumber), nameof(Encumber.GetEncumberLowThresholdKG))]
+        internal static class BackPainEncumberLowThresholdPatch
+        {
+            private static void Postfix(ref ItemWeight __result)
+            {
+                ApplyBackPainPenalty(ref __result);
+            }
+        }
 
-                float deltaKg = _cache.Overconfidence ? 7.5f : 5f;
-                ItemWeight delta = ItemWeight.FromKilograms(deltaKg);
+        [HarmonyPatch(typeof(Encumber), nameof(Encumber.GetEncumberMedThresholdKG))]
+        internal static class BackPainEncumberMedThresholdPatch
+        {
+            private static void Postfix(ref ItemWeight __result)
+            {
+                ApplyBackPainPenalty(ref __result);
+            }
+        }
 
-                __instance.m_MaxCarryCapacity = _snapshot.MaxCarryCapacity - delta;
-                __instance.m_MaxCarryCapacityWhenExhausted = _snapshot.MaxCarryCapacityWhenExhausted - delta;
-                __instance.m_NoSprintCarryCapacity = _snapshot.NoSprintCarryCapacity - delta;
-                __instance.m_NoWalkCarryCapacity = _snapshot.NoWalkCarryCapacity - delta;
-                __instance.m_EncumberLowThreshold = _snapshot.EncumberLowThreshold - delta;
-                __instance.m_EncumberMedThreshold = _snapshot.EncumberMedThreshold - delta;
-                __instance.m_EncumberHighThreshold = _snapshot.EncumberHighThreshold - delta;
+        [HarmonyPatch(typeof(Encumber), nameof(Encumber.GetEncumberHighThresholdKG))]
+        internal static class BackPainEncumberHighThresholdPatch
+        {
+            private static void Postfix(ref ItemWeight __result)
+            {
+                ApplyBackPainPenalty(ref __result);
             }
         }
     }

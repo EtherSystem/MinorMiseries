@@ -1,17 +1,25 @@
 ﻿using AfflictionComponent.Interfaces;
 using AfflictionComponent.Components;
 using AfflictionComponent.Enums;
+using Minor_Miseries.Resources.Localization;
 
 namespace Minor_Miseries.Afflictions
 {
     internal class SensitiveHand
     {
-        public class SensitiveHandAffliction : CustomAffliction, IDuration, IRemedies, IInstance
+        public class SensitiveHandAffliction : CustomAffliction, IDuration, IRemedies, IInstance, ILocalizableAffliction
         {
+            private const string NAME_KEY = "GAMEPLAY_SensitiveHandName";
+            private const string CAUSE_KEY = "GAMEPLAY_SensitiveHandCause";
+            private const string DESC_KEY = "GAMEPLAY_SensitiveHandDescription";
+
+            private const string ICON = "Minor_Miseries.Resources.Icons.Afflictions.Classic.SensitiveHand.png";
+            private const string ALT_ICON = "Minor_Miseries.Resources.Icons.Afflictions.Alt.SensitiveHand_ALT.png";
+
             public InstanceType Type { get; set; } = InstanceType.Single;
             public void OnFoundExistingInstance(CustomAffliction existingAffliction)
             {
-                //MelonLogger.Msg("sensitive hand duplication");
+                //Core.Log("sensitive hand duplication");
                 if (existingAffliction is SensitiveHandAffliction sensitiveHand)
                 {
                     sensitiveHand.ResetAffliction(resetRemedies: false);
@@ -29,7 +37,7 @@ namespace Minor_Miseries.Afflictions
 
             public bool InstantHeal { get; set; } = true;
 
-            public SensitiveHandAffliction(AfflictionBodyArea bodyArea) : base("GAMEPLAY_SensitiveHandName", "GAMEPLAY_SensitiveHandCause", "GAMEPLAY_SensitiveHandDescription", null, "Minor_Miseries.Resources.Icons.SensitiveHand.png", bodyArea, true)
+            public SensitiveHandAffliction(AfflictionBodyArea bodyArea) : base(NAME_KEY, CAUSE_KEY, DESC_KEY, null, UnityEngine.Random.Range(0f, 100f) < Settings.options.AltAfflictionIconChance ? ALT_ICON : ICON, bodyArea, true)
             {
             }
 
@@ -46,6 +54,18 @@ namespace Minor_Miseries.Afflictions
             public override void OnUpdate()
             {
                 IsSensiActive = true;
+            }
+
+            public void RefreshLocalization()
+            {
+                string oldName = m_Name;
+
+                m_Name = Localization.Get(NAME_KEY);
+                m_CauseText = Localization.Get(CAUSE_KEY);
+                m_Description = Localization.Get(DESC_KEY);
+                m_DescriptionNoHeal = null;
+
+                Core.Log($"SensitiveHand refresh -> '{oldName}' => '{m_Name}'");
             }
         }
     }

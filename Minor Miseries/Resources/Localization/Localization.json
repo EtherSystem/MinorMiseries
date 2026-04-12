@@ -72,7 +72,7 @@
         "Spanish (Spain)": "La astilla en tu mano ha causado irritación; tu mano sigue sensible y se irrita con facilidad, lo que dificulta tus acciones.",
         "German": "Der Splitter in deiner Hand hat Reizungen verursacht; deine Hand bleibt empfindlich und entzündet sich leicht, was deine Handlungen erschwert.",
         "Turkish": "Elinizdeki kıymık tahrişe neden oldu; eliniz hassas kaldı ve kolayca tahriş oluyor, bu da eylemlerinizi zorlaştırıyor.",
-        "Russian": "Заноза в руке вызвала раздражение: рука остаётся чувствительной и легко воспаляется, из-за чего действовать сложнее."
+        "Russian": "Заноза в руке вызвала раздражение: рука остаётся чувствительной и легко воспаляется, из-за чего работать сложнее."
     },
 
 
@@ -90,7 +90,7 @@
         "Spanish (Spain)": "Has caminado demasiado tiempo",
         "German": "Zu lange gelaufen",
         "Turkish": "Çok uzun yürüdünüz",
-        "Russian": "Слишком долго ходили"
+        "Russian": "Слишком долгая ходьба"
     },
     "GAMEPLAY_BlisterDescription": {
         "English": "You have made a sustained effort for too long.",
@@ -98,7 +98,7 @@
         "Spanish (Spain)": "Has hecho un esfuerzo prolongado durante demasiado tiempo.",
         "German": "Du hast dich zu lange dauerhaft angestrengt.",
         "Turkish": "Çok uzun süre sürekli efor sarf ettiniz.",
-        "Russian": "Вы слишком долго прилагали непрерывные усилия."
+        "Russian": "Вы изнурились."
     },
 
     "GAMEPLAY_BareSkinName": {
@@ -115,7 +115,7 @@
         "Spanish (Spain)": "Rozaduras repetidas",
         "German": "Wiederholte Reibung",
         "Turkish": "Tekrarlayan sürtünme",
-        "Russian": "Повторяющееся трение"
+        "Russian": "Неоднократное натирание"
     },
     "GAMEPLAY_BareSkinDescription": {
         "English": "Skin worn down by repeated friction becomes tender, making prolonged movement uncomfortable.",
@@ -123,7 +123,7 @@
         "Spanish (Spain)": "La piel, desgastada por la fricción repetida, se vuelve sensible, haciendo incómodo moverse durante mucho tiempo.",
         "German": "Durch wiederholte Reibung aufgescheuerte Haut wird empfindlich und macht längere Bewegungen unangenehm.",
         "Turkish": "Tekrarlayan sürtünmeyle aşınan cildiniz hassaslaşır; uzun süre hareket etmek rahatsız edici olur.",
-        "Russian": "Кожа, натёртая повторяющимся трением, становится болезненной, и длительное движение причиняет дискомфорт."
+        "Russian": "Кожа, натертая неоднократно, становится тонкой, доставляя дискомфорт при длительном движении."
     },
 
 
@@ -149,7 +149,7 @@
         "Spanish (Spain)": "Te has arañado la piel, nada demasiado serio...",
         "German": "Du hast dir die Haut aufgeschürft, nichts allzu Ernstes...",
         "Turkish": "Cildinizi sıyırdınız, çok da ciddi değil...",
-        "Russian": "Вы поцарапали кожу — ничего слишком серьёзного..."
+        "Russian": "Вы поцарапали кожу — ничего страшного..."
     },
 
     "GAMEPLAY_SmallCutName": {
@@ -174,7 +174,7 @@
         "Spanish (Spain)": "Un arañazo superficial se ha abierto un poco; requiere atención para evitar complicaciones.",
         "German": "Eine oberflächliche Schramme hat sich leicht geöffnet und braucht Pflege, um weitere Komplikationen zu vermeiden.",
         "Turkish": "Yüzeysel bir sıyrık biraz açıldı; daha fazla sorun yaşamamak için ilgilenmeniz gerekiyor.",
-        "Russian": "Поверхностная царапина немного разошлась; за ней нужно присмотреть, чтобы избежать осложнений."
+        "Russian": "Поверхностная царапина немного разошлась, наблюдайте за ней, чтобы избежать осложнений."
     },
 
 
@@ -184,7 +184,7 @@
         "Spanish (Spain)": "Comida atascada",
         "German": "Steckengebliebene Nahrung",
         "Turkish": "Takılan yiyecek",
-        "Russian": "Застрявшая еда"
+        "Russian": "Застрявшая пища"
     },
     "GAMEPLAY_StuckFoodCause": {
         "English": "You ate too fast",
@@ -226,7 +226,7 @@
         "Spanish (Spain)": "Estar demasiado cargado durante mucho tiempo tiene consecuencias...",
         "German": "Zu lange überlastet zu sein hat Folgen...",
         "Turkish": "Çok uzun süre aşırı yüklü kalmanın sonuçları olur...",
-        "Russian": "Долго быть перегруженным имеет последствия..."
+        "Russian": "Последствия того, что вы тащили тяжелый вес слишком долго..."
     },
 
 
@@ -236,7 +236,7 @@
         "Spanish (Spain)": "Pesadilla",
         "German": "Albtraum",
         "Turkish": "Kötü rüya",
-        "Russian": "Кошмар"
+        "Russian": "Ночной кошмар"
     },
     "GAMEPLAY_BadDreamCause": {
         "English": "Troubled sleep",
@@ -252,7 +252,7 @@
         "Spanish (Spain)": "Un sueño inquietante te despierta de golpe; tus pensamientos se aceleran y el sueño se niega a volver.",
         "German": "Ein verstörender Traum reißt dich aus dem Schlaf; deine Gedanken rasen und der Schlaf will nicht zurückkehren.",
         "Turkish": "Rahatsız edici bir rüya sizi aniden uyandırır; düşünceleriniz yarışır ve uyku geri gelmez.",
-        "Russian": "Тревожный сон резко будит вас: мысли несутся, и сон никак не возвращается."
+        "Russian": "Страшный сон резко будит вас: мысли крутятся в голове, и сон никак не возвращается."
     },
 
     "GAMEPLAY_NightTerrorName": {
@@ -337,7 +337,7 @@
         "French (France)": "",
         "Spanish (Spain)": "",
         "German": "",
-        "Turkish": "",
+        "Turkish": "Boyun ağrısı",
         "Russian": ""
     },
     "GAMEPLAY_SoreNeckCause": {
@@ -345,7 +345,7 @@
         "French (France)": "",
         "Spanish (Spain)": "",
         "German": "",
-        "Turkish": "",
+        "Turkish": "Kötü uyku pozisyonu",
         "Russian": ""
     },
     "GAMEPLAY_SoreNeckDescription": {
@@ -353,7 +353,7 @@
         "French (France)": "",
         "Spanish (Spain)": "",
         "German": "",
-        "Turkish": "",
+        "Turkish": "Çok rahatsız bir pozisyonda uyudun, boynun çok ağrıyor.",
         "Russian": ""
     },
 
@@ -371,7 +371,7 @@
         "Spanish (Spain)": "Tú mismo",
         "German": "Du selbst",
         "Turkish": "Kendiniz",
-        "Russian": "Вы сами"
+        "Russian": "Вы"
     },
     "GAMEPLAY_OverconfidenceRiskDescription": {
         "English": "Everything seems so simple, doesn't it ?",
@@ -397,7 +397,7 @@
         "Spanish (Spain)": "Tú mismo",
         "German": "Du selbst",
         "Turkish": "Kendiniz",
-        "Russian": "Вы сами"
+        "Russian": "Вы"
     },
     "GAMEPLAY_OverconfidenceDescription": {
         "English": "You are far too confident, you are paying the price for your experience, and you take your survival for granted. Afflictions are now easier to contract.",
@@ -415,7 +415,7 @@
         "Spanish (Spain)": "Piel en carne viva sin tratar",
         "German": "Unbehandelte aufgescheuerte Haut",
         "Turkish": "Tedavi edilmemiş tahriş olmuş cilt",
-        "Russian": "Нелеченная натёртая кожа"
+        "Russian": "Невылеченная натёртость на коже"
     },
     "GAMEPLAY_SmallCutInfection": {
         "English": "Untreated small cut",
@@ -423,6 +423,83 @@
         "Spanish (Spain)": "Pequeño corte sin tratar",
         "German": "Unbehandelte kleine Schnittwunde",
         "Turkish": "Tedavi edilmemiş küçük kesik",
-        "Russian": "Нелеченный небольшой порез"
+        "Russian": "Невылеченный небольшой порез"
+    },
+
+
+
+    "GAMEPLAY_ProtectedHandsName": {
+        "English": "Protected Hands",
+        "French (France)": "Mains protégées",
+        "Spanish (Spain)": "Manos protegidas",
+        "German": "Geschützte Hände",
+        "Turkish": "Korumalı Eller",
+        "Russian": "Защищённые руки"
+    },
+    "GAMEPLAY_ProtectedHandsCause": {
+        "English": "Wearing gloves",
+        "French (France)": "Porte des gants",
+        "Spanish (Spain)": "Lleva guantes",
+        "German": "Trägt Handschuhe",
+        "Turkish": "Eldiven giyiyor",
+        "Russian": "На вас надеты перчатки"
+    },
+    "GAMEPLAY_ProtectedHandsDescription": {
+        "English": "Your gloves protect your hands against splinters while breaking down objects.",
+        "French (France)": "Vos gants protègent vos mains contre les échardes lorsque vous démontez des objets.",
+        "Spanish (Spain)": "Tus guantes protegen tus manos de las astillas al desmantelar objetos.",
+        "German": "Deine Handschuhe schützen deine Hände beim Zerlegen von Gegenständen vor Splittern.",
+        "Turkish": "Eldivenlerin, eşyaları sökerken ellerini kıymıklara karşı korur.",
+        "Russian": "Ваши перчатки защищают руки от заноз при разборке предметов."
+    },
+
+    "GAMEPLAY_PeaceOfMindName": {
+        "English": "Peace Of Mind",
+        "French (France)": "Esprit en paix",
+        "Spanish (Spain)": "Paz mental",
+        "German": "Innere Ruhe",
+        "Turkish": "Huzur",
+        "Russian": "Душевный покой"
+    },
+    "GAMEPLAY_PeaceOfMindCause": {
+        "English": "You feel safe",
+        "French (France)": "Tu te sens en sécurité",
+        "Spanish (Spain)": "Te sientes a salvo",
+        "German": "Du fühlst dich sicher",
+        "Turkish": "Kendini güvende hissediyorsun",
+        "Russian": "Вы чувствуете себя в безопасности"
+    },
+    "GAMEPLAY_PeaceOfMindDescription": {
+        "English": "Time has passed since your last wildlife attack, and a restful sleep has calmed your nerves. Bad Dreams and Night Terrors can no longer occur.",
+        "French (France)": "Le temps a passé depuis votre dernière attaque d'animal sauvage, et un sommeil réparateur a apaisé vos nerfs. Les mauvais rêves et les terreurs nocturnes ne peuvent plus survenir.",
+        "Spanish (Spain)": "Ha pasado tiempo desde tu último ataque de fauna salvaje y un sueño reparador ha calmado tus nervios. Ya no pueden producirse malos sueños ni terrores nocturnos.",
+        "German": "Seit deinem letzten Angriff durch ein Wildtier ist einige Zeit vergangen, und erholsamer Schlaf hat deine Nerven beruhigt. Schlechte Träume und Nachtängste können nicht mehr auftreten.",
+        "Turkish": "Son vahşi hayvan saldırısından bu yana zaman geçti ve dinlendirici bir uyku sinirlerini yatıştırdı. Artık Kötü Rüyalar ve Gece Terörleri meydana gelemez.",
+        "Russian": "С момента последнего нападения дикого животного прошло достаточно времени, а спокойный сон успокоил ваши нервы. Кошмары и ночные ужасы больше не возникнут."
+    },
+
+    "GAMEPLAY_ProtectedArmsName": {
+        "English": "Protected Arms",
+        "French (France)": "Bras protégés",
+        "Spanish (Spain)": "Brazos protegidos",
+        "German": "Geschützte Arme",
+        "Turkish": "Korunan Kollar",
+        "Russian": "Защищённые руки"
+    },
+    "GAMEPLAY_ProtectedArmsCause": {
+        "English": "Wearing sturdy clothing",
+        "French (France)": "Porte un vêtement robuste",
+        "Spanish (Spain)": "Llevar ropa resistente",
+        "German": "Trägt robuste Kleidung",
+        "Turkish": "Sağlam giysi giyiyor",
+        "Russian": "Надета прочная одежда"
+    },
+    "GAMEPLAY_ProtectedArmsDescription": {
+        "English": "Your clothing protects your arms from scratches while crafting items.",
+        "French (France)": "Vos vêtements protègent vos bras des égratignures lorsque vous fabriquez des objets.",
+        "Spanish (Spain)": "Tu ropa protege tus brazos de los arañazos mientras fabricas objetos.",
+        "German": "Deine Kleidung schützt deine Arme beim Herstellen von Gegenständen vor Kratzern.",
+        "Turkish": "Giysilerin, eşya üretirken kollarını çizilmelere karşı korur.",
+        "Russian": "Ваша одежда защищает руки от царапин при изготовлении предметов."
     }
 }

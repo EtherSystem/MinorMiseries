@@ -1,17 +1,25 @@
 ﻿using AfflictionComponent.Interfaces;
 using AfflictionComponent.Components;
 using AfflictionComponent.Enums;
+using Minor_Miseries.Resources.Localization;
 
 namespace Minor_Miseries.Afflictions
 {
     internal class BackPain
     {
-        public class BackPainAffliction : CustomAffliction, IDuration, IInstance, IRemedies
+        public class BackPainAffliction : CustomAffliction, IDuration, IInstance, IRemedies, ILocalizableAffliction
         {
+            private const string NAME_KEY = "GAMEPLAY_BackPainName";
+            private const string CAUSE_KEY = "GAMEPLAY_BackPainCause";
+            private const string DESC_KEY = "GAMEPLAY_BackPainDescription";
+
+            private const string ICON = "Minor_Miseries.Resources.Icons.Afflictions.Classic.BackPain.png";
+            private const string ALT_ICON = "Minor_Miseries.Resources.Icons.Afflictions.Alt.BackPain_ALT.png";
+
             public InstanceType Type { get; set; } = InstanceType.Single;
             public void OnFoundExistingInstance(CustomAffliction existingAffliction)
             {
-                //MelonLogger.Msg("back pain duplication");
+                //Core.Log("back pain duplication");
                 if (existingAffliction is BackPainAffliction backPain)
                 {
                     backPain.ResetAffliction(resetRemedies: false);
@@ -29,7 +37,7 @@ namespace Minor_Miseries.Afflictions
 
             public bool InstantHeal { get; set; } = true;
 
-            public BackPainAffliction(AfflictionBodyArea bodyArea) : base("GAMEPLAY_BackPainName", "GAMEPLAY_BackPainCause", "GAMEPLAY_BackPainDescription", null, "Minor_Miseries.Resources.Icons.BackPain.png", bodyArea, true)
+            public BackPainAffliction(AfflictionBodyArea bodyArea) : base(NAME_KEY, CAUSE_KEY, DESC_KEY, null, UnityEngine.Random.Range(0f, 100f) < Settings.options.AltAfflictionIconChance ? ALT_ICON : ICON, bodyArea, true)
             {
             }
 
@@ -46,6 +54,18 @@ namespace Minor_Miseries.Afflictions
             public override void OnUpdate()
             {
                 IsBackPainActive = true;
+            }
+
+            public void RefreshLocalization()
+            {
+                string oldName = m_Name;
+
+                m_Name = Localization.Get(NAME_KEY);
+                m_CauseText = Localization.Get(CAUSE_KEY);
+                m_Description = Localization.Get(DESC_KEY);
+                m_DescriptionNoHeal = null;
+
+                Core.Log($"BackPain refresh -> '{oldName}' => '{m_Name}'");
             }
         }
     }

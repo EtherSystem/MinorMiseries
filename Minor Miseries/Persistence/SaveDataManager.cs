@@ -8,20 +8,25 @@ namespace Minor_Miseries.Persistence
         private static readonly ModDataManager _manager = new("MinorMiseries", false);
         private const string SUFFIX = "mmdata";
 
+        private static void LogState(string prefix)
+        {
+            Core.Log(
+                $"{prefix} → " +
+                $"Stress:{Core.State.AnimalStressScore:0.###} | " +
+                $"Timer:{Core.State.AnimalStressTimer:0.###} | " +
+                $"HrsSinceAtt:{Core.State.HoursSinceLastWildlifeAttack:0.###} | " +
+                $"HrsSinceAff:{Core.State.HoursSinceLastAffliction:0.###} | " +
+                $"HrsMove:{Core.State.HoursSpentMoving:0.###} | " +
+                $"HrsOverL:{Core.State.HoursOverloaded:0.###}"
+            );
+        }
+
         internal static void OnSave()
         {
             string json = JsonConvert.SerializeObject(Core.State);
             _manager.Save(json, SUFFIX);
 
-            if (Settings.options.IsLogging && Core.Instance != null)
-            {
-                Core.Instance.LoggerInstance.Msg(
-                    $"Saved → Stress:{Core.State.AnimalStressScore:0.###} | " +
-                    $"Timer:{Core.State.AnimalStressTimer:0.###} | " +
-                    $"HrsSinceAff:{Core.State.HoursSinceLastAffliction:0.###} | " +
-                    $"Move:{Core.State.HoursSpentMoving:0.###} | Over:{Core.State.HoursOverloaded:0.###}"
-                );
-            }
+            LogState("Saved");
         }
 
         internal static void OnLoad()
@@ -31,30 +36,36 @@ namespace Minor_Miseries.Persistence
             if (string.IsNullOrEmpty(json))
             {
                 Core.State = new MMState();
-                if (Settings.options.IsLogging && Core.Instance != null)
-                    Core.Instance.LoggerInstance.Msg("Loaded → empty data (fresh slot)");
+
+                Core.Log("Loaded → empty data (fresh slot)");
+
+                LogState("Loaded");
                 return;
             }
 
             MMState? loaded = null;
-            try { loaded = JsonConvert.DeserializeObject<MMState>(json); }
-            catch { /* corrupted data -> reset safe */ }
+            try
+            {
+                loaded = JsonConvert.DeserializeObject<MMState>(json);
+            }
+            catch (Exception ex)
+            {
+                if (Settings.options.IsLogging && Core.Instance != null) Core.Instance.LoggerInstance.Warning($"Load failed, resetting state: {ex.Message}");
+            }
 
             Core.State = loaded ?? new MMState();
             ClampAndFix();
 
-            if (Settings.options.IsLogging && Core.Instance != null)
-            {
-                Core.Instance.LoggerInstance.Msg($"Loaded → Stress:{Core.State.AnimalStressScore:0.###} | " + $"Timer:{Core.State.AnimalStressTimer:0.###}");
-            }
+            LogState("Loaded");
         }
 
         internal static void OnNewGame()
         {
             Core.State = new MMState();
 
-            if (Settings.options.IsLogging && Core.Instance != null)
-                Core.Instance.LoggerInstance.Msg("Clearing data for new game");
+            Core.Log("Clearing data for new game");
+
+            LogState("NewGame");
         }
 
         private static void ClampAndFix()
@@ -62,10 +73,12 @@ namespace Minor_Miseries.Persistence
             Core.State.AnimalStressScore = Mathf.Max(0f, Core.State.AnimalStressScore);
 
             // timer: -1 = inactive
-            if (Core.State.AnimalStressTimer < 0f)
+            if (float.IsNaN(Core.State.AnimalStressTimer) || float.IsInfinity(Core.State.AnimalStressTimer) || Core.State.AnimalStressTimer < 0f)
+            {
                 Core.State.AnimalStressTimer = -1f;
+            }
 
-            // optionnels
+            Core.State.HoursSinceLastWildlifeAttack = Mathf.Max(0f, Core.State.HoursSinceLastWildlifeAttack);
             Core.State.HoursSinceLastAffliction = Mathf.Max(0f, Core.State.HoursSinceLastAffliction);
             Core.State.HoursSpentMoving = Mathf.Max(0f, Core.State.HoursSpentMoving);
             Core.State.HoursOverloaded = Mathf.Max(0f, Core.State.HoursOverloaded);

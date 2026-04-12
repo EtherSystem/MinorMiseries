@@ -13,30 +13,48 @@
 		<Platforms>AnyCPU;x64</Platforms>
 	</PropertyGroup>
 
-	
 	<PropertyGroup>
 		<TheLongDarkPath>D:\SteamLibrary\steamapps\common\TheLongDark</TheLongDarkPath>
 	</PropertyGroup>
 
-	
 	<ItemGroup>
-	  <None Remove="Afflictions\Scratch.cs~RF1fa6777.TMP" />
-	  <None Remove="Resources\Icons\BackPain.png" />
-	  <None Remove="Resources\Icons\BadDream.png" />
-	  <None Remove="Resources\Icons\BareSkin.png" />
-	  <None Remove="Resources\Icons\Blister.png" />
-	  <None Remove="Resources\Icons\NightTerror.png" />
-	  <None Remove="Resources\Icons\Overconfidence.png" />
-	  <None Remove="Resources\Icons\OverconfidenceRisk.png" />
-	  <None Remove="Resources\Icons\Scratch.png" />
-	  <None Remove="Resources\Icons\SensitiveHand.png" />
-	  <None Remove="Resources\Icons\ShoulderTrauma.png" />
-	  <None Remove="Resources\Icons\SmallCut.png" />
-	  <None Remove="Resources\Icons\SoreNeck.png" />
-	  <None Remove="Resources\Icons\Splinter.png" />
-	  <None Remove="Resources\Icons\StuckFood.png" />
-	  <None Remove="Resources\Icons\WristTrauma.png" />
-	  <None Remove="Resources\Localization\Localization.json" />
+		<None Remove="Resources\Icons\Afflictions\Alt\BackPain_ALT.png" />
+		<None Remove="Resources\Icons\Afflictions\Alt\BadDream_ALT.png" />
+		<None Remove="Resources\Icons\Afflictions\Alt\BareSkin_ALT.png" />
+		<None Remove="Resources\Icons\Afflictions\Alt\Blister_ALT.png" />
+		<None Remove="Resources\Icons\Afflictions\Alt\NightTerror_ALT.png" />
+		<None Remove="Resources\Icons\Afflictions\Alt\OverconfidenceRisk_ALT.png" />
+		<None Remove="Resources\Icons\Afflictions\Alt\Overconfidence_ALT.png" />
+		<None Remove="Resources\Icons\Afflictions\Alt\Scratch_ALT.png" />
+		<None Remove="Resources\Icons\Afflictions\Alt\SensitiveHand_ALT.png" />
+		<None Remove="Resources\Icons\Afflictions\Alt\ShoulderTrauma_ALT.png" />
+		<None Remove="Resources\Icons\Afflictions\Alt\SmallCut_ALT.png" />
+		<None Remove="Resources\Icons\Afflictions\Alt\SoreNeck_ALT.png" />
+		<None Remove="Resources\Icons\Afflictions\Alt\Splinter_ALT.png" />
+		<None Remove="Resources\Icons\Afflictions\Alt\StuckFood_ALT.png" />
+		<None Remove="Resources\Icons\Afflictions\Alt\WristTrauma_ALT.png" />
+		<None Remove="Resources\Icons\Afflictions\Classic\BackPain.png" />
+		<None Remove="Resources\Icons\Afflictions\Classic\BadDream.png" />
+		<None Remove="Resources\Icons\Afflictions\Classic\BareSkin.png" />
+		<None Remove="Resources\Icons\Afflictions\Classic\Blister.png" />
+		<None Remove="Resources\Icons\Afflictions\Classic\NightTerror.png" />
+		<None Remove="Resources\Icons\Afflictions\Classic\Overconfidence.png" />
+		<None Remove="Resources\Icons\Afflictions\Classic\OverconfidenceRisk.png" />
+		<None Remove="Resources\Icons\Afflictions\Classic\Scratch.png" />
+		<None Remove="Resources\Icons\Afflictions\Classic\SensitiveHand.png" />
+		<None Remove="Resources\Icons\Afflictions\Classic\ShoulderTrauma.png" />
+		<None Remove="Resources\Icons\Afflictions\Classic\SmallCut.png" />
+		<None Remove="Resources\Icons\Afflictions\Classic\SoreNeck.png" />
+		<None Remove="Resources\Icons\Afflictions\Classic\Splinter.png" />
+		<None Remove="Resources\Icons\Afflictions\Classic\StuckFood.png" />
+		<None Remove="Resources\Icons\Afflictions\Classic\WristTrauma.png" />
+		<None Remove="Resources\Icons\Buffs\Alt\PeaceOfMind_ALT.png" />
+		<None Remove="Resources\Icons\Buffs\Alt\ProtectedArms_ALT.png" />
+		<None Remove="Resources\Icons\Buffs\Alt\ProtectedHands_ALT.png" />
+		<None Remove="Resources\Icons\Buffs\Classic\PeaceOfMind.png" />
+		<None Remove="Resources\Icons\Buffs\Classic\ProtectedArms.png" />
+		<None Remove="Resources\Icons\Buffs\Classic\ProtectedHands.png" />
+		<None Remove="Resources\Localization\Localization.json" />
 	</ItemGroup>
 
 	<PropertyGroup>
@@ -46,10 +64,15 @@
 
 	<ItemGroup>
 		<Compile Include="AfflictionLogic.cs" />
+		<Compile Include="AfflictionSaveHelper.cs" />
 		<Compile Include="Afflictions\BackPain.cs" />
 		<Compile Include="Afflictions\BadDream.cs" />
 		<Compile Include="Afflictions\BareSkin.cs" />
 		<Compile Include="Afflictions\Blister.cs" />
+		<Compile Include="Afflictions\Buffs\PeaceOfMind.cs" />
+		<Compile Include="Afflictions\Buffs\ProtectedArms.cs" />
+		<Compile Include="Afflictions\Buffs\ProtectedHands.cs" />
+		<Compile Include="Afflictions\DebugAffliction.cs" />
 		<Compile Include="Afflictions\NightTerror.cs" />
 		<Compile Include="Afflictions\Overconfidence.cs" />
 		<Compile Include="Afflictions\SensitiveHand.cs" />
@@ -57,6 +80,7 @@
 		<Compile Include="Afflictions\SmallCut.cs" />
 		<Compile Include="Afflictions\SoreNeck.cs" />
 		<Compile Include="Afflictions\WristTrauma.cs" />
+		<Compile Include="BuffLogic.cs" />
 		<Compile Include="Core.cs" />
 		<Compile Include="DevConsoleCommands.cs" />
 		<Compile Include="Patches\AfflictionEffects.cs" />
@@ -71,25 +95,48 @@
 		<Compile Include="Patches\RepairOnCrashPatch.cs" />
 		<Compile Include="Persistence\MMState.cs" />
 		<Compile Include="Persistence\SaveDataManager.cs" />
+		<Compile Include="Resources\Localization\ILocalizableAffliction.cs" />
+		<Compile Include="Resources\Localization\LocalizationRefresh.cs" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <EmbeddedResource Include="Resources\Icons\BackPain.png" />
-	  <EmbeddedResource Include="Resources\Icons\BadDream.png" />
-	  <EmbeddedResource Include="Resources\Icons\BareSkin.png" />
-	  <EmbeddedResource Include="Resources\Icons\Blister.png" />
-	  <EmbeddedResource Include="Resources\Icons\NightTerror.png" />
-	  <EmbeddedResource Include="Resources\Icons\Overconfidence.png" />
-	  <EmbeddedResource Include="Resources\Icons\OverconfidenceRisk.png" />
-	  <EmbeddedResource Include="Resources\Icons\Scratch.png" />
-	  <EmbeddedResource Include="Resources\Icons\SensitiveHand.png" />
-	  <EmbeddedResource Include="Resources\Icons\ShoulderTrauma.png" />
-	  <EmbeddedResource Include="Resources\Icons\SmallCut.png" />
-	  <EmbeddedResource Include="Resources\Icons\SoreNeck.png" />
-	  <EmbeddedResource Include="Resources\Icons\Splinter.png" />
-	  <EmbeddedResource Include="Resources\Icons\StuckFood.png" />
-	  <EmbeddedResource Include="Resources\Icons\WristTrauma.png" />
-	  <EmbeddedResource Include="Resources\Localization\Localization.json" />
+		<EmbeddedResource Include="Resources\Icons\Afflictions\Alt\BackPain_ALT.png" />
+		<EmbeddedResource Include="Resources\Icons\Afflictions\Alt\BadDream_ALT.png" />
+		<EmbeddedResource Include="Resources\Icons\Afflictions\Alt\BareSkin_ALT.png" />
+		<EmbeddedResource Include="Resources\Icons\Afflictions\Alt\Blister_ALT.png" />
+		<EmbeddedResource Include="Resources\Icons\Afflictions\Alt\NightTerror_ALT.png" />
+		<EmbeddedResource Include="Resources\Icons\Afflictions\Alt\OverconfidenceRisk_ALT.png" />
+		<EmbeddedResource Include="Resources\Icons\Afflictions\Alt\Overconfidence_ALT.png" />
+		<EmbeddedResource Include="Resources\Icons\Afflictions\Alt\Scratch_ALT.png" />
+		<EmbeddedResource Include="Resources\Icons\Afflictions\Alt\SensitiveHand_ALT.png" />
+		<EmbeddedResource Include="Resources\Icons\Afflictions\Alt\ShoulderTrauma_ALT.png" />
+		<EmbeddedResource Include="Resources\Icons\Afflictions\Alt\SmallCut_ALT.png" />
+		<EmbeddedResource Include="Resources\Icons\Afflictions\Alt\SoreNeck_ALT.png" />
+		<EmbeddedResource Include="Resources\Icons\Afflictions\Alt\Splinter_ALT.png" />
+		<EmbeddedResource Include="Resources\Icons\Afflictions\Alt\StuckFood_ALT.png" />
+		<EmbeddedResource Include="Resources\Icons\Afflictions\Alt\WristTrauma_ALT.png" />
+		<EmbeddedResource Include="Resources\Icons\Afflictions\Classic\BackPain.png" />
+		<EmbeddedResource Include="Resources\Icons\Afflictions\Classic\BadDream.png" />
+		<EmbeddedResource Include="Resources\Icons\Afflictions\Classic\BareSkin.png" />
+		<EmbeddedResource Include="Resources\Icons\Afflictions\Classic\Blister.png" />
+		<EmbeddedResource Include="Resources\Icons\Afflictions\Classic\NightTerror.png" />
+		<EmbeddedResource Include="Resources\Icons\Afflictions\Classic\Overconfidence.png" />
+		<EmbeddedResource Include="Resources\Icons\Afflictions\Classic\OverconfidenceRisk.png" />
+		<EmbeddedResource Include="Resources\Icons\Afflictions\Classic\Scratch.png" />
+		<EmbeddedResource Include="Resources\Icons\Afflictions\Classic\SensitiveHand.png" />
+		<EmbeddedResource Include="Resources\Icons\Afflictions\Classic\ShoulderTrauma.png" />
+		<EmbeddedResource Include="Resources\Icons\Afflictions\Classic\SmallCut.png" />
+		<EmbeddedResource Include="Resources\Icons\Afflictions\Classic\SoreNeck.png" />
+		<EmbeddedResource Include="Resources\Icons\Afflictions\Classic\Splinter.png" />
+		<EmbeddedResource Include="Resources\Icons\Afflictions\Classic\StuckFood.png" />
+		<EmbeddedResource Include="Resources\Icons\Afflictions\Classic\WristTrauma.png" />
+		<EmbeddedResource Include="Resources\Icons\Buffs\Alt\PeaceOfMind_ALT.png" />
+		<EmbeddedResource Include="Resources\Icons\Buffs\Alt\ProtectedArms_ALT.png" />
+		<EmbeddedResource Include="Resources\Icons\Buffs\Alt\ProtectedHands_ALT.png" />
+		<EmbeddedResource Include="Resources\Icons\Buffs\Classic\PeaceOfMind.png" />
+		<EmbeddedResource Include="Resources\Icons\Buffs\Classic\ProtectedArms.png" />
+		<EmbeddedResource Include="Resources\Icons\Buffs\Classic\ProtectedHands.png" />
+		<EmbeddedResource Include="Resources\Localization\Localization.json" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -108,8 +155,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="STBlade.Modding.TLD.Il2CppAssemblies.Windows" Version="2.51.0" />
-	  <PackageReference Include="STBlade.Modding.TLD.ModSettings" Version="1.9.0" />
+		<PackageReference Include="STBlade.Modding.TLD.Il2CppAssemblies.Windows" Version="2.51.0" />
+		<PackageReference Include="STBlade.Modding.TLD.ModSettings" Version="1.9.0" />
 	</ItemGroup>
 
 	<ItemGroup>

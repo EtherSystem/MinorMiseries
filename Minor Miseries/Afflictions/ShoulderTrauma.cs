@@ -1,17 +1,25 @@
 ﻿using AfflictionComponent.Interfaces;
 using AfflictionComponent.Components;
 using AfflictionComponent.Enums;
+using Minor_Miseries.Resources.Localization;
 
 namespace Minor_Miseries.Afflictions
 {
     internal class ShoulderTrauma
     {
-        public class ShoulderTraumaAffliction : CustomAffliction, IDuration, IRemedies, IInstance
+        public class ShoulderTraumaAffliction : CustomAffliction, IDuration, IRemedies, IInstance, ILocalizableAffliction
         {
+            private const string NAME_KEY = "GAMEPLAY_ShoulderTraumaName";
+            private const string CAUSE_KEY = "GAMEPLAY_ShoulderTraumaCause";
+            private const string DESC_KEY = "GAMEPLAY_ShoulderTraumaDescription";
+
+            private const string ICON = "Minor_Miseries.Resources.Icons.Afflictions.Classic.ShoulderTrauma.png";
+            private const string ALT_ICON = "Minor_Miseries.Resources.Icons.Afflictions.Alt.ShoulderTrauma_ALT.png";
+
             public InstanceType Type { get; set; } = InstanceType.Single;
             public void OnFoundExistingInstance(CustomAffliction existingAffliction)
             {
-                //MelonLogger.Msg("Shoulder Trauma duplication");
+                //Core.Log("Shoulder Trauma duplication");
                 if (existingAffliction is ShoulderTraumaAffliction shoulderTrauma)
                 {
                     shoulderTrauma.ResetAffliction(resetRemedies: false);
@@ -29,7 +37,7 @@ namespace Minor_Miseries.Afflictions
 
             public bool InstantHeal { get; set; } = true;
 
-            public ShoulderTraumaAffliction(AfflictionBodyArea bodyArea) : base("GAMEPLAY_ShoulderTraumaName", "GAMEPLAY_ShoulderTraumaCause", "GAMEPLAY_ShoulderTraumaDescription", null, "Minor_Miseries.Resources.Icons.ShoulderTrauma.png", bodyArea, true)
+            public ShoulderTraumaAffliction(AfflictionBodyArea bodyArea) : base(NAME_KEY, CAUSE_KEY, DESC_KEY, null, UnityEngine.Random.Range(0f, 100f) < Settings.options.AltAfflictionIconChance ? ALT_ICON : ICON, bodyArea, true)
             {
             }
 
@@ -45,6 +53,18 @@ namespace Minor_Miseries.Afflictions
             public override void OnUpdate()
             {
                 IsShoulderTraumaActive = true;
+            }
+
+            public void RefreshLocalization()
+            {
+                string oldName = m_Name;
+
+                m_Name = Localization.Get(NAME_KEY);
+                m_CauseText = Localization.Get(CAUSE_KEY);
+                m_Description = Localization.Get(DESC_KEY);
+                m_DescriptionNoHeal = null;
+
+                Core.Log($"ShoulderTrauma refresh -> '{oldName}' => '{m_Name}'");
             }
         }
     }

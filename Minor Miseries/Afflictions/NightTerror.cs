@@ -1,17 +1,25 @@
 ﻿using AfflictionComponent.Interfaces;
 using AfflictionComponent.Components;
 using AfflictionComponent.Enums;
+using Minor_Miseries.Resources.Localization;
 
 namespace Minor_Miseries.Afflictions
 {
     internal class NightTerror
     {
-        public class NightTerrorAffliction : CustomAffliction, IDuration, IRemedies, IInstance
+        public class NightTerrorAffliction : CustomAffliction, IDuration, IRemedies, IInstance, ILocalizableAffliction
         {
+            private const string NAME_KEY = "GAMEPLAY_NightTerrorName";
+            private const string CAUSE_KEY = "GAMEPLAY_NightTerrorCause";
+            private const string DESC_KEY = "GAMEPLAY_NightTerrorDescription";
+
+            private const string ICON = "Minor_Miseries.Resources.Icons.Afflictions.Classic.NightTerror.png";
+            private const string ALT_ICON = "Minor_Miseries.Resources.Icons.Afflictions.Alt.NightTerror_ALT.png";
+
             public InstanceType Type { get; set; } = InstanceType.Single;
             public void OnFoundExistingInstance(CustomAffliction existingAffliction)
             {
-                //MelonLogger.Msg("night terror duplication");
+                //Core.Log("night terror duplication");
                 if (existingAffliction is NightTerrorAffliction nightTerror)
                 {
                     nightTerror.ResetAffliction(resetRemedies: false);
@@ -29,7 +37,7 @@ namespace Minor_Miseries.Afflictions
 
             public bool InstantHeal { get; set; } = true;
 
-            public NightTerrorAffliction(AfflictionBodyArea bodyArea) : base("GAMEPLAY_NightTerrorName", "GAMEPLAY_NightTerrorCause", "GAMEPLAY_NightTerrorDescription", null, "Minor_Miseries.Resources.Icons.NightTerror.png", bodyArea, true)
+            public NightTerrorAffliction(AfflictionBodyArea bodyArea) : base(NAME_KEY, CAUSE_KEY, DESC_KEY, null, UnityEngine.Random.Range(0f, 100f) < Settings.options.AltAfflictionIconChance ? ALT_ICON : ICON, bodyArea, true)
             {
             }
 
@@ -46,6 +54,18 @@ namespace Minor_Miseries.Afflictions
             public override void OnUpdate()
             {
                 IsNightTerrorActive = true;
+            }
+
+            public void RefreshLocalization()
+            {
+                string oldName = m_Name;
+
+                m_Name = Localization.Get(NAME_KEY);
+                m_CauseText = Localization.Get(CAUSE_KEY);
+                m_Description = Localization.Get(DESC_KEY);
+                m_DescriptionNoHeal = null;
+
+                Core.Log($"NightTerror refresh -> '{oldName}' => '{m_Name}'");
             }
         }
     }

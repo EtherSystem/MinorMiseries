@@ -1,17 +1,25 @@
 ﻿using AfflictionComponent.Interfaces;
 using AfflictionComponent.Components;
 using AfflictionComponent.Enums;
+using Minor_Miseries.Resources.Localization;
 
 namespace Minor_Miseries.Afflictions
 {
     internal class SmallCut
     {
-        public class SmallCutAffliction : CustomAffliction, IDuration, IRemedies, IInstance
+        public class SmallCutAffliction : CustomAffliction, IDuration, IRemedies, IInstance, ILocalizableAffliction
         {
+            private const string NAME_KEY = "GAMEPLAY_SmallCutName";
+            private const string CAUSE_KEY = "GAMEPLAY_SmallCutCause";
+            private const string DESC_KEY = "GAMEPLAY_SmallCutDescription";
+
+            private const string ICON = "Minor_Miseries.Resources.Icons.Afflictions.Classic.SmallCut.png";
+            private const string ALT_ICON = "Minor_Miseries.Resources.Icons.Afflictions.Alt.SmallCut_ALT.png";
+
             public InstanceType Type { get; set; } = InstanceType.Single;
             public void OnFoundExistingInstance(CustomAffliction existingAffliction)
             {
-                //MelonLogger.Msg("bare skin duplication");
+                //Core.Log("bare skin duplication");
                 if (existingAffliction is SmallCutAffliction smallCut)
                 {
                     smallCut.ResetAffliction(resetRemedies: false);
@@ -36,7 +44,7 @@ namespace Minor_Miseries.Afflictions
 
             public bool InstantHeal { get; set; } = false;
 
-            public SmallCutAffliction(AfflictionBodyArea bodyArea) : base("GAMEPLAY_SmallCutName", "GAMEPLAY_SmallCutCause", "GAMEPLAY_SmallCutDescription", null, "Minor_Miseries.Resources.Icons.SmallCut.png", bodyArea, true)
+            public SmallCutAffliction(AfflictionBodyArea bodyArea) : base(NAME_KEY, CAUSE_KEY, DESC_KEY, null, UnityEngine.Random.Range(0f, 100f) < Settings.options.AltAfflictionIconChance ? ALT_ICON : ICON, bodyArea, true)
             {
                 m_StartTime = GameManager.GetTimeOfDayComponent().GetHoursPlayedNotPaused();
             }
@@ -68,6 +76,18 @@ namespace Minor_Miseries.Afflictions
 
                     m_InfectionRiskTriggered = true;
                 }
+            }
+
+            public void RefreshLocalization()
+            {
+                string oldName = m_Name;
+
+                m_Name = Localization.Get(NAME_KEY);
+                m_CauseText = Localization.Get(CAUSE_KEY);
+                m_Description = Localization.Get(DESC_KEY);
+                m_DescriptionNoHeal = null;
+
+                Core.Log($"SmallCut refresh -> '{oldName}' => '{m_Name}'");
             }
         }
     }

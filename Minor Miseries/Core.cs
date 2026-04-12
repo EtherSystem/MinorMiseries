@@ -1,7 +1,7 @@
 ﻿using Minor_Miseries.Persistence;
 using LocalizationUtilities;
 
-[assembly: MelonInfo(typeof(Minor_Miseries.Core), "Minor Miseries", "1.4.0", "EtherSystem, Flower Field", null)]
+[assembly: MelonInfo(typeof(Minor_Miseries.Core), "Minor Miseries", "1.5.0", "EtherSystem, Flower Field", null)]
 [assembly: MelonGame("Hinterland", "TheLongDark")]
 
 namespace Minor_Miseries
@@ -26,17 +26,31 @@ namespace Minor_Miseries
         internal static MMState State = new();
         private bool _dirty = false;
 
-        // ---------------------------------------------------
+        // ----------------logging helper--------------------
+        internal static void Log(string message, bool onlyWhenDebugEnabled = true)
+        {
+            if (onlyWhenDebugEnabled && !Settings.options.IsLogging) return;
+
+            Instance?.LoggerInstance.Msg(message);
+        }
+        // --------------------------------------------------
 
         public override void OnInitializeMelon()
         {
             Instance = this;
             LocalizationManager.LoadJsonLocalization(LoadEmbeddedJSON("Localization.json"));
-            LoggerInstance.Msg("Initialized.");
+            Log("Initialized.", false);
             Settings.OnLoad();
 
             //dev console commands
             DevConsoleCommands.Register();
+
+            uConsole.RegisterCommand("reset_hrsatt", new Action(() =>
+            {
+                Core.State.HoursSinceLastWildlifeAttack = 0f;
+                _dirty = true;
+                Log("Hrs since last attk reset to 0");
+            }));
         }
 
         private float updateTimer = 0f;
@@ -66,6 +80,8 @@ namespace Minor_Miseries
             wasEating = false;
             wasInStruggle = false;
             wasResting = false;
+
+            BuffLogic.ResetRuntime();
         }
 
         public void OnStateLoaded()
@@ -85,14 +101,17 @@ namespace Minor_Miseries
             float oldSince = Core.State.HoursSinceLastAffliction;
             float oldMove = Core.State.HoursSpentMoving;
             float oldOver = Core.State.HoursOverloaded;
+            float oldWildlife = Core.State.HoursSinceLastWildlifeAttack;
 
             Core.State.HoursSinceLastAffliction = Mathf.Max(0f, Core.State.HoursSinceLastAffliction);
             Core.State.HoursSpentMoving = Mathf.Max(0f, Core.State.HoursSpentMoving);
             Core.State.HoursOverloaded = Mathf.Max(0f, Core.State.HoursOverloaded);
+            Core.State.HoursSinceLastWildlifeAttack = Mathf.Max(0f, Core.State.HoursSinceLastWildlifeAttack);
 
             if (!Mathf.Approximately(oldSince, Core.State.HoursSinceLastAffliction)) changed = true;
             if (!Mathf.Approximately(oldMove, Core.State.HoursSpentMoving)) changed = true;
             if (!Mathf.Approximately(oldOver, Core.State.HoursOverloaded)) changed = true;
+            if (!Mathf.Approximately(oldWildlife, Core.State.HoursSinceLastWildlifeAttack)) changed = true;
 
             if (changed) _dirty = true;
         }
@@ -124,8 +143,12 @@ namespace Minor_Miseries
 
             float gameHoursPassed = tod.GetTODHours(realTimeElapsed);
             if (gameHoursPassed <= 0f) return;
-
             AfflictionLogic.Tick(this, cond, gameHoursPassed, ref badDreamRollTimer, ref _stoppedHours, ref hadAfflictionLastTick, ref wasEating, ref wasInStruggle, ref wasResting, ref _dirty);
+            BuffLogic.Tick();
+
+            Patches.FirearmsPatch.FlushPendingAfflictionSound();
+
+            Resources.Localization.LocalizationRefresh.FlushPendingRefresh();
 
             Patches.AfflictionEffects.ForceRefresh();
         }
