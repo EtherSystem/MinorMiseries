@@ -1,13 +1,16 @@
-
 # Minor Miseries
 
 Minor Miseries is a mod for The Long Dark that introduces a layer of everyday physical discomforts.
 
-These afflictions are not lethal, they are minor and easy to ignore.  
+These afflictions are not lethal. they are minor and easy to ignore.
 
 *Until they aren’t anymore.*
 
 Small problems accumulate. Neglect has consequences. Comfort is never permanent.
+
+Minor Miseries now also includes a few situational protective buffs, allowing the player’s gear and recent experience to influence which miseries can occur.
+
+ALSO A HUGE THANK YOU TO FLOWER FIELD FOR THESE MAGNIFICENT ICONS !
 
 ## Overview
 
@@ -15,33 +18,34 @@ Minor Miseries adds a collection of non-fatal afflictions that trigger under spe
 
 Some afflictions can evolve if left untreated, becoming more severe or introducing additional risks.
 
-The system is designed around escalation, persistence, and cumulative pressure rather than sudden punishment.
+The system is built around escalation, persistence, cumulative pressure, and context-sensitive risk rather than sudden punishment.
 
-ALSO A HUGE THANK YOU TO FLOWER FIELD FOR THESE MAGNIFICENT ICONS !
+Certain risks are now influenced by the tools you use, while some pieces of protective clothing can help prevent specific afflictions at the cost of item condition.
 
 ## Afflictions
 
-
 **Blister**  
-Appears after prolonged physical exertion. Slightly reduces mobility.  
+Appears after prolonged walking or sprinting. Slightly reduces mobility.  
 Can evolve into **Bare Skin** if ignored.
 
 **Bare Skin**  
-Represents worn and exposed skin. Applies stronger movement penalties and carries a risk of infection.
+Represents worn and exposed skin caused by repeated friction. Strongly reduces movement efficiency and carries a risk of infection if neglected.
 
 **Back Pain**  
 Triggered by extended encumbrance. Reduces carrying capacity.  
-This affliction overrides carry weight values and may conflict with other mods that modify carry capacity.
+This affliction overrides carry weight values and *may* conflict with other mods that modify carry capacity.
 
 **Splinter**  
-Can occur during manual actions without protection. Reduces crafting and rope climbing speed.  
+Can occur during breakdown actions with unprotected hands.  
+The chance depends on the tool being used.  
 Can evolve into **Sensitive Hand**.
 
 **Sensitive Hand**  
-Develops from an untreated splinter. Further reduces crafting and climbing efficiency.
+Develops from an untreated splinter. Further reduces crafting and rope climbing efficiency.
 
 **Scratch**  
-May occur while crafting. Slightly reduces crafting speed.  
+Can occur while crafting with unprotected arms.  
+The chance depends on the tool being used.  
 Can evolve into **Small Cut**.
 
 **Small Cut**  
@@ -49,27 +53,46 @@ Develops from an untreated scratch. Introduces a risk of infection if neglected.
 
 **Wrist Trauma**  
 Can occur when firing a revolver with low firearm skill.  
-Reduces crafting speed, rope climbing speed, and shortens maximum rifle aim duration.
+Makes aiming and weapon handling more difficult, and also affects crafting and rope climbing.
 
 **Shoulder Trauma**  
 Can occur when firing a rifle with low firearm skill.  
-Reduces crafting speed, rope climbing speed, and shortens maximum rifle aim duration.
+Makes aiming and weapon handling more difficult, and also affects crafting and rope climbing.
 
-**Food Stuck**  
+**Stuck Food**  
 Can occur after eating. Causes **extreme** discomfort.  
 (Currently may also trigger from calorie-giving drinks — unintended behavior.)
 
 **Sore Neck**  
-Can occur after sleeping inside a car (60% chance) or a snow shelter (40% chance).
+Can occur after sleeping inside a car or a snow shelter.  
+Sleeping in a car is riskier than sleeping in a snow shelter.
 
 **Bad Dream / Night Terror**  
-May occur during sleep if the player has recently been attacked by wildlife.
+May occur during sleep if the player has recently been attacked by wildlife.  
 Abruptly wakes the player and interrupts rest.
-Each type of attack varies in severity, the more attacks the player has suffered, the greater the chance of contracting Night Terror instead of Bad Dream.
 
-Here is the order of severity of predator attacks: Wolves -> Moose -> Cougar -> Bear.
+Each type of wildlife struggle contributes differently to the severity of the stress that builds up:
 
-Keep in mind that Night Terror will always be twice as long as Bad Dream.
+Wolves -> Moose -> Cougar -> Bear
+
+The more intense the accumulated stress, the greater the chance of suffering **Night Terror** instead of **Bad Dream**.
+
+Keep in mind that **Night Terror** always lasts twice as long as **Bad Dream**.
+
+## Buffs
+
+**Protected Hands**  
+Wearing appropriate gloves in good enough condition grants protection against **Splinter** during breakdown actions.  
+While the buff is active, **Splinter** cannot develop, but the gloves will lose condition each time a **Splinter** would have appeared.
+
+**Protected Arms**  
+Wearing sturdy upper-body clothing in good enough condition grants protection against **Scratch** while crafting.  
+While the buff is active, **Scratch** cannot develop, but the clothes will lose condition each time a **Scratch** would have appeared.
+
+**Peace Of Mind**  
+If enough time passes since your last wildlife attack and you manage to get proper sleep, you may gain **Peace Of Mind**.  
+While active, **Bad Dream** and **Night Terror** can no longer occur.  
+This buff is lost if wildlife stress returns.
 
 ## Overconfidence System
 
@@ -79,23 +102,31 @@ If this risk reaches its maximum, it evolves into **Overconfidence**.
 
 While Overconfidence is active:
 
-- The probability of all other Minor Miseries afflictions increases
+- The probability of Minor Miseries afflictions increases
+- Some afflictions trigger faster or hit harder
 - The severity of the first triggered affliction is amplified
 
 The mod is fundamentally built around this mechanic.
 
-
 ## Customization
 
-All afflictions can be individually enabled or disabled.
+All major afflictions can be individually enabled or disabled.
 
 Durations are configurable.
 
-For intended balance and design cohesion, keeping Overconfidence enabled is strongly recommended.
+Evolving afflictions are grouped under their base affliction for clearer setup.
+
+The **Peace Of Mind** threshold is configurable.
+
+For intended balance and design cohesion, keeping **Overconfidence** enabled is strongly recommended.
 
 ## For Developers
 <details>
 <summary><strong>Click to Expand</strong></summary>
+
+### ModSetting
+
+An advanced setting allows to modify rare alternative icons chance to appear for afflictions and buffs.
 
 ### Console Commands
 
@@ -107,7 +138,7 @@ These commands are intended strictly for testing and balancing.
 ### Trigger ALL Afflictions
 
 **mm_afflictions**  
-Applies all Minor Miseries afflictions for testing purposes.
+Applies the main Minor Miseries afflictions for testing purposes.
 
 **mm_afflictions_cure**  
 Cures all Minor Miseries afflictions currently active.
@@ -134,6 +165,9 @@ Triggers Scratch.
 **baddream**  
 Triggers Bad Dream.
 
+**nightterror**  
+Triggers Night Terror.
+
 **sensitivehand**  
 Triggers Sensitive Hand.
 
@@ -148,6 +182,9 @@ Triggers Wrist Trauma.
 
 **shoulderrecoil**  
 Triggers Shoulder Trauma.
+
+**soreneck**  
+Triggers Sore Neck.
 
 ---
 
@@ -167,5 +204,5 @@ Cures both Overconfidence Risk and Overconfidence if present.
 ## Installation
 
 1. Install MelonLoader.
-2. Install [AfflictionComponent](https://github.com/TLD-Mods/AfflictionComponent), [ModComponent](https://github.com/dommrogers/ModComponent) and [ModSettings](https://github.com/DigitalzombieTLD/ModSettings/).
+2. Install [AfflictionComponent](https://github.com/TLD-Mods/AfflictionComponent), [ModComponent](https://github.com/dommrogers/ModComponent), [ModSettings](https://github.com/DigitalzombieTLD/ModSettings/) and [ModData](https://github.com/dommrogers/ModData).
 3. Place `Minor_Miseries.dll` inside your Mods folder.
