@@ -15,6 +15,7 @@ using static Minor_Miseries.Afflictions.Blister;
 using static Minor_Miseries.Afflictions.Scratch;
 using static Minor_Miseries.Afflictions.DebugAff;
 using AfflictionComponent.Components;
+using Minor_Miseries.Afflictions.Buffs;
 
 namespace Minor_Miseries
 {
@@ -136,6 +137,26 @@ namespace Minor_Miseries
                     {
                         a.Cure();
                     }
+                }
+            }));
+
+            uConsole.RegisterCommand("pom", new Action(() =>
+            {
+                new PeaceOfMindBuff().Start();
+            }));
+
+            uConsole.RegisterCommand("pom_cure", new Action(() =>
+            {
+                var mgr = AfflictionManager.GetAfflictionManagerInstance();
+                if (mgr?.m_Afflictions == null) return;
+
+                for (int i = mgr.m_Afflictions.Count - 1; i >= 0; i--)
+                {
+                    var a = mgr.m_Afflictions[i];
+                    if (a == null) continue;
+
+                    if (a is PeaceOfMindBuff)
+                        a.Cure();
                 }
             }));
 
