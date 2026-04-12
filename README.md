@@ -59,7 +59,7 @@ Makes aiming and weapon handling more difficult, and also affects crafting and r
 Can occur when firing a rifle with low firearm skill.  
 Makes aiming and weapon handling more difficult, and also affects crafting and rope climbing.
 
-**Food Stuck**  
+**Stuck Food**  
 Can occur after eating. Causes **extreme** discomfort.  
 (Currently may also trigger from calorie-giving drinks — unintended behavior.)
 
