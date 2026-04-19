@@ -110,7 +110,7 @@ The mod is fundamentally built around this mechanic.
 
 ## Customization
 
-All major afflictions can be individually enabled or disabled.
+All afflictions can be individually enabled or disabled.
 
 Durations are configurable.
 
