@@ -17,6 +17,31 @@ namespace Minor_Miseries
         private static bool SoreNeckSleptInVehicle = false;
         private static bool SoreNeckSleptInShelter = false;
 
+        private static readonly HashSet<string> IgnoredOverconfidenceAfflictionTypeNames = new(StringComparer.OrdinalIgnoreCase)
+        {
+            // MinorMiseries
+            nameof(OverconfidenceRiskAffliction),
+            nameof(OverconfidenceAffliction),
+            nameof(ProtectedHandsBuff),
+            nameof(ProtectedArmsBuff),
+            nameof(PeaceOfMindBuff),
+
+            // OxygenLevels
+            "AcclimatizedBuff",
+
+            // CatchColdMod
+            "ColdResistance",
+
+            // AfflictionsAndBuffs
+            "BurningHeart",
+            "Determination",
+            "FogsEmbrace",
+            "LittleHeart",
+            "HowDidYouDoThat",
+
+            //"RandomOtherNameForCustomBuff", <-- FOR FUTURE NEW BUFFS
+        };
+
         private const float SORENECK_CAR_CHANCE = 60f;
         private const float SORENECK_SHELTER_CHANCE = 40f;
         private const float SORENECK_OVERC_BONUS = 20f;
@@ -35,6 +60,42 @@ namespace Minor_Miseries
         private const float STRESS_WINDOW_HOURS = 24f;
 
         private const float STOP_TO_RESET_HOURS = 10f / 60f; // 10 min in-game
+
+        private static bool IsIgnoredOverconfidenceAffliction(object affliction)
+        {
+            if (affliction == null)
+                return false;
+
+            Type type = affliction.GetType();
+
+            if (IgnoredOverconfidenceAfflictionTypeNames.Contains(type.Name))
+                return true;
+
+            if (!string.IsNullOrEmpty(type.FullName) && IgnoredOverconfidenceAfflictionTypeNames.Contains(type.FullName))
+                return true;
+
+            return false;
+        }
+
+        public static bool HasAnyOtherCustomAfflictionForOverconfidence()
+        {
+            var mgr = AfflictionManager.GetAfflictionManagerInstance();
+            if (mgr?.m_Afflictions == null)
+                return false;
+
+            foreach (var a in mgr.m_Afflictions)
+            {
+                if (a == null)
+                    continue;
+
+                if (IsIgnoredOverconfidenceAffliction(a))
+                    continue;
+
+                return true;
+            }
+
+            return false;
+        }
 
         internal static void Tick(
             Core core,
@@ -259,7 +320,7 @@ namespace Minor_Miseries
 
         public static void UpdateOverconfidenceTracking(Condition cond, float gameHoursPassed, ref bool hadAfflictionLastTick, ref bool dirty)
         {
-            bool hasAfflictionNow = cond.HasAffliction() || HasAnyOtherCustomAfflictionThan(typeof(OverconfidenceRiskAffliction), typeof(OverconfidenceAffliction), typeof(ProtectedHandsBuff), typeof(ProtectedArmsBuff), typeof(PeaceOfMindBuff));
+            bool hasAfflictionNow = cond.HasAffliction() || HasAnyOtherCustomAfflictionForOverconfidence();
 
             float oldSince = Core.State.HoursSinceLastAffliction;
 
@@ -378,23 +439,6 @@ namespace Minor_Miseries
                 Core.State.HoursSinceLastAffliction = 0f;
                 dirty = true;
             }
-        }
-
-        public static bool HasAnyOtherCustomAfflictionThan(Type ignoredType1, Type ignoredType2, Type ignoredType3, Type ignoredType4, Type ignoredType5)
-        {
-            var mgr = AfflictionManager.GetAfflictionManagerInstance();
-            if (mgr?.m_Afflictions == null) return false;
-
-            foreach (var a in mgr.m_Afflictions)
-            {
-                if (a == null) continue;
-                var t = a.GetType();
-                if (t == ignoredType1 || t == ignoredType2 || t == ignoredType3 || t == ignoredType4 || t == ignoredType5)
-                    continue;
-
-                return true;
-            }
-            return false;
         }
 
         public static bool IsPlayerOverloaded()

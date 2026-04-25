@@ -1,8 +1,6 @@
-﻿using static Minor_Miseries.Afflictions.OverconfidenceRisk;
-using AfflictionComponent.Interfaces;
+﻿using AfflictionComponent.Interfaces;
 using AfflictionComponent.Components;
 using AfflictionComponent.Enums;
-using Minor_Miseries.Afflictions.Buffs;
 using Minor_Miseries.Resources.Localization;
 
 namespace Minor_Miseries.Afflictions
@@ -55,9 +53,8 @@ namespace Minor_Miseries.Afflictions
 
                 IsActive = true;
                 var cond = GameManager.GetConditionComponent();
-                bool hasAffliction = (cond != null && cond.HasAffliction());
-                bool hasCustomAffliction = AfflictionLogic.HasAnyOtherCustomAfflictionThan(typeof(OverconfidenceRiskAffliction), typeof(OverconfidenceAffliction), typeof(ProtectedHandsBuff), typeof(ProtectedArmsBuff), typeof(PeaceOfMindBuff));
-                if (hasAffliction || hasCustomAffliction)
+                bool hasAfflictionNow = cond.HasAffliction() || AfflictionLogic.HasAnyOtherCustomAfflictionForOverconfidence();
+                if (hasAfflictionNow)
                 {
                     Cure();
                     IsActive = false;

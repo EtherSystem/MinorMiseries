@@ -3,7 +3,6 @@ using AfflictionComponent.Interfaces;
 using AfflictionComponent.Components;
 using AfflictionComponent.Enums;
 using System.Collections;
-using Minor_Miseries.Afflictions.Buffs;
 using Minor_Miseries.Resources.Localization;
 
 namespace Minor_Miseries.Afflictions
@@ -68,10 +67,9 @@ namespace Minor_Miseries.Afflictions
                 else if (Risk)
                 {
                     var cond = GameManager.GetConditionComponent();
-                    bool hasAffliction = (cond != null && cond.HasAffliction());
-                    bool hasCustomAffliction = AfflictionLogic.HasAnyOtherCustomAfflictionThan(typeof(OverconfidenceRiskAffliction), typeof(OverconfidenceAffliction), typeof(ProtectedHandsBuff), typeof(ProtectedArmsBuff), typeof(PeaceOfMindBuff));
+                    bool hasAfflictionNow = cond.HasAffliction() || AfflictionLogic.HasAnyOtherCustomAfflictionForOverconfidence();
 
-                    if (hasAffliction || hasCustomAffliction || (IsActive == true))
+                    if (hasAfflictionNow || (IsActive == true))
                     {
                         Cure();
                         m_LastUpdateTime = GameManager.GetTimeOfDayComponent().GetHoursPlayedNotPaused();
