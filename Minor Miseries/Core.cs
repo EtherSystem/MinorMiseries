@@ -1,7 +1,7 @@
 ﻿using Minor_Miseries.Persistence;
 using LocalizationUtilities;
 
-[assembly: MelonInfo(typeof(Minor_Miseries.Core), "Minor Miseries", "1.5.2", "EtherSystem, Flower Field", null)]
+[assembly: MelonInfo(typeof(Minor_Miseries.Core), "Minor Miseries", "1.5.3", "EtherSystem, Flower Field", null)]
 [assembly: MelonGame("Hinterland", "TheLongDark")]
 
 namespace Minor_Miseries

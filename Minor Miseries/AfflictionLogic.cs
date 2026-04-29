@@ -26,6 +26,9 @@ namespace Minor_Miseries
             nameof(ProtectedArmsBuff),
             nameof(PeaceOfMindBuff),
 
+            // MajorMiseries
+            "HomeComfortBuff",
+
             // OxygenLevels
             "AcclimatizedBuff",
 
