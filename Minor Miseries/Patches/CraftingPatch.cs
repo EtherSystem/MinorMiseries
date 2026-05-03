@@ -122,7 +122,8 @@ namespace Minor_Miseries.Patches
                 return;
             }
 
-            new ScratchAffliction(AfflictionBodyArea.ArmLeft).Start();
+            if (!Core.TryStartCustomAffliction(new ScratchAffliction(AfflictionBodyArea.ArmLeft), "Scratch from crafting")) return;
+
             GameAudioManager.PlaySound(Il2CppAK.EVENTS.PLAY_EXERTIONLOW, GameManager.GetPlayerObject());
             AfflictionSaveHelper.QueueSurvivalSave();
         }

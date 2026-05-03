@@ -40,6 +40,8 @@ namespace Minor_Miseries
 
         internal static void Tick()
         {
+            if (!Core.IsAfflictionComponentReady()) return;
+
             SyncSplinterProtection();
             SyncProtectedArms();
             SyncPeaceOfMind();
@@ -132,8 +134,7 @@ namespace Minor_Miseries
             {
                 if (!hasBuff)
                 {
-                    new ProtectedHandsBuff().Start();
-                    Core.Log($"ProtectedHands applied: {validGloves.name}");
+                    if (Core.TryStartCustomAffliction(new ProtectedHandsBuff(), "ProtectedHands")) Core.Log($"ProtectedHands applied: {validGloves.name}");
                 }
             }
             else
@@ -227,9 +228,7 @@ namespace Minor_Miseries
             {
                 if (!hasBuff)
                 {
-                    new ProtectedArmsBuff().Start();
-
-                    Core.Log($"ProtectedArms applied: {validChestItem.name} | layer: {layer}");
+                    if (Core.TryStartCustomAffliction(new ProtectedArmsBuff(), "ProtectedArms")) Core.Log($"ProtectedArms applied: {validChestItem.name} | layer: {layer}");
                 }
             }
             else
@@ -327,7 +326,7 @@ namespace Minor_Miseries
             {
                 if (CanGainPeaceOfMind() && !HasPeaceOfMind())
                 {
-                    new PeaceOfMindBuff().Start();
+                    Core.TryStartCustomAffliction(new PeaceOfMindBuff(), "PeaceOfMind");
                 }
             }
 

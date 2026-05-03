@@ -48,7 +48,8 @@ namespace Minor_Miseries.Patches
                 float roll = UnityEngine.Random.Range(0f, 100f);
                 if (roll >= chance) return;
 
-                new WristTraumaAffliction(AfflictionBodyArea.HandRight).Start();
+                if (!Core.TryStartCustomAffliction(new WristTraumaAffliction(AfflictionBodyArea.HandRight), "WristTrauma from revolver")) return;
+
                 QueueAfflictionSound(Il2CppAK.EVENTS.PLAY_PLAYERDAMAGE);
                 AfflictionSaveHelper.QueueSurvivalSave();
             }
@@ -76,7 +77,8 @@ namespace Minor_Miseries.Patches
                 float roll = UnityEngine.Random.Range(0f, 100f);
                 if (roll >= chance) return;
 
-                new ShoulderTraumaAffliction(AfflictionBodyArea.Chest).Start();
+                if (!Core.TryStartCustomAffliction(new ShoulderTraumaAffliction(AfflictionBodyArea.Chest), "ShoulderTrauma from rifle")) return;
+
                 QueueAfflictionSound(Il2CppAK.EVENTS.PLAY_EXERTIONMEDIUM);
                 AfflictionSaveHelper.QueueSurvivalSave();
             }

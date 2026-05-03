@@ -1,7 +1,8 @@
 ﻿using Minor_Miseries.Persistence;
 using LocalizationUtilities;
+using AfflictionComponent.Components;
 
-[assembly: MelonInfo(typeof(Minor_Miseries.Core), "Minor Miseries", "1.5.3", "EtherSystem, Flower Field", null)]
+[assembly: MelonInfo(typeof(Minor_Miseries.Core), "Minor Miseries", "1.5.4", "EtherSystem, Flower Field", null)]
 [assembly: MelonGame("Hinterland", "TheLongDark")]
 
 namespace Minor_Miseries
@@ -60,6 +61,7 @@ namespace Minor_Miseries
         private bool hadAfflictionLastTick = false;
         private bool wasEating = false;
         private bool wasInStruggle = false;
+        private bool _loggedAfflictionComponentNotReady = false;
 
         public void SaveIfDirty()
         {
@@ -80,6 +82,7 @@ namespace Minor_Miseries
             wasEating = false;
             wasInStruggle = false;
             wasResting = false;
+            _loggedAfflictionComponentNotReady = false;
 
             BuffLogic.ResetRuntime();
         }
@@ -122,6 +125,36 @@ namespace Minor_Miseries
             ResetRuntime();
         }
 
+        internal static bool IsAfflictionComponentReady()
+        {
+            var manager = AfflictionManager.GetAfflictionManagerInstance();
+            if (manager?.m_Afflictions == null) return false;
+
+            return GameObject.Find("CustomAtlas's") != null;
+        }
+
+        internal static bool TryStartCustomAffliction(CustomAffliction affliction, string context)
+        {
+            if (affliction == null) return false;
+
+            if (!IsAfflictionComponentReady())
+            {
+                Log($"AfflictionComponent not ready; skipped {context}.");
+                return false;
+            }
+
+            try
+            {
+                affliction.Start();
+                return true;
+            }
+            catch (NullReferenceException e)
+            {
+                Log($"AfflictionComponent rejected {context}: {e.Message}", false);
+                return false;
+            }
+        }
+
         public override void OnUpdate()
         {
             if (GameManager.m_Instance == null || GameManager.m_IsPaused) return;
@@ -143,6 +176,24 @@ namespace Minor_Miseries
 
             float gameHoursPassed = tod.GetTODHours(realTimeElapsed);
             if (gameHoursPassed <= 0f) return;
+
+            if (!IsAfflictionComponentReady())
+            {
+                if (!_loggedAfflictionComponentNotReady)
+                {
+                    Log("AfflictionComponent not ready yet; skipping Minor Miseries affliction tick.");
+                    _loggedAfflictionComponentNotReady = true;
+                }
+
+                return;
+            }
+
+            if (_loggedAfflictionComponentNotReady)
+            {
+                Log("AfflictionComponent ready; resuming Minor Miseries affliction tick.");
+                _loggedAfflictionComponentNotReady = false;
+            }
+
             AfflictionLogic.Tick(this, cond, gameHoursPassed, ref badDreamRollTimer, ref _stoppedHours, ref hadAfflictionLastTick, ref wasEating, ref wasInStruggle, ref wasResting, ref _dirty);
             BuffLogic.Tick();
 

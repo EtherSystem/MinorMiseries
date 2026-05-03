@@ -75,7 +75,8 @@ namespace Minor_Miseries.Patches
                 return;
             }
 
-            new SplinterAffliction(AfflictionBodyArea.HandLeft).Start();
+            if (!Core.TryStartCustomAffliction(new SplinterAffliction(AfflictionBodyArea.HandLeft), "Splinter from breakdown")) return;
+
             GameAudioManager.PlaySound(Il2CppAK.EVENTS.PLAY_VOLANDLEVEL1, GameManager.GetPlayerObject());
             AfflictionSaveHelper.QueueSurvivalSave();
         }
