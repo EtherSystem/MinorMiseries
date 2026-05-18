@@ -2,7 +2,7 @@
 using LocalizationUtilities;
 using AfflictionComponent.Components;
 
-[assembly: MelonInfo(typeof(Minor_Miseries.Core), "Minor Miseries", "1.5.4", "EtherSystem, Flower Field", null)]
+[assembly: MelonInfo(typeof(Minor_Miseries.Core), "Minor Miseries", "1.5.5", "EtherSystem, Flower Field", null)]
 [assembly: MelonGame("Hinterland", "TheLongDark")]
 
 namespace Minor_Miseries
@@ -33,6 +33,20 @@ namespace Minor_Miseries
             if (onlyWhenDebugEnabled && !Settings.options.IsLogging) return;
 
             Instance?.LoggerInstance.Msg(message);
+        }
+
+        internal static void Warn(string message, bool onlyWhenDebugEnabled = true)
+        {
+            if (onlyWhenDebugEnabled && !Settings.options.IsLogging) return;
+
+            Instance?.LoggerInstance.Warning(message);
+        }
+
+        internal static void Error(string message, bool onlyWhenDebugEnabled = false)
+        {
+            if (onlyWhenDebugEnabled && !Settings.options.IsLogging) return;
+
+            Instance?.LoggerInstance.Error(message);
         }
         // --------------------------------------------------
 

@@ -30,7 +30,8 @@ namespace Minor_Miseries
             "HomeComfortBuff",
 
             // OxygenLevels
-            "AcclimatizedBuff",
+            "CriticalAcclimatizedBuff",
+            "InsufficientAcclimatizedBuff",
 
             // CatchColdMod
             "ColdResistance",
@@ -41,6 +42,7 @@ namespace Minor_Miseries
             "FogsEmbrace",
             "LittleHeart",
             "HowDidYouDoThat",
+            "LunarSyndrome",
 
             //"RandomOtherNameForCustomBuff", <-- FOR FUTURE NEW BUFFS
         };

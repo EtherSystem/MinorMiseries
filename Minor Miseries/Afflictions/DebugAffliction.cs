@@ -225,15 +225,15 @@ namespace Minor_Miseries.Afflictions
                         }
                         catch (Exception exProp)
                         {
-                            MelonLogger.Warning($"[DebugAff] Failed property {prop.Name}: {exProp.Message}");
+                            Core.Warn($"[DebugAff] Failed property {prop.Name}: {exProp.Message}");
                         }
                     }
 
-                    MelonLogger.Msg($"[DebugAff] Loaded audio events = {loaded}");
+                    Core.Log($"[DebugAff] Loaded audio events = {loaded}");
                 }
                 catch (Exception ex)
                 {
-                    MelonLogger.Error($"[DebugAff] Failed to build audio dictionary: {ex}");
+                    Core.Error($"[DebugAff] Failed to build audio dictionary: {ex}");
                 }
             }
 
@@ -268,7 +268,7 @@ namespace Minor_Miseries.Afflictions
                 }
                 catch (Exception ex)
                 {
-                    MelonLogger.Error($"[DebugAff] Failed to create audio txt: {ex}");
+                    Core.Error($"[DebugAff] Failed to create audio txt: {ex}");
                 }
             }
 
@@ -302,11 +302,11 @@ namespace Minor_Miseries.Afflictions
                         else
                         {
                             invalidCount++;
-                            MelonLogger.Warning($"[DebugAff] Unknown event name in txt: {eventName}");
+                            Core.Warn($"[DebugAff] Unknown event name in txt: {eventName}");
                         }
                     }
 
-                    MelonLogger.Msg($"[DebugAff] Reloaded {AudioCandidates.Count} audio candidates");
+                    Core.Log($"[DebugAff] Reloaded {AudioCandidates.Count} audio candidates");
 
                     if (invalidCount > 0)
                         HUDMessage.AddMessage($"Audio reload: {AudioCandidates.Count} valid / {invalidCount} invalid");
@@ -320,7 +320,7 @@ namespace Minor_Miseries.Afflictions
                 }
                 catch (Exception ex)
                 {
-                    MelonLogger.Error($"[DebugAff] Failed to reload audio txt: {ex}");
+                    Core.Error($"[DebugAff] Failed to reload audio txt: {ex}");
                 }
             }
 
@@ -408,7 +408,7 @@ namespace Minor_Miseries.Afflictions
                 }
                 catch (Exception ex)
                 {
-                    MelonLogger.Error($"[DebugAff] Failed to play {current.Name}: {ex}");
+                    Core.Error($"[DebugAff] Failed to play {current.Name}: {ex}");
                 }
             }
 

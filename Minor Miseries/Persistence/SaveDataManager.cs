@@ -50,7 +50,7 @@ namespace Minor_Miseries.Persistence
             }
             catch (Exception ex)
             {
-                if (Settings.options.IsLogging && Core.Instance != null) Core.Instance.LoggerInstance.Warning($"Load failed, resetting state: {ex.Message}");
+                Core.Warn($"Load failed, resetting state: {ex.Message}");
             }
 
             Core.State = loaded ?? new MMState();
