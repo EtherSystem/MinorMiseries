@@ -28,6 +28,7 @@ namespace Minor_Miseries
 
             // MajorMiseries
             "HomeComfortBuff",
+            "AuroraExposureRiskAffliction",
 
             // OxygenLevels
             "CriticalAcclimatizedBuff",
@@ -43,6 +44,10 @@ namespace Minor_Miseries
             "LittleHeart",
             "HowDidYouDoThat",
             "LunarSyndrome",
+
+            // StalkerAids&Supplements
+            "AddictionRisk",
+            "CigaretteBuff",
 
             //"RandomOtherNameForCustomBuff", <-- FOR FUTURE NEW BUFFS
         };
