@@ -7,7 +7,7 @@ namespace Minor_Miseries.Afflictions
 {
     internal class BadDream
     {
-        public class BadDreamAffliction : CustomAffliction, IDuration, IRemedies, IInstance, ILocalizableAffliction
+        public class BadDreamAffliction : CustomAffliction, IDuration, IRemedies, IInstance, IAfflictionProgressBar, ILocalizableAffliction
         {
             private const string NAME_KEY = "GAMEPLAY_BadDreamName";
             private const string CAUSE_KEY = "GAMEPLAY_BadDreamCause";
@@ -25,6 +25,7 @@ namespace Minor_Miseries.Afflictions
                     badDream.ResetAffliction(resetRemedies: false);
                     var now = GameManager.GetTimeOfDayComponent().GetHoursPlayedNotPaused();
                     badDream.EndTime = now + badDream.Duration;
+                    badDream.RefreshProgressBar();
                 }
             }
 
@@ -37,8 +38,14 @@ namespace Minor_Miseries.Afflictions
 
             public bool InstantHeal { get; set; } = true;
 
+            public float ProgressBar { get; set; } = 0f;
+            public bool InvertProgressBar { get; set; } = true;
+
             public BadDreamAffliction(AfflictionBodyArea bodyArea) : base(NAME_KEY, CAUSE_KEY, DESC_KEY, null, UnityEngine.Random.Range(0f, 100f) < Settings.options.AltAfflictionIconChance ? ALT_ICON : ICON, bodyArea, true)
             {
+                TimeOfDay? tod = GameManager.GetTimeOfDayComponent();
+                if (tod != null) EndTime = tod.GetHoursPlayedNotPaused() + Duration;
+                RefreshProgressBar();
             }
 
             public void CureSymptoms()
@@ -54,6 +61,22 @@ namespace Minor_Miseries.Afflictions
             public override void OnUpdate()
             {
                 IsBadDreamActive = true;
+                RefreshProgressBar();
+            }
+
+            private void RefreshProgressBar()
+            {
+                TimeOfDay? tod = GameManager.GetTimeOfDayComponent();
+                if (tod == null || Duration <= 0f)
+                {
+                    ProgressBar = 0f;
+                    return;
+                }
+
+                if (EndTime <= 0f) EndTime = tod.GetHoursPlayedNotPaused() + Duration;
+
+                float elapsedHours = Mathf.Clamp(Duration - (EndTime - tod.GetHoursPlayedNotPaused()), 0f, Duration);
+                ProgressBar = Mathf.Clamp01(elapsedHours / Duration);
             }
 
             public void RefreshLocalization()

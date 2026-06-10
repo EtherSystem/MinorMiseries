@@ -49,6 +49,14 @@
         "Turkish": "Cildinize bir kıymık battı.",
         "Russian": "В кожу вонзилась заноза."
     },
+    "GAMEPLAY_SplinterSpecialTreatment": {
+        "English": "There is not much to do now. Gloves probably would have prevented this.",
+        "French (France)": "Il n’y a plus grand-chose à faire maintenant. Des gants auraient probablement évité ça.",
+        "Spanish (Spain)": "No hay mucho que hacer ahora. Unos guantes probablemente habrían evitado esto.",
+        "German": "Jetzt lässt sich nicht mehr viel tun. Handschuhe hätten das wahrscheinlich verhindert.",
+        "Turkish": "Artık yapılacak pek bir şey yok. Eldivenler muhtemelen bunu önlerdi.",
+        "Russian": "Теперь уже мало что можно сделать. Перчатки, скорее всего, предотвратили бы это."
+    },
 
     "GAMEPLAY_SensitiveHandName": {
         "English": "Sensitive Hand",
@@ -202,6 +210,14 @@
         "Turkish": "Dişlerinizin arasına yiyecek sıkışmış gibi görünüyor ve bu inanılmaz derecede sinir bozucu !",
         "Russian": "Похоже, еда застряла между зубами — и это ужасно раздражает !"
     },
+    "GAMEPLAY_StuckFoodSpecialTreatment": {
+        "English": "Stay calm and pretend nobody noticed.",
+        "French (France)": "Garde ton calme et fais comme si personne n’avait rien vu.",
+        "Spanish (Spain)": "Mantén la calma y finge que nadie se dio cuenta.",
+        "German": "Ruhig bleiben und so tun, als hätte niemand etwas bemerkt.",
+        "Turkish": "Sakin kalın ve kimse fark etmemiş gibi davranın.",
+        "Russian": "Сохраняйте спокойствие и делайте вид, что никто ничего не заметил."
+    },
 
 
     "GAMEPLAY_BackPainName": {
@@ -227,6 +243,14 @@
         "German": "Zu lange überlastet zu sein hat Folgen...",
         "Turkish": "Çok uzun süre aşırı yüklü kalmanın sonuçları olur...",
         "Russian": "Последствия того, что вы тащили тяжелый вес слишком долго..."
+    },
+    "GAMEPLAY_BackPainSpecialTreatment": {
+        "English": "Carry less. Your back has reached its limit.",
+        "French (France)": "Porte moins. Ton dos a atteint sa limite.",
+        "Spanish (Spain)": "Lleva menos peso. Tu espalda ha llegado a su límite.",
+        "German": "Trag weniger. Dein Rücken hat seine Grenze erreicht.",
+        "Turkish": "Daha az taşıyın. Sırtınız sınırına ulaştı.",
+        "Russian": "Носите меньше. Ваша спина достигла предела."
     },
 
 
@@ -334,27 +358,27 @@
 
     "GAMEPLAY_SoreNeckName": {
         "English": "Sore Neck",
-        "French (France)": "",
-        "Spanish (Spain)": "",
-        "German": "",
+        "French (France)": "Torticolis",
+        "Spanish (Spain)": "Dolor de cuello",
+        "German": "Steifer Nacken",
         "Turkish": "Boyun ağrısı",
-        "Russian": ""
+        "Russian": "Боль в шее"
     },
     "GAMEPLAY_SoreNeckCause": {
         "English": "Bad sleeping position",
-        "French (France)": "",
-        "Spanish (Spain)": "",
-        "German": "",
+        "French (France)": "Mauvaise position de sommeil",
+        "Spanish (Spain)": "Mala posición al dormir",
+        "German": "Schlechte Schlafposition",
         "Turkish": "Kötü uyku pozisyonu",
-        "Russian": ""
+        "Russian": "Неудобное положение во сне"
     },
     "GAMEPLAY_SoreNeckDescription": {
         "English": "You slept in a very uncomfortable position, your neck is aching terribly.",
-        "French (France)": "",
-        "Spanish (Spain)": "",
-        "German": "",
+        "French (France)": "Tu as dormi dans une position très inconfortable, ta nuque te fait terriblement mal.",
+        "Spanish (Spain)": "Dormiste en una posición muy incómoda y te duele muchísimo el cuello.",
+        "German": "Du hast in einer sehr unbequemen Position geschlafen, dein Nacken schmerzt fürchterlich.",
         "Turkish": "Çok rahatsız bir pozisyonda uyudun, boynun çok ağrıyor.",
-        "Russian": ""
+        "Russian": "Вы спали в очень неудобной позе, и у вас ужасно болит шея."
     },
 
     "GAMEPLAY_OverconfidenceRiskName": {

@@ -7,11 +7,12 @@ namespace Minor_Miseries.Afflictions
 {
     internal class BackPain
     {
-        public class BackPainAffliction : CustomAffliction, IDuration, IInstance, IRemedies, ILocalizableAffliction
+        public class BackPainAffliction : CustomAffliction, IDuration, IInstance, IRemedies, ISpecialTreatment, ILocalizableAffliction
         {
             private const string NAME_KEY = "GAMEPLAY_BackPainName";
             private const string CAUSE_KEY = "GAMEPLAY_BackPainCause";
             private const string DESC_KEY = "GAMEPLAY_BackPainDescription";
+            private const string SPECIAL_TREATMENT_KEY = "GAMEPLAY_BackPainSpecialTreatment";
 
             private const string ICON = "Minor_Miseries.Resources.Icons.Afflictions.Classic.BackPain.png";
             private const string ALT_ICON = "Minor_Miseries.Resources.Icons.Afflictions.Alt.BackPain_ALT.png";
@@ -37,8 +38,11 @@ namespace Minor_Miseries.Afflictions
 
             public bool InstantHeal { get; set; } = true;
 
+            public string SpecialTreatmentText { get; set; } = string.Empty;
+
             public BackPainAffliction(AfflictionBodyArea bodyArea) : base(NAME_KEY, CAUSE_KEY, DESC_KEY, null, UnityEngine.Random.Range(0f, 100f) < Settings.options.AltAfflictionIconChance ? ALT_ICON : ICON, bodyArea, true)
             {
+                SpecialTreatmentText = Localization.Get(SPECIAL_TREATMENT_KEY);
             }
 
             public void CureSymptoms()
@@ -64,6 +68,7 @@ namespace Minor_Miseries.Afflictions
                 m_CauseText = Localization.Get(CAUSE_KEY);
                 m_Description = Localization.Get(DESC_KEY);
                 m_DescriptionNoHeal = null;
+                SpecialTreatmentText = Localization.Get(SPECIAL_TREATMENT_KEY);
 
                 Core.Log($"BackPain refresh -> '{oldName}' => '{m_Name}'");
             }
