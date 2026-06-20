@@ -221,6 +221,18 @@ namespace Minor_Miseries.Patches
             return mult;
         }
 
+        private static void ScaleCraftingProgressHours(ref float hoursSpentCrafting)
+        {
+            if (hoursSpentCrafting <= 0f) return;
+
+            RefreshIfNeeded();
+
+            float mult = GetCraftingMultiplier();
+            if (mult <= 0f || Mathf.Approximately(mult, 1f)) return;
+
+            hoursSpentCrafting /= mult;
+        }
+
         // ----------------------------------------------------------------------------------------------------------------
         //                                                HARMONY PATCHES
         // ----------------------------------------------------------------------------------------------------------------
@@ -248,10 +260,28 @@ namespace Minor_Miseries.Patches
                 RefreshIfNeeded();
 
                 float mult = GetCraftingMultiplier();
-                if (mult != 1f)
+                if (!Mathf.Approximately(mult, 1f))
                 {
-                    __result = (int)(__result * mult);
+                    __result = Mathf.CeilToInt(__result * mult);
                 }
+            }
+        }
+
+        [HarmonyPatch(typeof(Il2CppTLD.Gear.CraftingOperation), nameof(Il2CppTLD.Gear.CraftingOperation.ApplyCraftingProgress))]
+        internal static class CraftingOperationApplyProgressPatch
+        {
+            private static void Prefix(ref float hoursSpentCrafting)
+            {
+                ScaleCraftingProgressHours(ref hoursSpentCrafting);
+            }
+        }
+
+        [HarmonyPatch(typeof(Il2CppTLD.Gear.CraftingOperation), nameof(Il2CppTLD.Gear.CraftingOperation.ConsumeMaterialsUsedForCrafting))]
+        internal static class CraftingOperationConsumeMaterialsPatch
+        {
+            private static void Prefix(ref float hoursSpentCrafting)
+            {
+                ScaleCraftingProgressHours(ref hoursSpentCrafting);
             }
         }
 
