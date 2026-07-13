@@ -22,6 +22,7 @@ namespace Minor_Miseries
             // MinorMiseries
             nameof(OverconfidenceRiskAffliction),
             nameof(OverconfidenceAffliction),
+            nameof(StuckFoodAffliction),
             nameof(ProtectedHandsBuff),
             nameof(ProtectedArmsBuff),
             nameof(PeaceOfMindBuff),
