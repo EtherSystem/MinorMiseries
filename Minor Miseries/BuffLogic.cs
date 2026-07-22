@@ -117,7 +117,7 @@ namespace Minor_Miseries
             if (protectedGloves == null) return false;
 
             float before = protectedGloves.GetNormalizedCondition() * 100f;
-            DegradeItemByMaxConditionPercent(protectedGloves, 10f);
+            DegradeItemByMaxConditionPercent(protectedGloves, 5f);
             float after = protectedGloves.GetNormalizedCondition() * 100f;
 
             Core.Log($"ProtectedHands absorbed splinter: {protectedGloves.name} ({before:0.#}% -> {after:0.#}%)");
@@ -209,7 +209,7 @@ namespace Minor_Miseries
             if (protectedItem == null) return false;
 
             float before = protectedItem.GetNormalizedCondition() * 100f;
-            DegradeItemByMaxConditionPercent(protectedItem, 10f);
+            DegradeItemByMaxConditionPercent(protectedItem, 5f);
             float after = protectedItem.GetNormalizedCondition() * 100f;
 
             Core.Log($"ProtectedArms absorbed scratch: {protectedItem.name} | layer: {layer} | {before:0.#}% -> {after:0.#}%");

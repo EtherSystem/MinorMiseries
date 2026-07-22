@@ -7,6 +7,7 @@ namespace Minor_Miseries.Patches
     internal class BreakdownPatches
     {
         private const float DEFAULT_SPLINTER_CHANCE = 10f;
+        private const float SPLINTER_CHANCE_MULTIPLIER = 0.5f;
 
         private static readonly Dictionary<string, float> SplinterChanceByTool = new(StringComparer.Ordinal)
         {
@@ -40,7 +41,7 @@ namespace Minor_Miseries.Patches
                     return;
                 }
 
-                float chance = GetSplinterChanceFromToolId(_selectedBreakdownToolId);
+                float chance = GetSplinterChanceFromToolId(_selectedBreakdownToolId) * SPLINTER_CHANCE_MULTIPLIER;
 
                 if (OverconfidenceAffliction.IsActive)
                     chance *= 2f;
@@ -69,11 +70,7 @@ namespace Minor_Miseries.Patches
             float roll = Random.Range(0f, 100f);
             if (roll >= chance) return;
 
-            if (BuffLogic.TryAbsorbSplinterWithProtectedHands())
-            {
-                AfflictionSaveHelper.QueueSurvivalSave();
-                return;
-            }
+            if (BuffLogic.TryAbsorbSplinterWithProtectedHands()) return;
 
             if (!Core.TryStartCustomAffliction(new SplinterAffliction(AfflictionBodyArea.HandLeft), "Splinter from breakdown")) return;
 

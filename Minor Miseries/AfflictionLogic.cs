@@ -8,6 +8,7 @@ using static Minor_Miseries.Afflictions.BadDream;
 using static Minor_Miseries.Afflictions.Blister;
 using Minor_Miseries.Afflictions.Buffs;
 using AfflictionComponent.Components;
+using Il2CppTLD.IntBackedUnit;
 
 namespace Minor_Miseries
 {
@@ -64,6 +65,9 @@ namespace Minor_Miseries
 
         private const float BACKPAIN_TRESHOLD_HOURS = 1f;
         private const float OVERC_BACKPAIN_TRESHOLD_HOURS = 0.5f;
+        private const float MIN_BACKPAIN_PROGRESS_MULTIPLIER = 0.25f;
+        private const float MAX_BACKPAIN_PROGRESS_MULTIPLIER = 4f;
+        private const float BACKPAIN_PROGRESS_PER_OVERLOAD_KG = 0.075f;
 
         private const float STUCKFOOD_CHANCE = 5f;
         private const float OVERC_STUCKFOOD_CHANCE = 10f;
@@ -308,12 +312,24 @@ namespace Minor_Miseries
 
         public static void UpdateOverloadAndBackPain(float gameHoursPassed, ref bool dirty)
         {
-            bool overloaded = IsPlayerOverloaded();
-
+            float overloadKg = GetPlayerOverloadKg();
             float oldOver = Core.State.HoursOverloaded;
-            Core.State.HoursOverloaded = overloaded ? (Core.State.HoursOverloaded + gameHoursPassed) : 0f;
-            if (!Mathf.Approximately(oldOver, Core.State.HoursOverloaded)) dirty = true;
 
+            if (overloadKg > 0f)
+            {
+                float progressMultiplier = Mathf.Clamp(
+                    MIN_BACKPAIN_PROGRESS_MULTIPLIER + (overloadKg * BACKPAIN_PROGRESS_PER_OVERLOAD_KG),
+                    MIN_BACKPAIN_PROGRESS_MULTIPLIER,
+                    MAX_BACKPAIN_PROGRESS_MULTIPLIER);
+
+                Core.State.HoursOverloaded += gameHoursPassed * progressMultiplier;
+            }
+            else
+            {
+                Core.State.HoursOverloaded = 0f;
+            }
+
+            if (!Mathf.Approximately(oldOver, Core.State.HoursOverloaded)) dirty = true;
             if (!Settings.options.IsBackPain) return;
 
             bool overc = OverconfidenceAffliction.IsActive;
@@ -321,9 +337,14 @@ namespace Minor_Miseries
 
             if (Core.State.HoursOverloaded >= threshold)
             {
+                bool wasAlreadyActive = HasBackPainAffliction();
+
                 new BackPainAffliction(AfflictionBodyArea.Chest).Start();
                 GameAudioManager.PlaySound(Il2CppAK.EVENTS.PLAY_GENERALINJURYLOW, GameManager.GetPlayerObject());
-                AfflictionSaveHelper.QueueSurvivalSave();
+
+                if (!wasAlreadyActive)
+                    AfflictionSaveHelper.QueueSurvivalSave();
+
                 Core.State.HoursOverloaded = 0f;
                 dirty = true;
             }
@@ -454,10 +475,31 @@ namespace Minor_Miseries
 
         public static bool IsPlayerOverloaded()
         {
-            var enc = GameManager.GetEncumberComponent();
-            if (enc == null) return false;
+            return GetPlayerOverloadKg() > 0f;
+        }
 
-            return enc.GetGearWeightKG() > enc.GetEffectiveCarryCapacityKG();
+        private static float GetPlayerOverloadKg()
+        {
+            var enc = GameManager.GetEncumberComponent();
+            if (enc == null) return 0f;
+
+            float gearWeightKg = enc.GetGearWeightKG().ToQuantity(1f);
+            float carryCapacityKg = enc.GetEffectiveCarryCapacityKG().ToQuantity(1f);
+            return Mathf.Max(0f, gearWeightKg - carryCapacityKg);
+        }
+
+        private static bool HasBackPainAffliction()
+        {
+            var mgr = AfflictionManager.GetAfflictionManagerInstance();
+            if (mgr?.m_Afflictions == null) return false;
+
+            for (int i = 0; i < mgr.m_Afflictions.Count; i++)
+            {
+                if (mgr.m_Afflictions[i] is BackPainAffliction)
+                    return true;
+            }
+
+            return false;
         }
 
         public static void UpdateSoreNeck(Core core)

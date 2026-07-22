@@ -7,6 +7,7 @@ namespace Minor_Miseries.Patches
     internal class CraftingPatch
     {
         private const float DEFAULT_SCRATCH_CHANCE = 10f;
+        private const float SCRATCH_CHANCE_MULTIPLIER = 0.5f;
 
         private static readonly Dictionary<string, float> ScratchChanceByTool = new(StringComparer.Ordinal)
         {
@@ -54,7 +55,7 @@ namespace Minor_Miseries.Patches
                     return;
                 }
 
-                float chance = GetScratchChanceFromToolId(_activeCraftToolId);
+                float chance = GetScratchChanceFromToolId(_activeCraftToolId) * SCRATCH_CHANCE_MULTIPLIER;
 
                 if (OverconfidenceAffliction.IsActive)
                     chance *= 2f;
@@ -80,7 +81,7 @@ namespace Minor_Miseries.Patches
                     return;
                 }
 
-                float chance = GetScratchChanceFromToolId(_activeCraftToolId) / 2f;
+                float chance = GetScratchChanceFromToolId(_activeCraftToolId) * SCRATCH_CHANCE_MULTIPLIER / 2f;
 
                 if (OverconfidenceAffliction.IsActive)
                     chance *= 2f;
@@ -116,11 +117,7 @@ namespace Minor_Miseries.Patches
             float roll = Random.Range(0f, 100f);
             if (roll >= chance) return;
 
-            if (BuffLogic.TryAbsorbScratchWithProtectedArms())
-            {
-                AfflictionSaveHelper.QueueSurvivalSave();
-                return;
-            }
+            if (BuffLogic.TryAbsorbScratchWithProtectedArms()) return;
 
             if (!Core.TryStartCustomAffliction(new ScratchAffliction(AfflictionBodyArea.ArmLeft), "Scratch from crafting")) return;
 

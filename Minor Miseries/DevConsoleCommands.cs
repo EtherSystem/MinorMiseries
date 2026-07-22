@@ -21,6 +21,23 @@ namespace Minor_Miseries
 {
     internal static class DevConsoleCommands
     {
+        private static void RegisterCureCommand<T>(string command) where T : CustomAffliction
+        {
+            uConsole.RegisterCommand(command, new Action(() => CureAfflictions<T>()));
+        }
+
+        private static void CureAfflictions<T>() where T : CustomAffliction
+        {
+            var mgr = AfflictionManager.GetAfflictionManagerInstance();
+            if (mgr?.m_Afflictions == null) return;
+
+            for (int i = mgr.m_Afflictions.Count - 1; i >= 0; i--)
+            {
+                if (mgr.m_Afflictions[i] is T affliction)
+                    affliction.Cure();
+            }
+        }
+
         internal static void Register()
         {
             uConsole.RegisterCommand("mm_afflictions", new Action(() =>
@@ -44,71 +61,85 @@ namespace Minor_Miseries
             {
                 new DebugAffliction(AfflictionBodyArea.Head).Start();
             }));
+            RegisterCureCommand<DebugAffliction>("debugaff_cure");
 
             uConsole.RegisterCommand("splinter", new Action(() =>
             {
                 new SplinterAffliction(AfflictionBodyArea.HandLeft).Start();
             }));
+            RegisterCureCommand<SplinterAffliction>("splinter_cure");
 
             uConsole.RegisterCommand("stuckfood", new Action(() =>
             {
                 new StuckFoodAffliction(AfflictionBodyArea.Head).Start();
             }));
+            RegisterCureCommand<StuckFoodAffliction>("stuckfood_cure");
 
             uConsole.RegisterCommand("blister", new Action(() =>
             {
                 new BlisterAffliction(AfflictionBodyArea.FootLeft).Start();
             }));
+            RegisterCureCommand<BlisterAffliction>("blister_cure");
 
             uConsole.RegisterCommand("backpain", new Action(() =>
             {
                 new BackPainAffliction(AfflictionBodyArea.Chest).Start();
             }));
+            RegisterCureCommand<BackPainAffliction>("backpain_cure");
 
             uConsole.RegisterCommand("scratch", new Action(() =>
             {
                 new ScratchAffliction(AfflictionBodyArea.ArmLeft).Start();
             }));
+            RegisterCureCommand<ScratchAffliction>("scratch_cure");
 
             uConsole.RegisterCommand("baddream", new Action(() =>
             {
                 new BadDreamAffliction(AfflictionBodyArea.Head).Start();
             }));
+            RegisterCureCommand<BadDreamAffliction>("baddream_cure");
 
             uConsole.RegisterCommand("nightterror", new Action(() =>
             {
                 new NightTerrorAffliction(AfflictionBodyArea.Head).Start();
             }));
+            RegisterCureCommand<NightTerrorAffliction>("nightterror_cure");
 
             uConsole.RegisterCommand("sensitivehand", new Action(() =>
             {
                 new SensitiveHandAffliction(AfflictionBodyArea.HandLeft).Start();
             }));
+            RegisterCureCommand<SensitiveHandAffliction>("sensitivehand_cure");
 
             uConsole.RegisterCommand("bareskin", new Action(() =>
             {
                 new BareSkinAffliction(AfflictionBodyArea.FootRight).Start();
             }));
+            RegisterCureCommand<BareSkinAffliction>("bareskin_cure");
 
             uConsole.RegisterCommand("smallcut", new Action(() =>
             {
                 new SmallCutAffliction(AfflictionBodyArea.ArmLeft).Start();
             }));
+            RegisterCureCommand<SmallCutAffliction>("smallcut_cure");
 
             uConsole.RegisterCommand("wristrecoil", new Action(() =>
             {
                 new WristTraumaAffliction(AfflictionBodyArea.HandRight).Start();
             }));
+            RegisterCureCommand<WristTraumaAffliction>("wristrecoil_cure");
 
             uConsole.RegisterCommand("shoulderrecoil", new Action(() =>
             {
                 new ShoulderTraumaAffliction(AfflictionBodyArea.Chest).Start();
             }));
+            RegisterCureCommand<ShoulderTraumaAffliction>("shoulderrecoil_cure");
 
             uConsole.RegisterCommand("soreneck", new Action(() =>
             {
                 new SoreNeckAffliction(AfflictionBodyArea.Neck).Start();
             }));
+            RegisterCureCommand<SoreNeckAffliction>("soreneck_cure");
 
             uConsole.RegisterCommand("mm_afflictions_cure", new Action(() =>
             {
@@ -145,44 +176,25 @@ namespace Minor_Miseries
                 new PeaceOfMindBuff().Start();
             }));
 
-            uConsole.RegisterCommand("pom_cure", new Action(() =>
-            {
-                var mgr = AfflictionManager.GetAfflictionManagerInstance();
-                if (mgr?.m_Afflictions == null) return;
-
-                for (int i = mgr.m_Afflictions.Count - 1; i >= 0; i--)
-                {
-                    var a = mgr.m_Afflictions[i];
-                    if (a == null) continue;
-
-                    if (a is PeaceOfMindBuff)
-                        a.Cure();
-                }
-            }));
+            RegisterCureCommand<PeaceOfMindBuff>("pom_cure");
 
             uConsole.RegisterCommand("overcrisk", new Action(() =>
             {
                 new OverconfidenceRiskAffliction(AfflictionBodyArea.Head).Start();
             }));
+            RegisterCureCommand<OverconfidenceRiskAffliction>("overcrisk_cure");
 
             uConsole.RegisterCommand("overc", new Action(() =>
             {
                 new OverconfidenceAffliction(AfflictionBodyArea.Head).Start();
             }));
+            RegisterCureCommand<OverconfidenceAffliction>("overc_cure");
+            RegisterCureCommand<OverconfidenceAffliction>("overconfidence_cure");
 
-            uConsole.RegisterCommand("overc_cure", new Action(() =>
+            uConsole.RegisterCommand("overc_all_cure", new Action(() =>
             {
-                var mgr = AfflictionManager.GetAfflictionManagerInstance();
-                if (mgr?.m_Afflictions == null) return;
-
-                for (int i = mgr.m_Afflictions.Count - 1; i >= 0; i--)
-                {
-                    var a = mgr.m_Afflictions[i];
-                    if (a == null) continue;
-
-                    if (a is OverconfidenceRiskAffliction || a is OverconfidenceAffliction)
-                        a.Cure();
-                }
+                CureAfflictions<OverconfidenceRiskAffliction>();
+                CureAfflictions<OverconfidenceAffliction>();
             }));
         }
     }
